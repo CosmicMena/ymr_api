@@ -1,0 +1,114 @@
+import { PrismaService } from '../../common/prisma/prisma.service';
+import { SiteVisitDto } from './dto/site-visit.dto';
+export declare class SiteVisitService {
+    private readonly prisma;
+    constructor(prisma: PrismaService);
+    create(data: Omit<SiteVisitDto, 'createdAt'>): Promise<{
+        id: string;
+        createdAt: Date;
+        userId: string | null;
+        ipAddress: string;
+        userAgent: string | null;
+        referer: string | null;
+        pageUrl: string | null;
+        country: string | null;
+        region: string | null;
+        city: string | null;
+        latitude: import("@prisma/client/runtime/library").Decimal | null;
+        longitude: import("@prisma/client/runtime/library").Decimal | null;
+        sessionId: string | null;
+        visitDuration: number | null;
+    }>;
+    findAll(): Promise<({
+        user: {
+            id: string;
+            name: string;
+            isActive: boolean;
+            createdAt: Date;
+            country: string;
+            city: string | null;
+            email: string;
+            phone: string | null;
+            birthDate: Date | null;
+            address: string | null;
+            company: string | null;
+            position: string | null;
+            avatarUrl: string | null;
+            passwordHash: string | null;
+            googleId: string | null;
+            emailVerified: boolean;
+            preferredContactMethod: string;
+            updatedAt: Date;
+            lastLogin: Date | null;
+        };
+    } & {
+        id: string;
+        createdAt: Date;
+        userId: string | null;
+        ipAddress: string;
+        userAgent: string | null;
+        referer: string | null;
+        pageUrl: string | null;
+        country: string | null;
+        region: string | null;
+        city: string | null;
+        latitude: import("@prisma/client/runtime/library").Decimal | null;
+        longitude: import("@prisma/client/runtime/library").Decimal | null;
+        sessionId: string | null;
+        visitDuration: number | null;
+    })[]>;
+    findOne(id: string): Promise<{
+        user: {
+            id: string;
+            name: string;
+            isActive: boolean;
+            createdAt: Date;
+            country: string;
+            city: string | null;
+            email: string;
+            phone: string | null;
+            birthDate: Date | null;
+            address: string | null;
+            company: string | null;
+            position: string | null;
+            avatarUrl: string | null;
+            passwordHash: string | null;
+            googleId: string | null;
+            emailVerified: boolean;
+            preferredContactMethod: string;
+            updatedAt: Date;
+            lastLogin: Date | null;
+        };
+    } & {
+        id: string;
+        createdAt: Date;
+        userId: string | null;
+        ipAddress: string;
+        userAgent: string | null;
+        referer: string | null;
+        pageUrl: string | null;
+        country: string | null;
+        region: string | null;
+        city: string | null;
+        latitude: import("@prisma/client/runtime/library").Decimal | null;
+        longitude: import("@prisma/client/runtime/library").Decimal | null;
+        sessionId: string | null;
+        visitDuration: number | null;
+    }>;
+    remove(id: string): Promise<{
+        id: string;
+        createdAt: Date;
+        userId: string | null;
+        ipAddress: string;
+        userAgent: string | null;
+        referer: string | null;
+        pageUrl: string | null;
+        country: string | null;
+        region: string | null;
+        city: string | null;
+        latitude: import("@prisma/client/runtime/library").Decimal | null;
+        longitude: import("@prisma/client/runtime/library").Decimal | null;
+        sessionId: string | null;
+        visitDuration: number | null;
+    }>;
+}

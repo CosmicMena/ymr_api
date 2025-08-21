@@ -1,0 +1,275 @@
+import { ProductsService } from './products.service';
+import { CreateProductDto, UpdateProductDto, ProductFilterDto } from './dto/product.dto';
+import { PaginationDto } from '../../common/dto/pagination.dto';
+import { SuccessResponseDto } from '../../common/dto/response.dto';
+export declare class ProductsController {
+    private readonly productsService;
+    constructor(productsService: ProductsService);
+    create(createProductDto: CreateProductDto): Promise<SuccessResponseDto<{
+        subcategory: {
+            category: {
+                id: string;
+                name: string;
+                description: string | null;
+                isActive: boolean;
+                createdAt: Date;
+                updatedAt: Date;
+                imageUrl: string | null;
+            };
+        } & {
+            id: string;
+            name: string;
+            description: string | null;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            categoryId: string;
+            imageUrl: string | null;
+        };
+        brand: {
+            id: string;
+            name: string;
+            description: string | null;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            logoUrl: string | null;
+        };
+    } & {
+        id: string;
+        name: string;
+        description: string | null;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+        code: string;
+        model: string | null;
+        features: string[];
+        images: string[];
+        specifications: import("@prisma/client/runtime/library").JsonValue | null;
+        documents: import("@prisma/client/runtime/library").JsonValue | null;
+        availability: string;
+        price: import("@prisma/client/runtime/library").Decimal;
+        stockQuantity: number;
+        viewCount: number;
+        subcategoryId: string | null;
+        brandId: string | null;
+    }>>;
+    findAll(paginationDto: PaginationDto, filterDto: ProductFilterDto): Promise<SuccessResponseDto<{
+        data: unknown[];
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+            hasNext: boolean;
+            hasPrev: boolean;
+        };
+    }>>;
+    getPopularProducts(limit?: number): Promise<SuccessResponseDto<({
+        subcategory: {
+            category: {
+                id: string;
+                name: string;
+                description: string | null;
+                isActive: boolean;
+                createdAt: Date;
+                updatedAt: Date;
+                imageUrl: string | null;
+            };
+        } & {
+            id: string;
+            name: string;
+            description: string | null;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            categoryId: string;
+            imageUrl: string | null;
+        };
+        brand: {
+            id: string;
+            name: string;
+            description: string | null;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            logoUrl: string | null;
+        };
+    } & {
+        id: string;
+        name: string;
+        description: string | null;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+        code: string;
+        model: string | null;
+        features: string[];
+        images: string[];
+        specifications: import("@prisma/client/runtime/library").JsonValue | null;
+        documents: import("@prisma/client/runtime/library").JsonValue | null;
+        availability: string;
+        price: import("@prisma/client/runtime/library").Decimal;
+        stockQuantity: number;
+        viewCount: number;
+        subcategoryId: string | null;
+        brandId: string | null;
+    })[]>>;
+    getFeaturedProducts(limit?: number): Promise<SuccessResponseDto<({
+        subcategory: {
+            category: {
+                id: string;
+                name: string;
+                description: string | null;
+                isActive: boolean;
+                createdAt: Date;
+                updatedAt: Date;
+                imageUrl: string | null;
+            };
+        } & {
+            id: string;
+            name: string;
+            description: string | null;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            categoryId: string;
+            imageUrl: string | null;
+        };
+        brand: {
+            id: string;
+            name: string;
+            description: string | null;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            logoUrl: string | null;
+        };
+    } & {
+        id: string;
+        name: string;
+        description: string | null;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+        code: string;
+        model: string | null;
+        features: string[];
+        images: string[];
+        specifications: import("@prisma/client/runtime/library").JsonValue | null;
+        documents: import("@prisma/client/runtime/library").JsonValue | null;
+        availability: string;
+        price: import("@prisma/client/runtime/library").Decimal;
+        stockQuantity: number;
+        viewCount: number;
+        subcategoryId: string | null;
+        brandId: string | null;
+    })[]>>;
+    findOne(id: string): Promise<SuccessResponseDto<{
+        _count: {
+            userFavorites: number;
+            quoteItems: number;
+            orderItems: number;
+        };
+        subcategory: {
+            category: {
+                id: string;
+                name: string;
+                description: string | null;
+                isActive: boolean;
+                createdAt: Date;
+                updatedAt: Date;
+                imageUrl: string | null;
+            };
+        } & {
+            id: string;
+            name: string;
+            description: string | null;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            categoryId: string;
+            imageUrl: string | null;
+        };
+        brand: {
+            id: string;
+            name: string;
+            description: string | null;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            logoUrl: string | null;
+        };
+    } & {
+        id: string;
+        name: string;
+        description: string | null;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+        code: string;
+        model: string | null;
+        features: string[];
+        images: string[];
+        specifications: import("@prisma/client/runtime/library").JsonValue | null;
+        documents: import("@prisma/client/runtime/library").JsonValue | null;
+        availability: string;
+        price: import("@prisma/client/runtime/library").Decimal;
+        stockQuantity: number;
+        viewCount: number;
+        subcategoryId: string | null;
+        brandId: string | null;
+    }>>;
+    update(id: string, updateProductDto: UpdateProductDto): Promise<SuccessResponseDto<{
+        subcategory: {
+            category: {
+                id: string;
+                name: string;
+                description: string | null;
+                isActive: boolean;
+                createdAt: Date;
+                updatedAt: Date;
+                imageUrl: string | null;
+            };
+        } & {
+            id: string;
+            name: string;
+            description: string | null;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            categoryId: string;
+            imageUrl: string | null;
+        };
+        brand: {
+            id: string;
+            name: string;
+            description: string | null;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            logoUrl: string | null;
+        };
+    } & {
+        id: string;
+        name: string;
+        description: string | null;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+        code: string;
+        model: string | null;
+        features: string[];
+        images: string[];
+        specifications: import("@prisma/client/runtime/library").JsonValue | null;
+        documents: import("@prisma/client/runtime/library").JsonValue | null;
+        availability: string;
+        price: import("@prisma/client/runtime/library").Decimal;
+        stockQuantity: number;
+        viewCount: number;
+        subcategoryId: string | null;
+        brandId: string | null;
+    }>>;
+    remove(id: string): Promise<SuccessResponseDto<any>>;
+}
