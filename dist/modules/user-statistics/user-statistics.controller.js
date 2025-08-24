@@ -16,6 +16,8 @@ exports.UserStatisticsController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const user_statistics_service_1 = require("./user-statistics.service");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let UserStatisticsController = class UserStatisticsController {
     constructor(service) {
         this.service = service;
@@ -89,8 +91,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserStatisticsController.prototype, "remove", null);
 exports.UserStatisticsController = UserStatisticsController = __decorate([
-    (0, swagger_1.ApiTags)('user-statistics'),
+    (0, swagger_1.ApiTags)('UserStatistics'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('user-statistics'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [user_statistics_service_1.UserStatisticsService])
 ], UserStatisticsController);
 //# sourceMappingURL=user-statistics.controller.js.map

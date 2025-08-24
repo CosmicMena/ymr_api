@@ -1,10 +1,14 @@
-import { Controller, Get, Post, Param, Body, Delete, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Delete, Patch, UseGuards } from '@nestjs/common';
 import { ShoppingCartService } from './shopping-cart.service';
 import { ShoppingCartDto } from './dto/shopping-cart.dto';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('shopping-carts')
+@ApiTags('ShoppingCarts')
+@ApiBearerAuth('JWT-auth')
 @Controller('shopping-carts')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class ShoppingCartController {
   constructor(private readonly service: ShoppingCartService) {}
 

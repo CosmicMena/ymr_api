@@ -1,10 +1,14 @@
-import { Controller, Get, Post, Param, Body, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Delete, UseGuards } from '@nestjs/common';
 import { RolePermissionService } from './role-permission.service';
 import { RolePermissionDto } from './dto/role-permission.dto';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('role-permissions')
+@ApiTags('RolePermissions')
+@ApiBearerAuth('JWT-auth')
 @Controller('role-permissions')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class RolePermissionController {
   constructor(private readonly service: RolePermissionService) {}
 

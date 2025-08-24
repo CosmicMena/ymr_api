@@ -1,10 +1,14 @@
-import { Controller, Get, Post, Param, Body, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Patch, Delete, UseGuards } from '@nestjs/common';
 import { SubcategoryService } from './subcategory.service';
 import { SubcategoryDto } from './dto/subcategory.dto';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('subcategories')
+@ApiTags('Subcategories')
+@ApiBearerAuth('JWT-auth')
 @Controller('subcategories')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class SubcategoryController {
   constructor(private readonly service: SubcategoryService) {}
 

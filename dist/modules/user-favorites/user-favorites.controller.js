@@ -16,6 +16,8 @@ exports.UserFavoritesController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const user_favorites_service_1 = require("./user-favorites.service");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let UserFavoritesController = class UserFavoritesController {
     constructor(service) {
         this.service = service;
@@ -66,8 +68,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserFavoritesController.prototype, "remove", null);
 exports.UserFavoritesController = UserFavoritesController = __decorate([
-    (0, swagger_1.ApiTags)('user-favorites'),
+    (0, swagger_1.ApiTags)('UserFavorites'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('user-favorites'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [user_favorites_service_1.UserFavoritesService])
 ], UserFavoritesController);
 //# sourceMappingURL=user-favorites.controller.js.map

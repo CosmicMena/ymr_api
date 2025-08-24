@@ -4,9 +4,8 @@ export declare class SiteVisitController {
     private readonly service;
     constructor(service: SiteVisitService);
     create(data: Omit<SiteVisitDto, 'createdAt'>): Promise<{
-        id: string;
         createdAt: Date;
-        userId: string | null;
+        id: string;
         ipAddress: string;
         userAgent: string | null;
         referer: string | null;
@@ -17,16 +16,16 @@ export declare class SiteVisitController {
         latitude: import("@prisma/client/runtime/library").Decimal | null;
         longitude: import("@prisma/client/runtime/library").Decimal | null;
         sessionId: string | null;
+        userId: string | null;
         visitDuration: number | null;
     }>;
     findAll(): Promise<({
         user: {
-            id: string;
-            name: string;
-            isActive: boolean;
             createdAt: Date;
+            id: string;
             country: string;
             city: string | null;
+            name: string;
             email: string;
             phone: string | null;
             birthDate: Date | null;
@@ -37,14 +36,14 @@ export declare class SiteVisitController {
             passwordHash: string | null;
             googleId: string | null;
             emailVerified: boolean;
+            isActive: boolean;
             preferredContactMethod: string;
             updatedAt: Date;
             lastLogin: Date | null;
         };
     } & {
-        id: string;
         createdAt: Date;
-        userId: string | null;
+        id: string;
         ipAddress: string;
         userAgent: string | null;
         referer: string | null;
@@ -55,16 +54,16 @@ export declare class SiteVisitController {
         latitude: import("@prisma/client/runtime/library").Decimal | null;
         longitude: import("@prisma/client/runtime/library").Decimal | null;
         sessionId: string | null;
+        userId: string | null;
         visitDuration: number | null;
     })[]>;
     findOne(id: string): Promise<{
         user: {
-            id: string;
-            name: string;
-            isActive: boolean;
             createdAt: Date;
+            id: string;
             country: string;
             city: string | null;
+            name: string;
             email: string;
             phone: string | null;
             birthDate: Date | null;
@@ -75,14 +74,14 @@ export declare class SiteVisitController {
             passwordHash: string | null;
             googleId: string | null;
             emailVerified: boolean;
+            isActive: boolean;
             preferredContactMethod: string;
             updatedAt: Date;
             lastLogin: Date | null;
         };
     } & {
-        id: string;
         createdAt: Date;
-        userId: string | null;
+        id: string;
         ipAddress: string;
         userAgent: string | null;
         referer: string | null;
@@ -93,12 +92,12 @@ export declare class SiteVisitController {
         latitude: import("@prisma/client/runtime/library").Decimal | null;
         longitude: import("@prisma/client/runtime/library").Decimal | null;
         sessionId: string | null;
+        userId: string | null;
         visitDuration: number | null;
     }>;
     remove(id: string): Promise<{
-        id: string;
         createdAt: Date;
-        userId: string | null;
+        id: string;
         ipAddress: string;
         userAgent: string | null;
         referer: string | null;
@@ -109,6 +108,7 @@ export declare class SiteVisitController {
         latitude: import("@prisma/client/runtime/library").Decimal | null;
         longitude: import("@prisma/client/runtime/library").Decimal | null;
         sessionId: string | null;
+        userId: string | null;
         visitDuration: number | null;
     }>;
 }

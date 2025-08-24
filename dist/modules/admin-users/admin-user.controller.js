@@ -16,6 +16,8 @@ exports.AdminUserController = void 0;
 const common_1 = require("@nestjs/common");
 const admin_user_service_1 = require("./admin-user.service");
 const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let AdminUserController = class AdminUserController {
     constructor(adminUserService) {
         this.adminUserService = adminUserService;
@@ -79,8 +81,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AdminUserController.prototype, "remove", null);
 exports.AdminUserController = AdminUserController = __decorate([
-    (0, swagger_1.ApiTags)('admin-users'),
+    (0, swagger_1.ApiTags)('AdminUsers'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('admin-users'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [admin_user_service_1.AdminUserService])
 ], AdminUserController);
 //# sourceMappingURL=admin-user.controller.js.map

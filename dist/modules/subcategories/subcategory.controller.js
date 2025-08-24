@@ -16,6 +16,8 @@ exports.SubcategoryController = void 0;
 const common_1 = require("@nestjs/common");
 const subcategory_service_1 = require("./subcategory.service");
 const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let SubcategoryController = class SubcategoryController {
     constructor(service) {
         this.service = service;
@@ -78,8 +80,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SubcategoryController.prototype, "remove", null);
 exports.SubcategoryController = SubcategoryController = __decorate([
-    (0, swagger_1.ApiTags)('subcategories'),
+    (0, swagger_1.ApiTags)('Subcategories'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('subcategories'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [subcategory_service_1.SubcategoryService])
 ], SubcategoryController);
 //# sourceMappingURL=subcategory.controller.js.map

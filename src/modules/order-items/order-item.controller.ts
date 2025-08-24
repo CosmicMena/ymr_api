@@ -6,13 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { OrderItemService } from './order-item.service';
 import { OrderItemDto } from './dto/order-item.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('order-items')
+@ApiTags('OrderItems')
+@ApiBearerAuth('JWT-auth')
 @Controller('order-items')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class OrderItemController {
   constructor(private readonly service: OrderItemService) {}
 

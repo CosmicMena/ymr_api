@@ -16,6 +16,8 @@ exports.NewsletterSubscriptionController = void 0;
 const common_1 = require("@nestjs/common");
 const newsletter_subscription_service_1 = require("./newsletter-subscription.service");
 const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let NewsletterSubscriptionController = class NewsletterSubscriptionController {
     constructor(service) {
         this.service = service;
@@ -79,8 +81,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], NewsletterSubscriptionController.prototype, "remove", null);
 exports.NewsletterSubscriptionController = NewsletterSubscriptionController = __decorate([
-    (0, swagger_1.ApiTags)('newsletter-subscriptions'),
+    (0, swagger_1.ApiTags)('NewsletterSubscriptions'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('newsletter-subscriptions'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [newsletter_subscription_service_1.NewsletterSubscriptionService])
 ], NewsletterSubscriptionController);
 //# sourceMappingURL=newsletter-subscription.controller.js.map

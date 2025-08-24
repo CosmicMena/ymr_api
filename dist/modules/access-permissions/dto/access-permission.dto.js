@@ -9,14 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccessPermissionDto = void 0;
+exports.UpdateAccessPermissionDto = exports.CreateAccessPermissionDto = exports.AccessPermissionDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class AccessPermissionDto {
 }
 exports.AccessPermissionDto = AccessPermissionDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'ID da permissão', example: 'uuid' }),
+    (0, swagger_1.ApiProperty)({ description: 'ID da permissão', example: '550e8400-e29b-41d4-a716-446655440000' }),
     (0, class_validator_1.IsUUID)(),
     __metadata("design:type", String)
 ], AccessPermissionDto.prototype, "id", void 0);
@@ -26,24 +26,30 @@ __decorate([
     __metadata("design:type", String)
 ], AccessPermissionDto.prototype, "name", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Recurso', example: 'Product' }),
+    (0, swagger_1.ApiProperty)({ description: 'Recurso relacionado à permissão', example: 'Product' }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], AccessPermissionDto.prototype, "resource", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Ação', example: 'edit' }),
+    (0, swagger_1.ApiProperty)({ description: 'Ação permitida', example: 'edit' }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], AccessPermissionDto.prototype, "action", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Descrição', required: false }),
+    (0, swagger_1.ApiProperty)({ description: 'Descrição da permissão', required: false, example: 'Permite editar informações de produtos' }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], AccessPermissionDto.prototype, "description", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Data de criação', example: '2024-08-19T19:00:00.000Z' }),
+    (0, swagger_1.ApiProperty)({ description: 'Data de criação da permissão', example: '2024-08-19T19:00:00.000Z' }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], AccessPermissionDto.prototype, "createdAt", void 0);
+class CreateAccessPermissionDto extends (0, swagger_1.OmitType)(AccessPermissionDto, ['id', 'createdAt']) {
+}
+exports.CreateAccessPermissionDto = CreateAccessPermissionDto;
+class UpdateAccessPermissionDto extends (0, swagger_1.PartialType)(CreateAccessPermissionDto) {
+}
+exports.UpdateAccessPermissionDto = UpdateAccessPermissionDto;
 //# sourceMappingURL=access-permission.dto.js.map

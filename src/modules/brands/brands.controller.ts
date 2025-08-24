@@ -6,49 +6,317 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  HttpStatus,
 } from '@nestjs/common';
+import { 
+  ApiTags, 
+  ApiOperation, 
+  ApiResponse, 
+  ApiBearerAuth, 
+  ApiParam,
+  ApiBody,
+  ApiHeader,
+  ApiConsumes,
+  ApiProduces
+} from '@nestjs/swagger';
 import { BrandService } from './brands.service';
 import { BrandDto } from './dto/brand.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
+import { Roles } from '../../common/decorators/roles.decorator';
+import { Public } from '../../common/decorators/public.decorator';
+import { SuccessResponseDto } from '../../common/dto/response.dto';
 
-@ApiTags('brands')
+@ApiTags('Brands')
+@ApiBearerAuth('JWT-auth')
 @Controller('brands')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 
+  @ApiOperation({ 
+    summary: 'Criar nova marca',
+    description: 'Cria uma nova marca de produtos no sistema. Acesso restrito a administradores.'
+  })
+  @ApiBody({ 
+    type: BrandDto,
+    description: 'Dados da marca a ser criada',
+    examples: {
+      example1: {
+        summary: 'Marca Industrial',
+        description: 'Exemplo de criação de uma marca industrial',
+        value: {
+          name: 'YMR Industrial',
+          description: 'Marca líder em equipamentos industriais de alta qualidade',
+          logoUrl: 'https://example.com/logo-ymr.png',
+          isActive: true
+        }
+      },
+      example2: {
+        summary: 'Marca Residencial',
+        description: 'Exemplo de criação de uma marca residencial',
+        value: {
+          name: 'HomeTech',
+          description: 'Marca especializada em equipamentos residenciais inteligentes',
+          logoUrl: 'https://example.com/logo-hometech.png',
+          isActive: true
+        }
+      }
+    }
+  })
+  @ApiResponse({ 
+    status: HttpStatus.CREATED, 
+    description: 'Marca criada com sucesso', 
+    type: SuccessResponseDto,
+    schema: {
+      example: {
+        success: true,
+        message: 'Brand created successfully',
+        data: {
+          id: 'uuid-da-marca',
+          name: 'YMR Industrial',
+          createdAt: '2024-01-15T10:30:00Z'
+        }
+      }
+    }
+  })
+  @ApiResponse({ 
+    status: HttpStatus.CONFLICT, 
+    description: 'Nome da marca já existe no sistema'
+  })
+  @ApiResponse({ 
+    status: HttpStatus.BAD_REQUEST, 
+    description: 'Dados inválidos fornecidos'
+  })
+  @ApiResponse({ 
+    status: HttpStatus.UNAUTHORIZED, 
+    description: 'Usuário não autenticado'
+  })
+  @ApiResponse({ 
+    status: HttpStatus.FORBIDDEN, 
+    description: 'Usuário sem permissão para criar marcas'
+  })
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer token JWT',
+    required: true
+  })
+  @ApiConsumes('application/json')
+  @ApiProduces('application/json')
+  @Roles('brands.create')
   @Post()
-  @ApiOperation({ summary: 'Criar uma nova marca' })
-  @ApiResponse({ status: 201, description: 'Marca criada com sucesso.' })
-  async create(
-    @Body() data: Omit<BrandDto, 'id' | 'createdAt' | 'updatedAt'>,
-  ) {
-    return this.brandService.create(data);
+  async create(@Body() createBrandDto: Omit<BrandDto, 'id' | 'createdAt' | 'updatedAt'>) {
+    const brand = await this.brandService.create(createBrandDto);
+    return new SuccessResponseDto('Brand created successfully', brand);
   }
 
+  @ApiOperation({ 
+    summary: 'Listar todas as marcas',
+    description: 'Retorna uma lista de todas as marcas do sistema. Endpoint público.'
+  })
+  @ApiResponse({ 
+    status: HttpStatus.OK, 
+    description: 'Marcas recuperadas com sucesso',
+    schema: {
+      example: {
+        success: true,
+        message: 'Brands retrieved successfully',
+        data: [
+          {
+            id: 'uuid-1',
+            name: 'YMR Industrial',
+            logoUrl: 'https://example.com/logo-ymr.png',
+            description: 'Marca líder em equipamentos industriais de alta qualidade',
+            isActive: true,
+            createdAt: '2024-01-15T10:30:00Z',
+            updatedAt: '2024-01-15T10:30:00Z'
+          }
+        ]
+      }
+    }
+  })
+  @ApiResponse({ 
+    status: HttpStatus.BAD_REQUEST, 
+    description: 'Erro na requisição'
+  })
+  @ApiProduces('application/json')
+  @Public()
   @Get()
-  @ApiOperation({ summary: 'Listar todas as marcas' })
   async findAll() {
-    return this.brandService.findAll();
+    const brands = await this.brandService.findAll();
+    return new SuccessResponseDto('Brands retrieved successfully', brands);
   }
 
+  @ApiOperation({ 
+    summary: 'Buscar marca por ID',
+    description: 'Retorna informações detalhadas de uma marca específica pelo seu ID.'
+  })
+  @ApiParam({ 
+    name: 'id', 
+    description: 'ID único da marca (UUID)',
+    example: 'uuid-da-marca',
+    type: String
+  })
+  @ApiResponse({ 
+    status: HttpStatus.OK, 
+    description: 'Marca recuperada com sucesso',
+    schema: {
+      example: {
+        success: true,
+        message: 'Brand retrieved successfully',
+        data: {
+          id: 'uuid-da-marca',
+          name: 'YMR Industrial',
+          logoUrl: 'https://example.com/logo-ymr.png',
+          description: 'Marca líder em equipamentos industriais de alta qualidade',
+          isActive: true,
+          createdAt: '2024-01-15T10:30:00Z',
+          updatedAt: '2024-01-15T10:30:00Z'
+        }
+      }
+    }
+  })
+  @ApiResponse({ 
+    status: HttpStatus.NOT_FOUND, 
+    description: 'Marca não encontrada'
+  })
+  @ApiResponse({ 
+    status: HttpStatus.BAD_REQUEST, 
+    description: 'ID inválido fornecido'
+  })
+  @ApiProduces('application/json')
+  @Public()
   @Get(':id')
-  @ApiOperation({ summary: 'Obter uma marca pelo ID' })
   async findOne(@Param('id') id: string) {
-    return this.brandService.findOne(id);
+    const brand = await this.brandService.findOne(id);
+    return new SuccessResponseDto('Brand retrieved successfully', brand);
   }
 
+  @ApiOperation({ 
+    summary: 'Atualizar marca',
+    description: 'Atualiza as informações de uma marca existente. Acesso restrito a administradores.'
+  })
+  @ApiParam({ 
+    name: 'id', 
+    description: 'ID único da marca a ser atualizada (UUID)',
+    example: 'uuid-da-marca',
+    type: String
+  })
+  @ApiBody({ 
+    type: BrandDto,
+    description: 'Dados da marca a serem atualizados (todos os campos são opcionais)',
+    examples: {
+      example1: {
+        summary: 'Atualizar nome e descrição',
+        description: 'Exemplo de atualização de nome e descrição',
+        value: {
+          name: 'YMR Industrial Solutions',
+          description: 'Marca líder em soluções industriais de alta tecnologia'
+        }
+      },
+      example2: {
+        summary: 'Atualizar logo e status',
+        description: 'Exemplo de atualização de logo e status',
+        value: {
+          logoUrl: 'https://example.com/new-logo-ymr.png',
+          isActive: false
+        }
+      }
+    }
+  })
+  @ApiResponse({ 
+    status: HttpStatus.OK, 
+    description: 'Marca atualizada com sucesso',
+    schema: {
+      example: {
+        success: true,
+        message: 'Brand updated successfully',
+        data: {
+          id: 'uuid-da-marca',
+          name: 'YMR Industrial Solutions',
+          updatedAt: '2024-01-15T11:30:00Z'
+        }
+      }
+    }
+  })
+  @ApiResponse({ 
+    status: HttpStatus.NOT_FOUND, 
+    description: 'Marca não encontrada'
+  })
+  @ApiResponse({ 
+    status: HttpStatus.BAD_REQUEST, 
+    description: 'Dados inválidos fornecidos'
+  })
+  @ApiResponse({ 
+    status: HttpStatus.UNAUTHORIZED, 
+    description: 'Usuário não autenticado'
+  })
+  @ApiResponse({ 
+    status: HttpStatus.FORBIDDEN, 
+    description: 'Usuário sem permissão para atualizar marcas'
+  })
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer token JWT',
+    required: true
+  })
+  @ApiConsumes('application/json')
+  @ApiProduces('application/json')
+  @Roles('brands.update')
   @Patch(':id')
-  @ApiOperation({ summary: 'Atualizar uma marca pelo ID' })
-  async update(
-    @Param('id') id: string,
-    @Body() data: Partial<Omit<BrandDto, 'id' | 'createdAt' | 'updatedAt'>>,
-  ) {
-    return this.brandService.update(id, data);
+  async update(@Param('id') id: string, @Body() updateBrandDto: Partial<Omit<BrandDto, 'id' | 'createdAt' | 'updatedAt'>>) {
+    const brand = await this.brandService.update(id, updateBrandDto);
+    return new SuccessResponseDto('Brand updated successfully', brand);
   }
 
+  @ApiOperation({ 
+    summary: 'Excluir marca',
+    description: 'Remove uma marca do sistema. Acesso restrito a administradores.'
+  })
+  @ApiParam({ 
+    name: 'id', 
+    description: 'ID único da marca a ser excluída (UUID)',
+    example: 'uuid-da-marca',
+    type: String
+  })
+  @ApiResponse({ 
+    status: HttpStatus.OK, 
+    description: 'Marca excluída com sucesso',
+    schema: {
+      example: {
+        success: true,
+        message: 'Brand deleted successfully',
+        data: null
+      }
+    }
+  })
+  @ApiResponse({ 
+    status: HttpStatus.NOT_FOUND, 
+    description: 'Marca não encontrada'
+  })
+  @ApiResponse({ 
+    status: HttpStatus.CONFLICT, 
+    description: 'Não é possível excluir marca com produtos associados'
+  })
+  @ApiResponse({ 
+    status: HttpStatus.UNAUTHORIZED, 
+    description: 'Usuário não autenticado'
+  })
+  @ApiResponse({ 
+    status: HttpStatus.FORBIDDEN, 
+    description: 'Usuário sem permissão para excluir marcas'
+  })
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer token JWT',
+    required: true
+  })
+  @ApiProduces('application/json')
+  @Roles('brands.delete')
   @Delete(':id')
-  @ApiOperation({ summary: 'Remover uma marca pelo ID' })
   async remove(@Param('id') id: string) {
-    return this.brandService.remove(id);
+    await this.brandService.remove(id);
+    return new SuccessResponseDto('Brand deleted successfully');
   }
 }

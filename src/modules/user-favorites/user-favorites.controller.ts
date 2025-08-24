@@ -1,10 +1,14 @@
-import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { Controller, Get, Post, Delete, Param, Body, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { UserFavoritesService } from './user-favorites.service';
 import { UserFavoriteDto } from './dto/user-favorite.dto';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('user-favorites')
+@ApiTags('UserFavorites')
+@ApiBearerAuth('JWT-auth')
 @Controller('user-favorites')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class UserFavoritesController {
   constructor(private readonly service: UserFavoritesService) {}
 

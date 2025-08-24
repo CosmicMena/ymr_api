@@ -5,74 +5,74 @@ export declare class UserStatisticsController {
     constructor(service: UserStatisticsService);
     create(data: Omit<UserStatisticsDto, 'id'>): Promise<{
         id: string;
-        createdAt: Date;
         userId: string;
-        updatedAt: Date;
         ordersCount: number;
         consultationsCount: number;
         rentalsCount: number;
         loyaltyPoints: number;
         totalSpent: import("@prisma/client/runtime/library").Decimal;
         lastActivity: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     findAll(): Promise<{
         id: string;
-        createdAt: Date;
         userId: string;
-        updatedAt: Date;
         ordersCount: number;
         consultationsCount: number;
         rentalsCount: number;
         loyaltyPoints: number;
         totalSpent: import("@prisma/client/runtime/library").Decimal;
         lastActivity: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
     }[]>;
     findOne(id: string): Promise<{
         id: string;
-        createdAt: Date;
         userId: string;
-        updatedAt: Date;
         ordersCount: number;
         consultationsCount: number;
         rentalsCount: number;
         loyaltyPoints: number;
         totalSpent: import("@prisma/client/runtime/library").Decimal;
         lastActivity: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     findByUserId(userId: string): Promise<{
         id: string;
-        createdAt: Date;
         userId: string;
-        updatedAt: Date;
         ordersCount: number;
         consultationsCount: number;
         rentalsCount: number;
         loyaltyPoints: number;
         totalSpent: import("@prisma/client/runtime/library").Decimal;
         lastActivity: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     update(id: string, data: Partial<Omit<UserStatisticsDto, 'id'>>): Promise<{
         id: string;
-        createdAt: Date;
         userId: string;
-        updatedAt: Date;
         ordersCount: number;
         consultationsCount: number;
         rentalsCount: number;
         loyaltyPoints: number;
         totalSpent: import("@prisma/client/runtime/library").Decimal;
         lastActivity: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     remove(id: string): Promise<{
         id: string;
-        createdAt: Date;
         userId: string;
-        updatedAt: Date;
         ordersCount: number;
         consultationsCount: number;
         rentalsCount: number;
         loyaltyPoints: number;
         totalSpent: import("@prisma/client/runtime/library").Decimal;
         lastActivity: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
 }

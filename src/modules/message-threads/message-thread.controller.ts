@@ -6,13 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { MessageThreadService } from './message-thread.service';
 import { MessageThreadDto } from './dto/message-thread.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('message-threads')
+@ApiTags('MessageThreads')
+@ApiBearerAuth('JWT-auth')
 @Controller('message-threads')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class MessageThreadController {
   constructor(private readonly service: MessageThreadService) {}
 

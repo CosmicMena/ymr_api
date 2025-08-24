@@ -1,51 +1,108 @@
 import { PrismaService } from '../../common/prisma/prisma.service';
-import { CategoryDto } from './dto/category.dto';
+import { CreateCategoryDto, UpdateCategoryDto, CategoryFilterDto } from './dto/category.dto';
 export declare class CategoryService {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(data: Omit<CategoryDto, 'id' | 'createdAt' | 'updatedAt'>): Promise<{
+    create(data: CreateCategoryDto): Promise<{
+        subcategories: {
+            id: string;
+            name: string;
+            imageUrl: string | null;
+            description: string | null;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            categoryId: string;
+        }[];
+        _count: {
+            subcategories: number;
+        };
+    } & {
         id: string;
         name: string;
+        imageUrl: string | null;
         description: string | null;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        imageUrl: string | null;
     }>;
-    findAll(): Promise<{
+    findAll(filterDto?: CategoryFilterDto): Promise<({
+        subcategories: {
+            id: string;
+            name: string;
+            isActive: boolean;
+        }[];
+        _count: {
+            subcategories: number;
+        };
+    } & {
         id: string;
         name: string;
+        imageUrl: string | null;
         description: string | null;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        imageUrl: string | null;
+    })[]>;
+    findActiveCategories(): Promise<{
+        id: string;
+        name: string;
+        imageUrl: string;
+        description: string;
+        isActive: boolean;
+        _count: {
+            subcategories: number;
+        };
     }[]>;
     findOne(id: string): Promise<{
+        subcategories: {
+            id: string;
+            name: string;
+            description: string;
+            isActive: boolean;
+        }[];
+        _count: {
+            subcategories: number;
+        };
+    } & {
         id: string;
         name: string;
+        imageUrl: string | null;
         description: string | null;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        imageUrl: string | null;
     }>;
-    update(id: string, data: Partial<Omit<CategoryDto, 'id' | 'createdAt' | 'updatedAt'>>): Promise<{
+    update(id: string, data: UpdateCategoryDto): Promise<{
+        subcategories: {
+            id: string;
+            name: string;
+            imageUrl: string | null;
+            description: string | null;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            categoryId: string;
+        }[];
+        _count: {
+            subcategories: number;
+        };
+    } & {
         id: string;
         name: string;
+        imageUrl: string | null;
         description: string | null;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        imageUrl: string | null;
     }>;
     remove(id: string): Promise<{
         id: string;
         name: string;
+        imageUrl: string | null;
         description: string | null;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        imageUrl: string | null;
     }>;
 }

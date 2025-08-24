@@ -7,40 +7,40 @@ export declare class UserRolesController {
         id: string;
         name: string;
         description: string | null;
+        permissions: import("@prisma/client/runtime/library").JsonValue | null;
         isActive: boolean;
         createdAt: Date;
-        permissions: import("@prisma/client/runtime/library").JsonValue | null;
     }>;
     findAll(): Promise<{
         id: string;
         name: string;
         description: string | null;
+        permissions: import("@prisma/client/runtime/library").JsonValue | null;
         isActive: boolean;
         createdAt: Date;
-        permissions: import("@prisma/client/runtime/library").JsonValue | null;
     }[]>;
     findOne(id: string): Promise<{
         id: string;
         name: string;
         description: string | null;
+        permissions: import("@prisma/client/runtime/library").JsonValue | null;
         isActive: boolean;
         createdAt: Date;
-        permissions: import("@prisma/client/runtime/library").JsonValue | null;
     }>;
     update(id: string, data: Partial<Omit<UserRoleDto, 'id'>>): Promise<{
         id: string;
         name: string;
         description: string | null;
+        permissions: import("@prisma/client/runtime/library").JsonValue | null;
         isActive: boolean;
         createdAt: Date;
-        permissions: import("@prisma/client/runtime/library").JsonValue | null;
     }>;
     remove(id: string): Promise<{
         id: string;
         name: string;
         description: string | null;
+        permissions: import("@prisma/client/runtime/library").JsonValue | null;
         isActive: boolean;
         createdAt: Date;
-        permissions: import("@prisma/client/runtime/library").JsonValue | null;
     }>;
 }

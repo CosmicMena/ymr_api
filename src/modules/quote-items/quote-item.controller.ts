@@ -6,13 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { QuoteItemService } from './quote-item.service';
 import { QuoteItemDto } from './dto/quote-item.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('quote-items')
+@ApiTags('QuoteItems')
+@ApiBearerAuth('JWT-auth')
 @Controller('quote-items')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class QuoteItemController {
   constructor(private readonly service: QuoteItemService) {}
 

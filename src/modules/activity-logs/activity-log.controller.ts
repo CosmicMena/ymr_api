@@ -6,13 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ActivityLogService } from './activity-log.service';
 import { ActivityLogDto } from './dto/activity-log.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('activity-logs')
+@ApiTags('ActivityLogs')
+@ApiBearerAuth('JWT-auth')
 @Controller('activity-logs')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class ActivityLogController {
   constructor(private readonly activityLogService: ActivityLogService) {}
 

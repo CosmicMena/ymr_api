@@ -4,9 +4,9 @@ export declare class SubcategoryService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(data: Omit<SubcategoryDto, 'id'>): Promise<{
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -15,18 +15,18 @@ export declare class SubcategoryService {
     }>;
     findAll(): Promise<({
         category: {
-            id: string;
             name: string;
             description: string | null;
+            id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             imageUrl: string | null;
         };
     } & {
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -35,18 +35,18 @@ export declare class SubcategoryService {
     })[]>;
     findOne(id: string): Promise<{
         category: {
-            id: string;
             name: string;
             description: string | null;
+            id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             imageUrl: string | null;
         };
     } & {
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -54,9 +54,9 @@ export declare class SubcategoryService {
         imageUrl: string | null;
     }>;
     update(id: string, data: Partial<Omit<SubcategoryDto, 'id'>>): Promise<{
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -64,9 +64,9 @@ export declare class SubcategoryService {
         imageUrl: string | null;
     }>;
     remove(id: string): Promise<{
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;

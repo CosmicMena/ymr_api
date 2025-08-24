@@ -1,8 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { IsUUID, IsString, IsOptional } from 'class-validator';
 
+// DTO principal (para respostas completas)
 export class AccessPermissionDto {
-  @ApiProperty({ description: 'ID da permissão', example: 'uuid' })
+  @ApiProperty({ description: 'ID da permissão', example: '550e8400-e29b-41d4-a716-446655440000' })
   @IsUUID()
   id: string;
 
@@ -10,20 +11,26 @@ export class AccessPermissionDto {
   @IsString()
   name: string;
 
-  @ApiProperty({ description: 'Recurso', example: 'Product' })
+  @ApiProperty({ description: 'Recurso relacionado à permissão', example: 'Product' })
   @IsString()
   resource: string;
 
-  @ApiProperty({ description: 'Ação', example: 'edit' })
+  @ApiProperty({ description: 'Ação permitida', example: 'edit' })
   @IsString()
   action: string;
 
-  @ApiProperty({ description: 'Descrição', required: false })
+  @ApiProperty({ description: 'Descrição da permissão', required: false, example: 'Permite editar informações de produtos' })
   @IsOptional()
   @IsString()
   description?: string;
 
-  @ApiProperty({ description: 'Data de criação', example: '2024-08-19T19:00:00.000Z' })
+  @ApiProperty({ description: 'Data de criação da permissão', example: '2024-08-19T19:00:00.000Z' })
   @IsString()
   createdAt: string;
 }
+
+// DTO para criação (omitindo id e createdAt)
+export class CreateAccessPermissionDto extends OmitType(AccessPermissionDto, ['id', 'createdAt'] as const) {}
+
+// DTO para atualização (todos os campos opcionais)
+export class UpdateAccessPermissionDto extends PartialType(CreateAccessPermissionDto) {}

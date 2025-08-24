@@ -5,39 +5,39 @@ export declare class ProductsService {
     private prisma;
     constructor(prisma: PrismaService);
     create(createProductDto: CreateProductDto): Promise<{
+        brand: {
+            name: string;
+            description: string | null;
+            id: string;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            logoUrl: string | null;
+        };
         subcategory: {
             category: {
-                id: string;
                 name: string;
                 description: string | null;
+                id: string;
                 isActive: boolean;
                 createdAt: Date;
                 updatedAt: Date;
                 imageUrl: string | null;
             };
         } & {
-            id: string;
             name: string;
             description: string | null;
+            id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
             imageUrl: string | null;
         };
-        brand: {
-            id: string;
-            name: string;
-            description: string | null;
-            isActive: boolean;
-            createdAt: Date;
-            updatedAt: Date;
-            logoUrl: string | null;
-        };
     } & {
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -50,9 +50,9 @@ export declare class ProductsService {
         availability: string;
         price: import("@prisma/client/runtime/library").Decimal;
         stockQuantity: number;
-        viewCount: number;
         subcategoryId: string | null;
         brandId: string | null;
+        viewCount: number;
     }>;
     findAll(paginationDto: PaginationDto, filterDto: ProductFilterDto): Promise<{
         data: unknown[];
@@ -66,44 +66,44 @@ export declare class ProductsService {
         };
     }>;
     findOne(id: string): Promise<{
+        brand: {
+            name: string;
+            description: string | null;
+            id: string;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            logoUrl: string | null;
+        };
+        subcategory: {
+            category: {
+                name: string;
+                description: string | null;
+                id: string;
+                isActive: boolean;
+                createdAt: Date;
+                updatedAt: Date;
+                imageUrl: string | null;
+            };
+        } & {
+            name: string;
+            description: string | null;
+            id: string;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            categoryId: string;
+            imageUrl: string | null;
+        };
         _count: {
             userFavorites: number;
             quoteItems: number;
             orderItems: number;
         };
-        subcategory: {
-            category: {
-                id: string;
-                name: string;
-                description: string | null;
-                isActive: boolean;
-                createdAt: Date;
-                updatedAt: Date;
-                imageUrl: string | null;
-            };
-        } & {
-            id: string;
-            name: string;
-            description: string | null;
-            isActive: boolean;
-            createdAt: Date;
-            updatedAt: Date;
-            categoryId: string;
-            imageUrl: string | null;
-        };
-        brand: {
-            id: string;
-            name: string;
-            description: string | null;
-            isActive: boolean;
-            createdAt: Date;
-            updatedAt: Date;
-            logoUrl: string | null;
-        };
     } & {
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -116,44 +116,44 @@ export declare class ProductsService {
         availability: string;
         price: import("@prisma/client/runtime/library").Decimal;
         stockQuantity: number;
-        viewCount: number;
         subcategoryId: string | null;
         brandId: string | null;
+        viewCount: number;
     }>;
     update(id: string, updateProductDto: UpdateProductDto): Promise<{
+        brand: {
+            name: string;
+            description: string | null;
+            id: string;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            logoUrl: string | null;
+        };
         subcategory: {
             category: {
-                id: string;
                 name: string;
                 description: string | null;
+                id: string;
                 isActive: boolean;
                 createdAt: Date;
                 updatedAt: Date;
                 imageUrl: string | null;
             };
         } & {
-            id: string;
             name: string;
             description: string | null;
+            id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
             imageUrl: string | null;
         };
-        brand: {
-            id: string;
-            name: string;
-            description: string | null;
-            isActive: boolean;
-            createdAt: Date;
-            updatedAt: Date;
-            logoUrl: string | null;
-        };
     } & {
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -166,14 +166,14 @@ export declare class ProductsService {
         availability: string;
         price: import("@prisma/client/runtime/library").Decimal;
         stockQuantity: number;
-        viewCount: number;
         subcategoryId: string | null;
         brandId: string | null;
+        viewCount: number;
     }>;
     remove(id: string): Promise<{
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -186,44 +186,44 @@ export declare class ProductsService {
         availability: string;
         price: import("@prisma/client/runtime/library").Decimal;
         stockQuantity: number;
-        viewCount: number;
         subcategoryId: string | null;
         brandId: string | null;
+        viewCount: number;
     }>;
     getPopularProducts(limit?: number): Promise<({
+        brand: {
+            name: string;
+            description: string | null;
+            id: string;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            logoUrl: string | null;
+        };
         subcategory: {
             category: {
-                id: string;
                 name: string;
                 description: string | null;
+                id: string;
                 isActive: boolean;
                 createdAt: Date;
                 updatedAt: Date;
                 imageUrl: string | null;
             };
         } & {
-            id: string;
             name: string;
             description: string | null;
+            id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
             imageUrl: string | null;
         };
-        brand: {
-            id: string;
-            name: string;
-            description: string | null;
-            isActive: boolean;
-            createdAt: Date;
-            updatedAt: Date;
-            logoUrl: string | null;
-        };
     } & {
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -236,44 +236,44 @@ export declare class ProductsService {
         availability: string;
         price: import("@prisma/client/runtime/library").Decimal;
         stockQuantity: number;
-        viewCount: number;
         subcategoryId: string | null;
         brandId: string | null;
+        viewCount: number;
     })[]>;
     getFeaturedProducts(limit?: number): Promise<({
+        brand: {
+            name: string;
+            description: string | null;
+            id: string;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            logoUrl: string | null;
+        };
         subcategory: {
             category: {
-                id: string;
                 name: string;
                 description: string | null;
+                id: string;
                 isActive: boolean;
                 createdAt: Date;
                 updatedAt: Date;
                 imageUrl: string | null;
             };
         } & {
-            id: string;
             name: string;
             description: string | null;
+            id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
             imageUrl: string | null;
         };
-        brand: {
-            id: string;
-            name: string;
-            description: string | null;
-            isActive: boolean;
-            createdAt: Date;
-            updatedAt: Date;
-            logoUrl: string | null;
-        };
     } & {
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -286,8 +286,8 @@ export declare class ProductsService {
         availability: string;
         price: import("@prisma/client/runtime/library").Decimal;
         stockQuantity: number;
-        viewCount: number;
         subcategoryId: string | null;
         brandId: string | null;
+        viewCount: number;
     })[]>;
 }

@@ -6,3 +6,10 @@ export declare class AccessPermissionDto {
     description?: string;
     createdAt: string;
 }
+declare const CreateAccessPermissionDto_base: import("@nestjs/common").Type<Omit<AccessPermissionDto, "id" | "createdAt">>;
+export declare class CreateAccessPermissionDto extends CreateAccessPermissionDto_base {
+}
+declare const UpdateAccessPermissionDto_base: import("@nestjs/common").Type<Partial<CreateAccessPermissionDto>>;
+export declare class UpdateAccessPermissionDto extends UpdateAccessPermissionDto_base {
+}
+export {};

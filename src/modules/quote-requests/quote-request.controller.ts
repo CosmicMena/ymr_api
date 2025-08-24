@@ -1,10 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { QuoteRequestService } from './quote-request.service';
 import { QuoteRequestDto } from './dto/quote-request.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('quote-requests')
+@ApiTags('QuoteRequests')
+@ApiBearerAuth('JWT-auth')
 @Controller('quote-requests')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class QuoteRequestController {
   constructor(private readonly service: QuoteRequestService) {}
 

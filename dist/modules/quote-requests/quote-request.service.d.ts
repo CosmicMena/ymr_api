@@ -6,113 +6,113 @@ export declare class QuoteRequestService {
     create(data: Omit<QuoteRequestDto, 'id' | 'createdAt' | 'updatedAt'>): Promise<{
         id: string;
         createdAt: Date;
-        userId: string;
         updatedAt: Date;
+        userId: string;
         code: string;
-        notes: string | null;
         statusId: string;
+        notes: string | null;
         totalItems: number;
         adminNotes: string | null;
         expiresAt: Date | null;
     }>;
     findAll(): Promise<({
-        status: {
-            id: string;
-            name: string;
-            description: string | null;
-            color: string | null;
-            isActive: boolean;
-        };
         user: {
-            id: string;
             name: string;
-            isActive: boolean;
-            createdAt: Date;
-            country: string;
-            city: string | null;
             email: string;
             phone: string | null;
+            company: string | null;
+            id: string;
+            googleId: string | null;
             birthDate: Date | null;
             address: string | null;
-            company: string | null;
+            city: string | null;
+            country: string;
             position: string | null;
             avatarUrl: string | null;
             passwordHash: string | null;
-            googleId: string | null;
             emailVerified: boolean;
+            isActive: boolean;
             preferredContactMethod: string;
+            createdAt: Date;
             updatedAt: Date;
             lastLogin: Date | null;
+        };
+        status: {
+            name: string;
+            description: string | null;
+            id: string;
+            isActive: boolean;
+            color: string | null;
         };
         quoteItems: {
             id: string;
             createdAt: Date;
+            notes: string | null;
             productId: string;
             quantity: number;
-            quoteRequestId: string;
             unitPrice: import("@prisma/client/runtime/library").Decimal | null;
             totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-            notes: string | null;
+            quoteRequestId: string;
         }[];
     } & {
         id: string;
         createdAt: Date;
-        userId: string;
         updatedAt: Date;
+        userId: string;
         code: string;
-        notes: string | null;
         statusId: string;
+        notes: string | null;
         totalItems: number;
         adminNotes: string | null;
         expiresAt: Date | null;
     })[]>;
     findOne(id: string): Promise<{
-        status: {
-            id: string;
-            name: string;
-            description: string | null;
-            color: string | null;
-            isActive: boolean;
-        };
         user: {
-            id: string;
             name: string;
-            isActive: boolean;
-            createdAt: Date;
-            country: string;
-            city: string | null;
             email: string;
             phone: string | null;
+            company: string | null;
+            id: string;
+            googleId: string | null;
             birthDate: Date | null;
             address: string | null;
-            company: string | null;
+            city: string | null;
+            country: string;
             position: string | null;
             avatarUrl: string | null;
             passwordHash: string | null;
-            googleId: string | null;
             emailVerified: boolean;
+            isActive: boolean;
             preferredContactMethod: string;
+            createdAt: Date;
             updatedAt: Date;
             lastLogin: Date | null;
+        };
+        status: {
+            name: string;
+            description: string | null;
+            id: string;
+            isActive: boolean;
+            color: string | null;
         };
         quoteItems: {
             id: string;
             createdAt: Date;
+            notes: string | null;
             productId: string;
             quantity: number;
-            quoteRequestId: string;
             unitPrice: import("@prisma/client/runtime/library").Decimal | null;
             totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-            notes: string | null;
+            quoteRequestId: string;
         }[];
     } & {
         id: string;
         createdAt: Date;
-        userId: string;
         updatedAt: Date;
+        userId: string;
         code: string;
-        notes: string | null;
         statusId: string;
+        notes: string | null;
         totalItems: number;
         adminNotes: string | null;
         expiresAt: Date | null;
@@ -120,11 +120,11 @@ export declare class QuoteRequestService {
     update(id: string, data: Partial<Omit<QuoteRequestDto, 'id' | 'createdAt' | 'updatedAt'>>): Promise<{
         id: string;
         createdAt: Date;
-        userId: string;
         updatedAt: Date;
+        userId: string;
         code: string;
-        notes: string | null;
         statusId: string;
+        notes: string | null;
         totalItems: number;
         adminNotes: string | null;
         expiresAt: Date | null;
@@ -132,11 +132,11 @@ export declare class QuoteRequestService {
     remove(id: string): Promise<{
         id: string;
         createdAt: Date;
-        userId: string;
         updatedAt: Date;
+        userId: string;
         code: string;
-        notes: string | null;
         statusId: string;
+        notes: string | null;
         totalItems: number;
         adminNotes: string | null;
         expiresAt: Date | null;

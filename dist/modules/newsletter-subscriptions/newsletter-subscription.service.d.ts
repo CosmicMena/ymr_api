@@ -4,48 +4,48 @@ export declare class NewsletterSubscriptionService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(data: Omit<NewsletterSubscriptionDto, 'id' | 'subscribedAt' | 'unsubscribedAt'>): Promise<{
-        id: string;
         name: string | null;
-        isActive: boolean;
         email: string;
+        id: string;
+        isActive: boolean;
+        interests: string[];
         subscribedAt: Date;
         unsubscribedAt: Date | null;
-        interests: string[];
     }>;
     findAll(): Promise<{
-        id: string;
         name: string | null;
-        isActive: boolean;
         email: string;
+        id: string;
+        isActive: boolean;
+        interests: string[];
         subscribedAt: Date;
         unsubscribedAt: Date | null;
-        interests: string[];
     }[]>;
     findOne(id: string): Promise<{
-        id: string;
         name: string | null;
-        isActive: boolean;
         email: string;
+        id: string;
+        isActive: boolean;
+        interests: string[];
         subscribedAt: Date;
         unsubscribedAt: Date | null;
-        interests: string[];
     }>;
     update(id: string, data: Partial<Omit<NewsletterSubscriptionDto, 'id' | 'subscribedAt' | 'unsubscribedAt'>>): Promise<{
-        id: string;
         name: string | null;
-        isActive: boolean;
         email: string;
+        id: string;
+        isActive: boolean;
+        interests: string[];
         subscribedAt: Date;
         unsubscribedAt: Date | null;
-        interests: string[];
     }>;
     remove(id: string): Promise<{
-        id: string;
         name: string | null;
-        isActive: boolean;
         email: string;
+        id: string;
+        isActive: boolean;
+        interests: string[];
         subscribedAt: Date;
         unsubscribedAt: Date | null;
-        interests: string[];
     }>;
 }

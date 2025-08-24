@@ -1,10 +1,14 @@
-import { Controller, Get, Post, Param, Body, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Patch, Delete, UseGuards } from '@nestjs/common';
 import { StatusService } from './status.service';
 import { StatusDto } from './dto/status.dto';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('statuses')
+@ApiTags('Statuses')
+@ApiBearerAuth('JWT-auth')
 @Controller('statuses')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class StatusController {
   constructor(private readonly service: StatusService) {}
 

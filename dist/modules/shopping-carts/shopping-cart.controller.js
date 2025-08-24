@@ -16,6 +16,8 @@ exports.ShoppingCartController = void 0;
 const common_1 = require("@nestjs/common");
 const shopping_cart_service_1 = require("./shopping-cart.service");
 const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let ShoppingCartController = class ShoppingCartController {
     constructor(service) {
         this.service = service;
@@ -78,8 +80,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ShoppingCartController.prototype, "remove", null);
 exports.ShoppingCartController = ShoppingCartController = __decorate([
-    (0, swagger_1.ApiTags)('shopping-carts'),
+    (0, swagger_1.ApiTags)('ShoppingCarts'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('shopping-carts'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [shopping_cart_service_1.ShoppingCartService])
 ], ShoppingCartController);
 //# sourceMappingURL=shopping-cart.controller.js.map

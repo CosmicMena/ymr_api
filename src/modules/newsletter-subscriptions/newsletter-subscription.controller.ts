@@ -6,13 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { NewsletterSubscriptionService } from './newsletter-subscription.service';
 import { NewsletterSubscriptionDto } from './dto/newsletter-subscription.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('newsletter-subscriptions')
+@ApiTags('NewsletterSubscriptions')
+@ApiBearerAuth('JWT-auth')
 @Controller('newsletter-subscriptions')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class NewsletterSubscriptionController {
   constructor(private readonly service: NewsletterSubscriptionService) {}
 

@@ -16,6 +16,8 @@ exports.SiteVisitController = void 0;
 const common_1 = require("@nestjs/common");
 const site_visit_service_1 = require("./site-visit.service");
 const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let SiteVisitController = class SiteVisitController {
     constructor(service) {
         this.service = service;
@@ -66,8 +68,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SiteVisitController.prototype, "remove", null);
 exports.SiteVisitController = SiteVisitController = __decorate([
-    (0, swagger_1.ApiTags)('site-visits'),
+    (0, swagger_1.ApiTags)('SiteVisits'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('site-visits'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [site_visit_service_1.SiteVisitService])
 ], SiteVisitController);
 //# sourceMappingURL=site-visit.controller.js.map

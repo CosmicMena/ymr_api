@@ -6,18 +6,18 @@ export declare class QuoteItemService {
     create(data: Omit<QuoteItemDto, 'id' | 'createdAt'>): Promise<{
         id: string;
         createdAt: Date;
+        notes: string | null;
         productId: string;
         quantity: number;
-        quoteRequestId: string;
         unitPrice: import("@prisma/client/runtime/library").Decimal | null;
         totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-        notes: string | null;
+        quoteRequestId: string;
     }>;
     findAll(): Promise<({
         product: {
-            id: string;
             name: string;
             description: string | null;
+            id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
@@ -30,18 +30,18 @@ export declare class QuoteItemService {
             availability: string;
             price: import("@prisma/client/runtime/library").Decimal;
             stockQuantity: number;
-            viewCount: number;
             subcategoryId: string | null;
             brandId: string | null;
+            viewCount: number;
         };
         quoteRequest: {
             id: string;
             createdAt: Date;
-            userId: string;
             updatedAt: Date;
+            userId: string;
             code: string;
-            notes: string | null;
             statusId: string;
+            notes: string | null;
             totalItems: number;
             adminNotes: string | null;
             expiresAt: Date | null;
@@ -49,18 +49,18 @@ export declare class QuoteItemService {
     } & {
         id: string;
         createdAt: Date;
+        notes: string | null;
         productId: string;
         quantity: number;
-        quoteRequestId: string;
         unitPrice: import("@prisma/client/runtime/library").Decimal | null;
         totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-        notes: string | null;
+        quoteRequestId: string;
     })[]>;
     findOne(id: string): Promise<{
         product: {
-            id: string;
             name: string;
             description: string | null;
+            id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
@@ -73,18 +73,18 @@ export declare class QuoteItemService {
             availability: string;
             price: import("@prisma/client/runtime/library").Decimal;
             stockQuantity: number;
-            viewCount: number;
             subcategoryId: string | null;
             brandId: string | null;
+            viewCount: number;
         };
         quoteRequest: {
             id: string;
             createdAt: Date;
-            userId: string;
             updatedAt: Date;
+            userId: string;
             code: string;
-            notes: string | null;
             statusId: string;
+            notes: string | null;
             totalItems: number;
             adminNotes: string | null;
             expiresAt: Date | null;
@@ -92,31 +92,31 @@ export declare class QuoteItemService {
     } & {
         id: string;
         createdAt: Date;
+        notes: string | null;
         productId: string;
         quantity: number;
-        quoteRequestId: string;
         unitPrice: import("@prisma/client/runtime/library").Decimal | null;
         totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-        notes: string | null;
+        quoteRequestId: string;
     }>;
     update(id: string, data: Partial<Omit<QuoteItemDto, 'id' | 'createdAt'>>): Promise<{
         id: string;
         createdAt: Date;
+        notes: string | null;
         productId: string;
         quantity: number;
-        quoteRequestId: string;
         unitPrice: import("@prisma/client/runtime/library").Decimal | null;
         totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-        notes: string | null;
+        quoteRequestId: string;
     }>;
     remove(id: string): Promise<{
         id: string;
         createdAt: Date;
+        notes: string | null;
         productId: string;
         quantity: number;
-        quoteRequestId: string;
         unitPrice: import("@prisma/client/runtime/library").Decimal | null;
         totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-        notes: string | null;
+        quoteRequestId: string;
     }>;
 }

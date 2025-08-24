@@ -5,47 +5,47 @@ export declare class NewsletterSubscriptionController {
     constructor(service: NewsletterSubscriptionService);
     create(data: Omit<NewsletterSubscriptionDto, 'id' | 'subscribedAt' | 'unsubscribedAt'>): Promise<{
         id: string;
-        name: string | null;
-        isActive: boolean;
-        email: string;
         subscribedAt: Date;
         unsubscribedAt: Date | null;
+        email: string;
+        name: string | null;
+        isActive: boolean;
         interests: string[];
     }>;
     findAll(): Promise<{
         id: string;
-        name: string | null;
-        isActive: boolean;
-        email: string;
         subscribedAt: Date;
         unsubscribedAt: Date | null;
+        email: string;
+        name: string | null;
+        isActive: boolean;
         interests: string[];
     }[]>;
     findOne(id: string): Promise<{
         id: string;
-        name: string | null;
-        isActive: boolean;
-        email: string;
         subscribedAt: Date;
         unsubscribedAt: Date | null;
+        email: string;
+        name: string | null;
+        isActive: boolean;
         interests: string[];
     }>;
     update(id: string, data: Partial<Omit<NewsletterSubscriptionDto, 'id' | 'subscribedAt' | 'unsubscribedAt'>>): Promise<{
         id: string;
-        name: string | null;
-        isActive: boolean;
-        email: string;
         subscribedAt: Date;
         unsubscribedAt: Date | null;
+        email: string;
+        name: string | null;
+        isActive: boolean;
         interests: string[];
     }>;
     remove(id: string): Promise<{
         id: string;
-        name: string | null;
-        isActive: boolean;
-        email: string;
         subscribedAt: Date;
         unsubscribedAt: Date | null;
+        email: string;
+        name: string | null;
+        isActive: boolean;
         interests: string[];
     }>;
 }

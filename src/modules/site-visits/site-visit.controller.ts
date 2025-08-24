@@ -1,10 +1,14 @@
-import { Controller, Get, Post, Param, Body, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Delete, UseGuards } from '@nestjs/common';
 import { SiteVisitService } from './site-visit.service';
 import { SiteVisitDto } from './dto/site-visit.dto';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('site-visits')
+@ApiTags('SiteVisits')
+@ApiBearerAuth('JWT-auth')
 @Controller('site-visits')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class SiteVisitController {
   constructor(private readonly service: SiteVisitService) {}
 

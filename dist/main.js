@@ -48,16 +48,6 @@ async function bootstrap() {
         description: 'Enter JWT token',
         in: 'header',
     }, 'JWT-auth')
-        .addTag('Authentication', 'Authentication and authorization endpoints')
-        .addTag('Users', 'User management endpoints')
-        .addTag('Admin Users', 'Admin user management endpoints')
-        .addTag('Products', 'Product management endpoints')
-        .addTag('Categories', 'Category management endpoints')
-        .addTag('Brands', 'Brand management endpoints')
-        .addTag('Orders', 'Order management endpoints')
-        .addTag('Quotes', 'Quote management endpoints')
-        .addTag('Messages', 'Message system endpoints')
-        .addTag('Analytics', 'Analytics and statistics endpoints')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api/docs', app, document, {

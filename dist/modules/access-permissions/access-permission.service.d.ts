@@ -4,43 +4,43 @@ export declare class AccessPermissionService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(data: Omit<AccessPermissionDto, 'id' | 'createdAt'>): Promise<{
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         createdAt: Date;
-        action: string;
         resource: string;
+        action: string;
     }>;
     findAll(): Promise<{
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         createdAt: Date;
-        action: string;
         resource: string;
+        action: string;
     }[]>;
     findOne(id: string): Promise<{
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         createdAt: Date;
-        action: string;
         resource: string;
+        action: string;
     }>;
     update(id: string, data: Partial<Omit<AccessPermissionDto, 'id' | 'createdAt'>>): Promise<{
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         createdAt: Date;
-        action: string;
         resource: string;
+        action: string;
     }>;
     remove(id: string): Promise<{
-        id: string;
         name: string;
         description: string | null;
+        id: string;
         createdAt: Date;
-        action: string;
         resource: string;
+        action: string;
     }>;
 }

@@ -17,18 +17,91 @@ let CategoryService = class CategoryService {
         this.prisma = prisma;
     }
     async create(data) {
+        const existingCategory = await this.prisma.category.findFirst({
+            where: { name: { equals: data.name, mode: 'insensitive' } },
+        });
+        if (existingCategory) {
+            throw new common_1.ConflictException('Já existe uma categoria com este nome');
+        }
         return this.prisma.category.create({
             data,
+            include: {
+                subcategories: true,
+                _count: {
+                    select: {
+                        subcategories: true,
+                    },
+                },
+            },
         });
     }
-    async findAll() {
+    async findAll(filterDto) {
+        const where = {};
+        if (filterDto?.search) {
+            where.OR = [
+                { name: { contains: filterDto.search, mode: 'insensitive' } },
+                { description: { contains: filterDto.search, mode: 'insensitive' } },
+            ];
+        }
+        if (filterDto?.isActive !== undefined) {
+            where.isActive = filterDto.isActive;
+        }
         return this.prisma.category.findMany({
+            where,
             orderBy: { createdAt: 'desc' },
+            include: {
+                subcategories: {
+                    select: {
+                        id: true,
+                        name: true,
+                        isActive: true,
+                    },
+                },
+                _count: {
+                    select: {
+                        subcategories: true,
+                    },
+                },
+            },
+        });
+    }
+    async findActiveCategories() {
+        return this.prisma.category.findMany({
+            where: { isActive: true },
+            orderBy: { name: 'asc' },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                imageUrl: true,
+                isActive: true,
+                _count: {
+                    select: {
+                        subcategories: true,
+                    },
+                },
+            },
         });
     }
     async findOne(id) {
         const category = await this.prisma.category.findUnique({
             where: { id },
+            include: {
+                subcategories: {
+                    where: { isActive: true },
+                    select: {
+                        id: true,
+                        name: true,
+                        description: true,
+                        isActive: true,
+                    },
+                },
+                _count: {
+                    select: {
+                        subcategories: true,
+                    },
+                },
+            },
         });
         if (!category) {
             throw new common_1.NotFoundException(`Categoria com ID ${id} não encontrada`);
@@ -36,13 +109,49 @@ let CategoryService = class CategoryService {
         return category;
     }
     async update(id, data) {
+        await this.findOne(id);
+        if (data.name) {
+            const existingCategory = await this.prisma.category.findFirst({
+                where: {
+                    name: { equals: data.name, mode: 'insensitive' },
+                    id: { not: id }
+                },
+            });
+            if (existingCategory) {
+                throw new common_1.ConflictException('Já existe uma categoria com este nome');
+            }
+        }
         return this.prisma.category.update({
             where: { id },
             data,
+            include: {
+                subcategories: true,
+                _count: {
+                    select: {
+                        subcategories: true,
+                    },
+                },
+            },
         });
     }
     async remove(id) {
         await this.findOne(id);
+        const productsCount = await this.prisma.product.count({
+            where: {
+                subcategory: {
+                    categoryId: id
+                }
+            },
+        });
+        if (productsCount > 0) {
+            throw new common_1.ConflictException(`Não é possível remover a categoria pois existem ${productsCount} produto(s) vinculado(s)`);
+        }
+        const subcategoriesCount = await this.prisma.subcategory.count({
+            where: { categoryId: id },
+        });
+        if (subcategoriesCount > 0) {
+            throw new common_1.ConflictException(`Não é possível remover a categoria pois existem ${subcategoriesCount} subcategoria(s) vinculada(s)`);
+        }
         return this.prisma.category.delete({
             where: { id },
         });

@@ -6,7 +6,6 @@ export declare class UserStatisticsService {
     create(data: Omit<UserStatisticsDto, 'id'>): Promise<{
         id: string;
         createdAt: Date;
-        userId: string;
         updatedAt: Date;
         ordersCount: number;
         consultationsCount: number;
@@ -14,11 +13,11 @@ export declare class UserStatisticsService {
         loyaltyPoints: number;
         totalSpent: import("@prisma/client/runtime/library").Decimal;
         lastActivity: Date | null;
+        userId: string;
     }>;
     findAll(): Promise<{
         id: string;
         createdAt: Date;
-        userId: string;
         updatedAt: Date;
         ordersCount: number;
         consultationsCount: number;
@@ -26,11 +25,11 @@ export declare class UserStatisticsService {
         loyaltyPoints: number;
         totalSpent: import("@prisma/client/runtime/library").Decimal;
         lastActivity: Date | null;
+        userId: string;
     }[]>;
     findOne(id: string): Promise<{
         id: string;
         createdAt: Date;
-        userId: string;
         updatedAt: Date;
         ordersCount: number;
         consultationsCount: number;
@@ -38,11 +37,11 @@ export declare class UserStatisticsService {
         loyaltyPoints: number;
         totalSpent: import("@prisma/client/runtime/library").Decimal;
         lastActivity: Date | null;
+        userId: string;
     }>;
     findByUserId(userId: string): Promise<{
         id: string;
         createdAt: Date;
-        userId: string;
         updatedAt: Date;
         ordersCount: number;
         consultationsCount: number;
@@ -50,11 +49,11 @@ export declare class UserStatisticsService {
         loyaltyPoints: number;
         totalSpent: import("@prisma/client/runtime/library").Decimal;
         lastActivity: Date | null;
+        userId: string;
     }>;
     update(id: string, data: Partial<Omit<UserStatisticsDto, 'id'>>): Promise<{
         id: string;
         createdAt: Date;
-        userId: string;
         updatedAt: Date;
         ordersCount: number;
         consultationsCount: number;
@@ -62,11 +61,11 @@ export declare class UserStatisticsService {
         loyaltyPoints: number;
         totalSpent: import("@prisma/client/runtime/library").Decimal;
         lastActivity: Date | null;
+        userId: string;
     }>;
     remove(id: string): Promise<{
         id: string;
         createdAt: Date;
-        userId: string;
         updatedAt: Date;
         ordersCount: number;
         consultationsCount: number;
@@ -74,5 +73,6 @@ export declare class UserStatisticsService {
         loyaltyPoints: number;
         totalSpent: import("@prisma/client/runtime/library").Decimal;
         lastActivity: Date | null;
+        userId: string;
     }>;
 }

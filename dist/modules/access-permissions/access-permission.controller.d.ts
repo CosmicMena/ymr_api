@@ -1,46 +1,40 @@
 import { AccessPermissionService } from './access-permission.service';
-import { AccessPermissionDto } from './dto/access-permission.dto';
+import { CreateAccessPermissionDto, UpdateAccessPermissionDto } from './dto/access-permission.dto';
+import { SuccessResponseDto } from '../../common/dto/response.dto';
 export declare class AccessPermissionController {
     private readonly accessPermissionService;
     constructor(accessPermissionService: AccessPermissionService);
-    create(data: Omit<AccessPermissionDto, 'id' | 'createdAt'>): Promise<{
+    create(data: CreateAccessPermissionDto): Promise<SuccessResponseDto<{
         id: string;
-        name: string;
-        description: string | null;
         createdAt: Date;
-        action: string;
+        name: string;
         resource: string;
-    }>;
-    findAll(): Promise<{
+        action: string;
+        description: string | null;
+    }>>;
+    findAll(): Promise<SuccessResponseDto<{
         id: string;
-        name: string;
-        description: string | null;
         createdAt: Date;
-        action: string;
+        name: string;
         resource: string;
-    }[]>;
-    findOne(id: string): Promise<{
+        action: string;
+        description: string | null;
+    }[]>>;
+    findOne(id: string): Promise<SuccessResponseDto<{
         id: string;
-        name: string;
-        description: string | null;
         createdAt: Date;
-        action: string;
+        name: string;
         resource: string;
-    }>;
-    update(id: string, data: Partial<Omit<AccessPermissionDto, 'id' | 'createdAt'>>): Promise<{
+        action: string;
+        description: string | null;
+    }>>;
+    update(id: string, data: UpdateAccessPermissionDto): Promise<SuccessResponseDto<{
         id: string;
-        name: string;
-        description: string | null;
         createdAt: Date;
-        action: string;
-        resource: string;
-    }>;
-    remove(id: string): Promise<{
-        id: string;
         name: string;
-        description: string | null;
-        createdAt: Date;
-        action: string;
         resource: string;
-    }>;
+        action: string;
+        description: string | null;
+    }>>;
+    remove(id: string): Promise<SuccessResponseDto<any>>;
 }

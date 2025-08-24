@@ -6,13 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { AdminUserService } from './admin-user.service';
 import { AdminUserDto } from './dto/admin-user.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('admin-users')
+@ApiTags('AdminUsers')
+@ApiBearerAuth('JWT-auth')
 @Controller('admin-users')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class AdminUserController {
   constructor(private readonly adminUserService: AdminUserService) {}
 

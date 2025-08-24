@@ -6,13 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { MessageService } from './message.service';
 import { MessageDto } from './dto/message.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 
-@ApiTags('messages')
+@ApiTags('Messages')
+@ApiBearerAuth('JWT-auth')
 @Controller('messages')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class MessageController {
   constructor(private readonly service: MessageService) {}
 

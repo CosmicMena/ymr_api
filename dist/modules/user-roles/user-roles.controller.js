@@ -16,6 +16,8 @@ exports.UserRolesController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const user_roles_service_1 = require("./user-roles.service");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let UserRolesController = class UserRolesController {
     constructor(service) {
         this.service = service;
@@ -78,8 +80,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserRolesController.prototype, "remove", null);
 exports.UserRolesController = UserRolesController = __decorate([
-    (0, swagger_1.ApiTags)('user-roles'),
+    (0, swagger_1.ApiTags)('UserRoles'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('user-roles'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [user_roles_service_1.UserRolesService])
 ], UserRolesController);
 //# sourceMappingURL=user-roles.controller.js.map

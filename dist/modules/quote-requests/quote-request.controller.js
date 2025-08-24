@@ -16,6 +16,8 @@ exports.QuoteRequestController = void 0;
 const common_1 = require("@nestjs/common");
 const quote_request_service_1 = require("./quote-request.service");
 const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let QuoteRequestController = class QuoteRequestController {
     constructor(service) {
         this.service = service;
@@ -79,8 +81,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], QuoteRequestController.prototype, "remove", null);
 exports.QuoteRequestController = QuoteRequestController = __decorate([
-    (0, swagger_1.ApiTags)('quote-requests'),
+    (0, swagger_1.ApiTags)('QuoteRequests'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('quote-requests'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [quote_request_service_1.QuoteRequestService])
 ], QuoteRequestController);
 //# sourceMappingURL=quote-request.controller.js.map

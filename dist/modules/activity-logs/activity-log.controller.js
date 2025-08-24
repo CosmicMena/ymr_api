@@ -16,6 +16,8 @@ exports.ActivityLogController = void 0;
 const common_1 = require("@nestjs/common");
 const activity_log_service_1 = require("./activity-log.service");
 const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let ActivityLogController = class ActivityLogController {
     constructor(activityLogService) {
         this.activityLogService = activityLogService;
@@ -79,8 +81,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ActivityLogController.prototype, "remove", null);
 exports.ActivityLogController = ActivityLogController = __decorate([
-    (0, swagger_1.ApiTags)('activity-logs'),
+    (0, swagger_1.ApiTags)('ActivityLogs'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('activity-logs'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [activity_log_service_1.ActivityLogService])
 ], ActivityLogController);
 //# sourceMappingURL=activity-log.controller.js.map

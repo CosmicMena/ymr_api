@@ -10,20 +10,20 @@ export declare class RolePermissionController {
     }>;
     findAll(): Promise<({
         role: {
-            id: string;
             name: string;
+            id: string;
             description: string | null;
+            permissions: import("@prisma/client/runtime/library").JsonValue | null;
             isActive: boolean;
             createdAt: Date;
-            permissions: import("@prisma/client/runtime/library").JsonValue | null;
         };
         permission: {
-            id: string;
             name: string;
+            id: string;
             description: string | null;
             createdAt: Date;
-            action: string;
             resource: string;
+            action: string;
         };
     } & {
         grantedAt: Date;
@@ -32,20 +32,20 @@ export declare class RolePermissionController {
     })[]>;
     findOne(roleId: string, permissionId: string): Promise<{
         role: {
-            id: string;
             name: string;
+            id: string;
             description: string | null;
+            permissions: import("@prisma/client/runtime/library").JsonValue | null;
             isActive: boolean;
             createdAt: Date;
-            permissions: import("@prisma/client/runtime/library").JsonValue | null;
         };
         permission: {
-            id: string;
             name: string;
+            id: string;
             description: string | null;
             createdAt: Date;
-            action: string;
             resource: string;
+            action: string;
         };
     } & {
         grantedAt: Date;

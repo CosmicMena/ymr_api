@@ -16,6 +16,8 @@ exports.StatusController = void 0;
 const common_1 = require("@nestjs/common");
 const status_service_1 = require("./status.service");
 const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let StatusController = class StatusController {
     constructor(service) {
         this.service = service;
@@ -78,8 +80,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], StatusController.prototype, "remove", null);
 exports.StatusController = StatusController = __decorate([
-    (0, swagger_1.ApiTags)('statuses'),
+    (0, swagger_1.ApiTags)('Statuses'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('statuses'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [status_service_1.StatusService])
 ], StatusController);
 //# sourceMappingURL=status.controller.js.map

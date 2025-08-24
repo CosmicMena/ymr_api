@@ -16,6 +16,8 @@ exports.MessageThreadController = void 0;
 const common_1 = require("@nestjs/common");
 const message_thread_service_1 = require("./message-thread.service");
 const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let MessageThreadController = class MessageThreadController {
     constructor(service) {
         this.service = service;
@@ -79,8 +81,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], MessageThreadController.prototype, "remove", null);
 exports.MessageThreadController = MessageThreadController = __decorate([
-    (0, swagger_1.ApiTags)('message-threads'),
+    (0, swagger_1.ApiTags)('MessageThreads'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('message-threads'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [message_thread_service_1.MessageThreadService])
 ], MessageThreadController);
 //# sourceMappingURL=message-thread.controller.js.map

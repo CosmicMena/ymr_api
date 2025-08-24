@@ -16,6 +16,8 @@ exports.UserActivityController = void 0;
 const common_1 = require("@nestjs/common");
 const user_activity_service_1 = require("./user-activity.service");
 const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../common/guards/roles.guard");
 let UserActivityController = class UserActivityController {
     constructor(service) {
         this.service = service;
@@ -78,8 +80,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserActivityController.prototype, "remove", null);
 exports.UserActivityController = UserActivityController = __decorate([
-    (0, swagger_1.ApiTags)('user-activities'),
+    (0, swagger_1.ApiTags)('UserActivities'),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('user-activities'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [user_activity_service_1.UserActivityService])
 ], UserActivityController);
 //# sourceMappingURL=user-activity.controller.js.map

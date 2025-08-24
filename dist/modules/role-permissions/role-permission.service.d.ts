@@ -4,57 +4,57 @@ export declare class RolePermissionService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(data: Omit<RolePermissionDto, 'grantedAt'>): Promise<{
-        grantedAt: Date;
         roleId: string;
         permissionId: string;
+        grantedAt: Date;
     }>;
     findAll(): Promise<({
         role: {
-            id: string;
             name: string;
             description: string | null;
+            id: string;
             isActive: boolean;
             createdAt: Date;
             permissions: import("@prisma/client/runtime/library").JsonValue | null;
         };
         permission: {
-            id: string;
             name: string;
             description: string | null;
+            id: string;
             createdAt: Date;
-            action: string;
             resource: string;
+            action: string;
         };
     } & {
-        grantedAt: Date;
         roleId: string;
         permissionId: string;
+        grantedAt: Date;
     })[]>;
     findOne(roleId: string, permissionId: string): Promise<{
         role: {
-            id: string;
             name: string;
             description: string | null;
+            id: string;
             isActive: boolean;
             createdAt: Date;
             permissions: import("@prisma/client/runtime/library").JsonValue | null;
         };
         permission: {
-            id: string;
             name: string;
             description: string | null;
+            id: string;
             createdAt: Date;
-            action: string;
             resource: string;
+            action: string;
         };
     } & {
-        grantedAt: Date;
         roleId: string;
         permissionId: string;
+        grantedAt: Date;
     }>;
     remove(roleId: string, permissionId: string): Promise<{
-        grantedAt: Date;
         roleId: string;
         permissionId: string;
+        grantedAt: Date;
     }>;
 }

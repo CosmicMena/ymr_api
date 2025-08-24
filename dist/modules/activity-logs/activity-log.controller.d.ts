@@ -5,11 +5,11 @@ export declare class ActivityLogController {
     constructor(activityLogService: ActivityLogService);
     create(data: Omit<ActivityLogDto, 'id' | 'createdAt'>): Promise<{
         id: string;
-        description: string | null;
         createdAt: Date;
         userId: string | null;
         adminId: string | null;
         action: string;
+        description: string | null;
         resourceType: string | null;
         resourceId: string | null;
         ipAddress: string | null;
@@ -18,11 +18,11 @@ export declare class ActivityLogController {
     }>;
     findAll(): Promise<{
         id: string;
-        description: string | null;
         createdAt: Date;
         userId: string | null;
         adminId: string | null;
         action: string;
+        description: string | null;
         resourceType: string | null;
         resourceId: string | null;
         ipAddress: string | null;
@@ -31,11 +31,11 @@ export declare class ActivityLogController {
     }[]>;
     findOne(id: string): Promise<{
         id: string;
-        description: string | null;
         createdAt: Date;
         userId: string | null;
         adminId: string | null;
         action: string;
+        description: string | null;
         resourceType: string | null;
         resourceId: string | null;
         ipAddress: string | null;
@@ -44,11 +44,11 @@ export declare class ActivityLogController {
     }>;
     update(id: string, data: Partial<Omit<ActivityLogDto, 'id' | 'createdAt'>>): Promise<{
         id: string;
-        description: string | null;
         createdAt: Date;
         userId: string | null;
         adminId: string | null;
         action: string;
+        description: string | null;
         resourceType: string | null;
         resourceId: string | null;
         ipAddress: string | null;
@@ -57,11 +57,11 @@ export declare class ActivityLogController {
     }>;
     remove(id: string): Promise<{
         id: string;
-        description: string | null;
         createdAt: Date;
         userId: string | null;
         adminId: string | null;
         action: string;
+        description: string | null;
         resourceType: string | null;
         resourceId: string | null;
         ipAddress: string | null;
