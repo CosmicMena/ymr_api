@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BrandDto = void 0;
+exports.BrandFilterDto = exports.UpdateBrandDto = exports.CreateBrandDto = exports.BrandDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class BrandDto {
@@ -52,4 +52,26 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], BrandDto.prototype, "updatedAt", void 0);
+class CreateBrandDto extends (0, swagger_1.OmitType)(BrandDto, ['id', 'createdAt', 'updatedAt']) {
+}
+exports.CreateBrandDto = CreateBrandDto;
+class UpdateBrandDto extends (0, swagger_1.PartialType)(CreateBrandDto) {
+}
+exports.UpdateBrandDto = UpdateBrandDto;
+class BrandFilterDto {
+}
+exports.BrandFilterDto = BrandFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Buscar por nome (contém, case-insensitive)', required: false, example: 'cat' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(100),
+    __metadata("design:type", String)
+], BrandFilterDto.prototype, "search", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por estado ativo', required: false, example: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], BrandFilterDto.prototype, "isActive", void 0);
 //# sourceMappingURL=brand.dto.js.map

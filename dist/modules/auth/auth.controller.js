@@ -42,7 +42,7 @@ __decorate([
         summary: 'User login',
         description: 'Authenticate user with email and password. Returns access token and refresh token.'
     }),
-    (0, swagger_1.ApiBody)({ type: auth_dto_1.LoginDto }),
+    (0, swagger_1.ApiBody)({ type: auth_dto_1.LoginDto, examples: { exemplo: { value: { email: 'user@example.com', password: 'SecurePassword123!' } } } }),
     (0, swagger_1.ApiResponse)({
         status: 200,
         description: 'Login successful',
@@ -52,17 +52,8 @@ __decorate([
                 success: true,
                 message: 'Login successful',
                 data: {
-                    user: {
-                        id: 'uuid',
-                        email: 'user@example.com',
-                        name: 'John Doe',
-                        userType: 'user'
-                    },
-                    tokens: {
-                        accessToken: 'jwt_token',
-                        refreshToken: 'refresh_token',
-                        expiresIn: '1h'
-                    }
+                    user: { id: 'uuid', email: 'user@example.com', name: 'John Doe', userType: 'user' },
+                    tokens: { accessToken: 'jwt_token', refreshToken: 'refresh_token', expiresIn: '1h' }
                 }
             }
         }
@@ -81,12 +72,8 @@ __decorate([
         summary: 'User registration',
         description: 'Register a new user account. Creates user profile and returns authentication tokens.'
     }),
-    (0, swagger_1.ApiBody)({ type: auth_dto_1.RegisterDto }),
-    (0, swagger_1.ApiResponse)({
-        status: 201,
-        description: 'Registration successful',
-        type: response_dto_1.SuccessResponseDto
-    }),
+    (0, swagger_1.ApiBody)({ type: auth_dto_1.RegisterDto, examples: { exemplo: { value: { name: 'John Doe', email: 'john@example.com', password: 'SecurePassword123!', phone: '+244 912 345 678', company: 'Tech Solutions' } } } }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Registration successful', type: response_dto_1.SuccessResponseDto }),
     (0, swagger_1.ApiResponse)({ status: 409, description: 'User already exists' }),
     (0, public_decorator_1.Public)(),
     (0, common_1.Post)('register'),
@@ -100,12 +87,8 @@ __decorate([
         summary: 'Refresh access token',
         description: 'Generate new access token using refresh token.'
     }),
-    (0, swagger_1.ApiBody)({ type: auth_dto_1.RefreshTokenDto }),
-    (0, swagger_1.ApiResponse)({
-        status: 200,
-        description: 'Token refreshed successfully',
-        type: response_dto_1.SuccessResponseDto
-    }),
+    (0, swagger_1.ApiBody)({ type: auth_dto_1.RefreshTokenDto, examples: { exemplo: { value: { refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' } } } }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Token refreshed successfully', type: response_dto_1.SuccessResponseDto }),
     (0, swagger_1.ApiResponse)({ status: 401, description: 'Invalid refresh token' }),
     (0, public_decorator_1.Public)(),
     (0, common_1.Post)('refresh'),
@@ -117,6 +100,8 @@ __decorate([
 ], AuthController.prototype, "refreshToken", null);
 exports.AuthController = AuthController = __decorate([
     (0, swagger_1.ApiTags)('Authentication'),
+    (0, swagger_1.ApiConsumes)('application/json'),
+    (0, swagger_1.ApiProduces)('application/json'),
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);

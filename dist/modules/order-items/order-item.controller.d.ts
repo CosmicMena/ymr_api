@@ -1,56 +1,57 @@
 import { OrderItemService } from './order-item.service';
-import { OrderItemDto } from './dto/order-item.dto';
+import { OrderItemDto, OrderItemFilterDto } from './dto/order-item.dto';
+import { SuccessResponseDto } from '../../common/dto/response.dto';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 export declare class OrderItemController {
     private readonly service;
     constructor(service: OrderItemService);
-    create(data: Omit<OrderItemDto, 'id' | 'createdAt'>): Promise<{
+    create(data: Omit<OrderItemDto, 'id' | 'createdAt'>): Promise<SuccessResponseDto<{
         id: string;
         createdAt: Date;
-        orderId: string;
         productId: string | null;
-        serviceDescription: string | null;
         quantity: number;
         unitPrice: import("@prisma/client/runtime/library").Decimal | null;
         totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-    }>;
-    findAll(): Promise<{
+        orderId: string;
+        serviceDescription: string | null;
+    }>>;
+    findAll(pagination: PaginationDto, filter: OrderItemFilterDto): Promise<SuccessResponseDto<{
+        data: {
+            id: string;
+            createdAt: Date;
+            productId: string | null;
+            quantity: number;
+            unitPrice: import("@prisma/client/runtime/library").Decimal | null;
+            totalPrice: import("@prisma/client/runtime/library").Decimal | null;
+            orderId: string;
+            serviceDescription: string | null;
+        }[];
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+        };
+    }>>;
+    findOne(id: string): Promise<SuccessResponseDto<{
         id: string;
         createdAt: Date;
-        orderId: string;
         productId: string | null;
-        serviceDescription: string | null;
         quantity: number;
         unitPrice: import("@prisma/client/runtime/library").Decimal | null;
         totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-    }[]>;
-    findOne(id: string): Promise<{
+        orderId: string;
+        serviceDescription: string | null;
+    }>>;
+    update(id: string, data: Partial<Omit<OrderItemDto, 'id' | 'createdAt'>>): Promise<SuccessResponseDto<{
         id: string;
         createdAt: Date;
-        orderId: string;
         productId: string | null;
-        serviceDescription: string | null;
         quantity: number;
         unitPrice: import("@prisma/client/runtime/library").Decimal | null;
         totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-    }>;
-    update(id: string, data: Partial<Omit<OrderItemDto, 'id' | 'createdAt'>>): Promise<{
-        id: string;
-        createdAt: Date;
         orderId: string;
-        productId: string | null;
         serviceDescription: string | null;
-        quantity: number;
-        unitPrice: import("@prisma/client/runtime/library").Decimal | null;
-        totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-    }>;
-    remove(id: string): Promise<{
-        id: string;
-        createdAt: Date;
-        orderId: string;
-        productId: string | null;
-        serviceDescription: string | null;
-        quantity: number;
-        unitPrice: import("@prisma/client/runtime/library").Decimal | null;
-        totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-    }>;
+    }>>;
+    remove(id: string): Promise<SuccessResponseDto<any>>;
 }

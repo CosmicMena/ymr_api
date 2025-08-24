@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewsletterSubscriptionDto = void 0;
+exports.NewsletterSubscriptionFilterDto = exports.UpdateNewsletterSubscriptionDto = exports.CreateNewsletterSubscriptionDto = exports.NewsletterSubscriptionDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class NewsletterSubscriptionDto {
@@ -51,4 +51,43 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], NewsletterSubscriptionDto.prototype, "unsubscribedAt", void 0);
+class CreateNewsletterSubscriptionDto extends (0, swagger_1.OmitType)(NewsletterSubscriptionDto, ['id', 'subscribedAt', 'unsubscribedAt']) {
+}
+exports.CreateNewsletterSubscriptionDto = CreateNewsletterSubscriptionDto;
+class UpdateNewsletterSubscriptionDto extends (0, swagger_1.PartialType)(CreateNewsletterSubscriptionDto) {
+}
+exports.UpdateNewsletterSubscriptionDto = UpdateNewsletterSubscriptionDto;
+class NewsletterSubscriptionFilterDto {
+}
+exports.NewsletterSubscriptionFilterDto = NewsletterSubscriptionFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Buscar por e-mail (contém)', required: false, example: 'gmail.com' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], NewsletterSubscriptionFilterDto.prototype, "email", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por ativo', required: false, example: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], NewsletterSubscriptionFilterDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por interesse', required: false, example: 'novidades' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], NewsletterSubscriptionFilterDto.prototype, "interest", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (subscribedAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], NewsletterSubscriptionFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (subscribedAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], NewsletterSubscriptionFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=newsletter-subscription.dto.js.map

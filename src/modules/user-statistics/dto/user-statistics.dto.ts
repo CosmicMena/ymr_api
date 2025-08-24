@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsUUID, IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { IsUUID, IsInt, IsNumber, IsOptional, IsString, IsDateString } from 'class-validator';
 
 export class UserStatisticsDto {
   @ApiProperty({ description: 'ID das estatísticas', example: 'uuid' })
@@ -42,4 +42,33 @@ export class UserStatisticsDto {
   @ApiProperty({ description: 'Data de atualização', example: '2024-08-19T19:00:00.000Z' })
   @IsString()
   updatedAt: string;
+}
+
+export class UpdateUserStatisticsDto extends PartialType(UserStatisticsDto) {}
+
+export class UserStatisticsFilterDto {
+  @ApiProperty({ description: 'Filtrar por usuário', required: false, example: 'uuid-user' })
+  @IsOptional()
+  @IsUUID()
+  userId?: string;
+
+  @ApiProperty({ description: 'Mínimo de pedidos', required: false, example: 1 })
+  @IsOptional()
+  @IsInt()
+  minOrders?: number;
+
+  @ApiProperty({ description: 'Mínimo de gastos', required: false, example: 1000 })
+  @IsOptional()
+  @IsNumber()
+  minTotalSpent?: number;
+
+  @ApiProperty({ description: 'Data início (lastActivity >=)', required: false, example: '2024-08-01' })
+  @IsOptional()
+  @IsDateString()
+  startDate?: string;
+
+  @ApiProperty({ description: 'Data fim (lastActivity <=)', required: false, example: '2024-08-31' })
+  @IsOptional()
+  @IsDateString()
+  endDate?: string;
 }

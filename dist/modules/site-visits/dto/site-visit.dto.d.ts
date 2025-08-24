@@ -14,3 +14,17 @@ export declare class SiteVisitDto {
     visitDuration?: number;
     createdAt: string;
 }
+declare const CreateSiteVisitDto_base: import("@nestjs/common").Type<Omit<SiteVisitDto, "id" | "createdAt">>;
+export declare class CreateSiteVisitDto extends CreateSiteVisitDto_base {
+}
+declare const UpdateSiteVisitDto_base: import("@nestjs/common").Type<Partial<CreateSiteVisitDto>>;
+export declare class UpdateSiteVisitDto extends UpdateSiteVisitDto_base {
+}
+export declare class SiteVisitFilterDto {
+    userId?: string;
+    sessionId?: string;
+    ipAddress?: string;
+    startDate?: string;
+    endDate?: string;
+}
+export {};

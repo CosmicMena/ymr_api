@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.QuoteRequestDto = void 0;
+exports.QuoteRequestFilterDto = exports.UpdateQuoteRequestDto = exports.CreateQuoteRequestDto = exports.QuoteRequestDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class QuoteRequestDto {
@@ -68,4 +68,44 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], QuoteRequestDto.prototype, "updatedAt", void 0);
+class CreateQuoteRequestDto extends (0, swagger_1.OmitType)(QuoteRequestDto, ['id', 'code', 'createdAt', 'updatedAt']) {
+}
+exports.CreateQuoteRequestDto = CreateQuoteRequestDto;
+class UpdateQuoteRequestDto extends (0, swagger_1.PartialType)(CreateQuoteRequestDto) {
+}
+exports.UpdateQuoteRequestDto = UpdateQuoteRequestDto;
+class QuoteRequestFilterDto {
+}
+exports.QuoteRequestFilterDto = QuoteRequestFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Buscar por código (contém)', required: false, example: 'Q-2024' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(20),
+    __metadata("design:type", String)
+], QuoteRequestFilterDto.prototype, "search", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por usuário', required: false, example: 'uuid-usuario' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], QuoteRequestFilterDto.prototype, "userId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por status', required: false, example: 'uuid-status' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], QuoteRequestFilterDto.prototype, "statusId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], QuoteRequestFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], QuoteRequestFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=quote-request.dto.js.map

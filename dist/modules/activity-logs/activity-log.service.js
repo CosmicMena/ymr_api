@@ -17,35 +17,52 @@ let ActivityLogService = class ActivityLogService {
         this.prisma = prisma;
     }
     async create(data) {
-        return this.prisma.activityLog.create({
-            data,
-        });
+        return this.prisma.activityLog.create({ data });
     }
-    async findAll() {
-        return this.prisma.activityLog.findMany({
-            orderBy: { createdAt: 'desc' },
-        });
+    async findAll(paginationDto, filterDto) {
+        const { page = 1, limit = 10 } = paginationDto;
+        const { userId, adminId, action, resourceType, startDate, endDate } = filterDto || {};
+        const where = {};
+        if (userId)
+            where.userId = userId;
+        if (adminId)
+            where.adminId = adminId;
+        if (action)
+            where.action = { contains: action, mode: 'insensitive' };
+        if (resourceType)
+            where.resourceType = { contains: resourceType, mode: 'insensitive' };
+        if (startDate || endDate) {
+            where.createdAt = {};
+            if (startDate)
+                where.createdAt.gte = new Date(startDate);
+            if (endDate)
+                where.createdAt.lte = new Date(endDate);
+        }
+        const skip = (page - 1) * limit;
+        const take = Math.min(limit, 100);
+        const [items, total] = await Promise.all([
+            this.prisma.activityLog.findMany({ where, orderBy: { createdAt: 'desc' }, skip, take }),
+            this.prisma.activityLog.count({ where }),
+        ]);
+        const totalPages = Math.ceil(total / take);
+        return {
+            data: items,
+            pagination: { page, limit: take, total, totalPages },
+        };
     }
     async findOne(id) {
-        const log = await this.prisma.activityLog.findUnique({
-            where: { id },
-        });
+        const log = await this.prisma.activityLog.findUnique({ where: { id } });
         if (!log) {
             throw new common_1.NotFoundException(`Log com ID ${id} não encontrado`);
         }
         return log;
     }
     async update(id, data) {
-        return this.prisma.activityLog.update({
-            where: { id },
-            data,
-        });
+        return this.prisma.activityLog.update({ where: { id }, data });
     }
     async remove(id) {
         await this.findOne(id);
-        return this.prisma.activityLog.delete({
-            where: { id },
-        });
+        return this.prisma.activityLog.delete({ where: { id } });
     }
 };
 exports.ActivityLogService = ActivityLogService;

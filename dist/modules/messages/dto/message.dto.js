@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MessageDto = void 0;
+exports.MessageFilterDto = exports.UpdateMessageDto = exports.CreateMessageDto = exports.MessageDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class MessageDto {
@@ -55,4 +55,42 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], MessageDto.prototype, "createdAt", void 0);
+class CreateMessageDto extends (0, swagger_1.OmitType)(MessageDto, ['id', 'createdAt']) {
+}
+exports.CreateMessageDto = CreateMessageDto;
+class UpdateMessageDto extends (0, swagger_1.PartialType)(CreateMessageDto) {
+}
+exports.UpdateMessageDto = UpdateMessageDto;
+class MessageFilterDto {
+}
+exports.MessageFilterDto = MessageFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por tópico', required: false, example: 'uuid-thread' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], MessageFilterDto.prototype, "threadId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por remetente', required: false, example: 'uuid-user' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], MessageFilterDto.prototype, "senderId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Apenas não lidas', required: false, example: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], MessageFilterDto.prototype, "isUnread", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], MessageFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], MessageFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=message.dto.js.map

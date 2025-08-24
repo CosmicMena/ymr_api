@@ -5,9 +5,9 @@ export declare class UserService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(createUserDto: CreateUserDto): Promise<{
-        id: string;
         name: string;
         email: string;
+        id: string;
         city: string;
         country: string;
         emailVerified: boolean;
@@ -16,13 +16,13 @@ export declare class UserService {
     }>;
     findAll(paginationDto: PaginationDto, filterDto: UserFilterDto): Promise<{
         data: {
-            id: string;
             name: string;
             email: string;
             phone: string;
+            company: string;
+            id: string;
             city: string;
             country: string;
-            company: string;
             position: string;
             avatarUrl: string;
             emailVerified: boolean;
@@ -40,12 +40,12 @@ export declare class UserService {
         };
     }>;
     findActiveUsers(limit?: number): Promise<{
-        id: string;
         name: string;
         email: string;
+        company: string;
+        id: string;
         city: string;
         country: string;
-        company: string;
         isActive: boolean;
     }[]>;
     getUserStats(): Promise<{
@@ -57,15 +57,15 @@ export declare class UserService {
         usersByCities: {};
     }>;
     findOne(id: string): Promise<{
-        id: string;
         name: string;
         email: string;
         phone: string;
+        company: string;
+        id: string;
         birthDate: Date;
         address: string;
         city: string;
         country: string;
-        company: string;
         position: string;
         avatarUrl: string;
         emailVerified: boolean;
@@ -76,9 +76,9 @@ export declare class UserService {
         lastLogin: Date;
     }>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<{
-        id: string;
         name: string;
         email: string;
+        id: string;
         city: string;
         country: string;
         emailVerified: boolean;
@@ -86,22 +86,22 @@ export declare class UserService {
         updatedAt: Date;
     }>;
     verifyEmail(id: string): Promise<{
-        id: string;
         email: string;
+        id: string;
         emailVerified: boolean;
         updatedAt: Date;
     }>;
     toggleStatus(id: string): Promise<{
-        id: string;
         name: string;
         email: string;
+        id: string;
         isActive: boolean;
         updatedAt: Date;
     }>;
     remove(id: string): Promise<{
-        id: string;
         name: string;
         email: string;
+        id: string;
         isActive: boolean;
         updatedAt: Date;
     }>;
@@ -110,19 +110,19 @@ export declare class UserService {
         lastLogin: Date;
     }>;
     findByEmail(email: string): Promise<{
-        id: string;
         name: string;
         email: string;
         phone: string | null;
+        company: string | null;
+        id: string;
+        googleId: string | null;
         birthDate: Date | null;
         address: string | null;
         city: string | null;
         country: string;
-        company: string | null;
         position: string | null;
         avatarUrl: string | null;
         passwordHash: string | null;
-        googleId: string | null;
         emailVerified: boolean;
         isActive: boolean;
         preferredContactMethod: string;
@@ -131,19 +131,19 @@ export declare class UserService {
         lastLogin: Date | null;
     }>;
     findByGoogleId(googleId: string): Promise<{
-        id: string;
         name: string;
         email: string;
         phone: string | null;
+        company: string | null;
+        id: string;
+        googleId: string | null;
         birthDate: Date | null;
         address: string | null;
         city: string | null;
         country: string;
-        company: string | null;
         position: string | null;
         avatarUrl: string | null;
         passwordHash: string | null;
-        googleId: string | null;
         emailVerified: boolean;
         isActive: boolean;
         preferredContactMethod: string;
@@ -152,9 +152,9 @@ export declare class UserService {
         lastLogin: Date | null;
     }>;
     getRecentUsers(days?: number): Promise<{
-        id: string;
         name: string;
         email: string;
+        id: string;
         city: string;
         country: string;
         createdAt: Date;

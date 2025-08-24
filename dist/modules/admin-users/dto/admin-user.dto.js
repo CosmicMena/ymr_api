@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdminUserDto = void 0;
+exports.AdminUserFilterDto = exports.UpdateAdminUserDto = exports.CreateAdminUserDto = exports.AdminUserDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class AdminUserDto {
@@ -27,7 +27,7 @@ __decorate([
 ], AdminUserDto.prototype, "name", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'E-mail do administrador', example: 'admin@email.com' }),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], AdminUserDto.prototype, "email", void 0);
 __decorate([
@@ -73,4 +73,49 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], AdminUserDto.prototype, "updatedAt", void 0);
+class CreateAdminUserDto extends (0, swagger_1.OmitType)(AdminUserDto, ['id', 'passwordHash', 'lastLogin', 'createdAt', 'updatedAt']) {
+}
+exports.CreateAdminUserDto = CreateAdminUserDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Senha do administrador (texto plano)', example: 'StrongPass@123' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(128),
+    __metadata("design:type", String)
+], CreateAdminUserDto.prototype, "password", void 0);
+class UpdateAdminUserDto extends (0, swagger_1.PartialType)(CreateAdminUserDto) {
+}
+exports.UpdateAdminUserDto = UpdateAdminUserDto;
+class AdminUserFilterDto {
+}
+exports.AdminUserFilterDto = AdminUserFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Buscar por nome/email (contém)', required: false, example: 'maria' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], AdminUserFilterDto.prototype, "search", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por papel', required: false, example: 'uuid-role' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], AdminUserFilterDto.prototype, "roleId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por ativo', required: false, example: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], AdminUserFilterDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], AdminUserFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], AdminUserFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=admin-user.dto.js.map

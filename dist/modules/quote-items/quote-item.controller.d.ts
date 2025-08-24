@@ -1,39 +1,81 @@
 import { QuoteItemService } from './quote-item.service';
-import { QuoteItemDto } from './dto/quote-item.dto';
+import { QuoteItemDto, QuoteItemFilterDto } from './dto/quote-item.dto';
+import { SuccessResponseDto } from '../../common/dto/response.dto';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 export declare class QuoteItemController {
     private readonly service;
     constructor(service: QuoteItemService);
-    create(data: Omit<QuoteItemDto, 'id' | 'createdAt'>): Promise<{
+    create(data: Omit<QuoteItemDto, 'id' | 'createdAt'>): Promise<SuccessResponseDto<{
         id: string;
         createdAt: Date;
-        quoteRequestId: string;
         productId: string;
         quantity: number;
         unitPrice: import("@prisma/client/runtime/library").Decimal | null;
         totalPrice: import("@prisma/client/runtime/library").Decimal | null;
         notes: string | null;
-    }>;
-    findAll(): Promise<({
-        quoteRequest: {
+        quoteRequestId: string;
+    }>>;
+    findAll(pagination: PaginationDto, filter: QuoteItemFilterDto): Promise<SuccessResponseDto<{
+        data: ({
+            product: {
+                name: string;
+                description: string | null;
+                id: string;
+                isActive: boolean;
+                createdAt: Date;
+                updatedAt: Date;
+                code: string;
+                model: string | null;
+                features: string[];
+                images: string[];
+                specifications: import("@prisma/client/runtime/library").JsonValue | null;
+                documents: import("@prisma/client/runtime/library").JsonValue | null;
+                availability: string;
+                price: import("@prisma/client/runtime/library").Decimal;
+                stockQuantity: number;
+                subcategoryId: string | null;
+                brandId: string | null;
+                viewCount: number;
+            };
+            quoteRequest: {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                code: string;
+                notes: string | null;
+                statusId: string;
+                totalItems: number;
+                adminNotes: string | null;
+                expiresAt: Date | null;
+            };
+        } & {
             id: string;
             createdAt: Date;
+            productId: string;
+            quantity: number;
+            unitPrice: import("@prisma/client/runtime/library").Decimal | null;
+            totalPrice: import("@prisma/client/runtime/library").Decimal | null;
             notes: string | null;
-            code: string;
-            userId: string;
-            statusId: string;
-            totalItems: number;
-            adminNotes: string | null;
-            expiresAt: Date | null;
-            updatedAt: Date;
+            quoteRequestId: string;
+        })[];
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
         };
+    }>>;
+    findOne(id: string): Promise<SuccessResponseDto<{
         product: {
-            id: string;
-            createdAt: Date;
             name: string;
-            code: string;
-            updatedAt: Date;
-            model: string | null;
             description: string | null;
+            id: string;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            code: string;
+            model: string | null;
             features: string[];
             images: string[];
             specifications: import("@prisma/client/runtime/library").JsonValue | null;
@@ -41,82 +83,41 @@ export declare class QuoteItemController {
             availability: string;
             price: import("@prisma/client/runtime/library").Decimal;
             stockQuantity: number;
-            viewCount: number;
-            isActive: boolean;
             subcategoryId: string | null;
             brandId: string | null;
+            viewCount: number;
         };
-    } & {
-        id: string;
-        createdAt: Date;
-        quoteRequestId: string;
-        productId: string;
-        quantity: number;
-        unitPrice: import("@prisma/client/runtime/library").Decimal | null;
-        totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-        notes: string | null;
-    })[]>;
-    findOne(id: string): Promise<{
         quoteRequest: {
             id: string;
             createdAt: Date;
-            notes: string | null;
-            code: string;
+            updatedAt: Date;
             userId: string;
+            code: string;
+            notes: string | null;
             statusId: string;
             totalItems: number;
             adminNotes: string | null;
             expiresAt: Date | null;
-            updatedAt: Date;
-        };
-        product: {
-            id: string;
-            createdAt: Date;
-            name: string;
-            code: string;
-            updatedAt: Date;
-            model: string | null;
-            description: string | null;
-            features: string[];
-            images: string[];
-            specifications: import("@prisma/client/runtime/library").JsonValue | null;
-            documents: import("@prisma/client/runtime/library").JsonValue | null;
-            availability: string;
-            price: import("@prisma/client/runtime/library").Decimal;
-            stockQuantity: number;
-            viewCount: number;
-            isActive: boolean;
-            subcategoryId: string | null;
-            brandId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
-        quoteRequestId: string;
         productId: string;
         quantity: number;
         unitPrice: import("@prisma/client/runtime/library").Decimal | null;
         totalPrice: import("@prisma/client/runtime/library").Decimal | null;
         notes: string | null;
-    }>;
-    update(id: string, data: Partial<Omit<QuoteItemDto, 'id' | 'createdAt'>>): Promise<{
+        quoteRequestId: string;
+    }>>;
+    update(id: string, data: Partial<Omit<QuoteItemDto, 'id' | 'createdAt'>>): Promise<SuccessResponseDto<{
         id: string;
         createdAt: Date;
-        quoteRequestId: string;
         productId: string;
         quantity: number;
         unitPrice: import("@prisma/client/runtime/library").Decimal | null;
         totalPrice: import("@prisma/client/runtime/library").Decimal | null;
         notes: string | null;
-    }>;
-    remove(id: string): Promise<{
-        id: string;
-        createdAt: Date;
         quoteRequestId: string;
-        productId: string;
-        quantity: number;
-        unitPrice: import("@prisma/client/runtime/library").Decimal | null;
-        totalPrice: import("@prisma/client/runtime/library").Decimal | null;
-        notes: string | null;
-    }>;
+    }>>;
+    remove(id: string): Promise<SuccessResponseDto<any>>;
 }

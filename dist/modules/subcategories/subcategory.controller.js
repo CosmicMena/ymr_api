@@ -15,33 +15,64 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SubcategoryController = void 0;
 const common_1 = require("@nestjs/common");
 const subcategory_service_1 = require("./subcategory.service");
+const subcategory_dto_1 = require("./dto/subcategory.dto");
 const swagger_1 = require("@nestjs/swagger");
 const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
 const roles_guard_1 = require("../../common/guards/roles.guard");
+const roles_decorator_1 = require("../../common/decorators/roles.decorator");
+const public_decorator_1 = require("../../common/decorators/public.decorator");
+const response_dto_1 = require("../../common/dto/response.dto");
+const pagination_dto_1 = require("../../common/dto/pagination.dto");
 let SubcategoryController = class SubcategoryController {
     constructor(service) {
         this.service = service;
     }
     async create(data) {
-        return this.service.create(data);
+        const created = await this.service.create(data);
+        return new response_dto_1.SuccessResponseDto('Subcategory created successfully', created);
     }
-    async findAll() {
-        return this.service.findAll();
+    async findAll(pagination, filter) {
+        const result = await this.service.findAll(pagination, filter);
+        return new response_dto_1.SuccessResponseDto('Subcategories retrieved successfully', result);
     }
     async findOne(id) {
-        return this.service.findOne(id);
+        const entity = await this.service.findOne(id);
+        return new response_dto_1.SuccessResponseDto('Subcategory retrieved successfully', entity);
     }
     async update(id, data) {
-        return this.service.update(id, data);
+        const updated = await this.service.update(id, data);
+        return new response_dto_1.SuccessResponseDto('Subcategory updated successfully', updated);
     }
     async remove(id) {
-        return this.service.remove(id);
+        await this.service.remove(id);
+        return new response_dto_1.SuccessResponseDto('Subcategory deleted successfully');
     }
 };
 exports.SubcategoryController = SubcategoryController;
 __decorate([
     (0, common_1.Post)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Criar nova subcategoria' }),
+    (0, roles_decorator_1.Roles)('subcategories.create'),
+    (0, swagger_1.ApiOperation)({ summary: 'Criar nova subcategoria', description: 'Cria uma nova subcategoria vinculada a uma categoria existente.' }),
+    (0, swagger_1.ApiBody)({
+        type: subcategory_dto_1.SubcategoryDto,
+        description: 'Dados da subcategoria a ser criada (exceto id, createdAt, updatedAt)',
+        examples: {
+            exemplo1: {
+                summary: 'Subcategoria de Geradores',
+                value: {
+                    name: 'Geradores Industriais',
+                    categoryId: 'uuid-da-categoria',
+                    imageUrl: 'https://exemplo.com/imagem.png',
+                    description: 'Linhas de geradores para uso industrial',
+                    isActive: true
+                }
+            }
+        }
+    }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.CREATED, description: 'Subcategoria criada com sucesso', type: response_dto_1.SuccessResponseDto }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.BAD_REQUEST, description: 'Dados inválidos fornecidos' }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.UNAUTHORIZED, description: 'Usuário não autenticado' }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.FORBIDDEN, description: 'Usuário sem permissão para criar subcategorias' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -49,14 +80,27 @@ __decorate([
 ], SubcategoryController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Listar todas as subcategorias' }),
+    (0, public_decorator_1.Public)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Listar subcategorias (paginado)', description: 'Retorna subcategorias com filtros por nome, categoria e ativo.' }),
+    (0, swagger_1.ApiQuery)({ name: 'page', required: false, type: Number, example: 1 }),
+    (0, swagger_1.ApiQuery)({ name: 'limit', required: false, type: Number, example: 10 }),
+    (0, swagger_1.ApiQuery)({ name: 'search', required: false, type: String, example: 'gera' }),
+    (0, swagger_1.ApiQuery)({ name: 'categoryId', required: false, type: String, example: 'uuid-category' }),
+    (0, swagger_1.ApiQuery)({ name: 'isActive', required: false, type: Boolean, example: true }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.OK, description: 'Lista retornada com sucesso', type: response_dto_1.SuccessResponseDto }),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [pagination_dto_1.PaginationDto, subcategory_dto_1.SubcategoryFilterDto]),
     __metadata("design:returntype", Promise)
 ], SubcategoryController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Obter subcategoria específica' }),
+    (0, public_decorator_1.Public)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Obter subcategoria específica', description: 'Retorna os detalhes de uma subcategoria pelo ID.' }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID da subcategoria (UUID)', example: 'f47ac10b-58cc-4372-a567-0e02b2c3d479' }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.OK, description: 'Subcategoria encontrada', type: response_dto_1.SuccessResponseDto }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.NOT_FOUND, description: 'Subcategoria não encontrada' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -64,7 +108,22 @@ __decorate([
 ], SubcategoryController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Atualizar subcategoria' }),
+    (0, roles_decorator_1.Roles)('subcategories.update'),
+    (0, swagger_1.ApiOperation)({ summary: 'Atualizar subcategoria', description: 'Atualiza dados de uma subcategoria existente.' }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID da subcategoria (UUID)', example: 'f47ac10b-58cc-4372-a567-0e02b2c3d479' }),
+    (0, swagger_1.ApiBody)({
+        type: subcategory_dto_1.SubcategoryDto,
+        description: 'Campos parciais para atualização',
+        examples: {
+            atualizarNome: { summary: 'Atualizar nome', value: { name: 'Geradores de Backup' } },
+            atualizarImagem: { summary: 'Atualizar imagem', value: { imageUrl: 'https://exemplo.com/nova-imagem.png' } },
+            ativarDesativar: { summary: 'Ativar/Desativar', value: { isActive: false } }
+        }
+    }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.OK, description: 'Subcategoria atualizada', type: response_dto_1.SuccessResponseDto }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.NOT_FOUND, description: 'Subcategoria não encontrada' }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.UNAUTHORIZED, description: 'Usuário não autenticado' }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.FORBIDDEN, description: 'Usuário sem permissão para atualizar subcategorias' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -73,7 +132,13 @@ __decorate([
 ], SubcategoryController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Remover subcategoria' }),
+    (0, roles_decorator_1.Roles)('subcategories.delete'),
+    (0, swagger_1.ApiOperation)({ summary: 'Remover subcategoria', description: 'Remove uma subcategoria pelo ID.' }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID da subcategoria (UUID)', example: 'f47ac10b-58cc-4372-a567-0e02b2c3d479' }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.OK, description: 'Subcategoria removida com sucesso', type: response_dto_1.SuccessResponseDto, schema: { example: { success: true, message: 'Subcategory deleted successfully', data: null } } }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.NOT_FOUND, description: 'Subcategoria não encontrada' }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.UNAUTHORIZED, description: 'Usuário não autenticado' }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.FORBIDDEN, description: 'Usuário sem permissão para remover subcategorias' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -84,6 +149,8 @@ exports.SubcategoryController = SubcategoryController = __decorate([
     (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Controller)('subcategories'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, swagger_1.ApiConsumes)('application/json'),
+    (0, swagger_1.ApiProduces)('application/json'),
     __metadata("design:paramtypes", [subcategory_service_1.SubcategoryService])
 ], SubcategoryController);
 //# sourceMappingURL=subcategory.controller.js.map

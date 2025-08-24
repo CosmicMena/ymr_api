@@ -5,9 +5,9 @@ export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
     create(createUserDto: CreateUserDto): Promise<{
-        id: string;
         name: string;
         email: string;
+        id: string;
         city: string;
         country: string;
         emailVerified: boolean;
@@ -16,13 +16,13 @@ export declare class UserController {
     }>;
     findAll(paginationDto: PaginationDto, filterDto: UserFilterDto): Promise<{
         data: {
-            id: string;
             name: string;
             email: string;
             phone: string;
+            company: string;
+            id: string;
             city: string;
             country: string;
-            company: string;
             position: string;
             avatarUrl: string;
             emailVerified: boolean;
@@ -40,12 +40,12 @@ export declare class UserController {
         };
     }>;
     findActiveUsers(limit?: number): Promise<{
-        id: string;
         name: string;
         email: string;
+        company: string;
+        id: string;
         city: string;
         country: string;
-        company: string;
         isActive: boolean;
     }[]>;
     getUserStats(): Promise<{
@@ -57,15 +57,15 @@ export declare class UserController {
         usersByCities: {};
     }>;
     findOne(id: string): Promise<{
-        id: string;
         name: string;
         email: string;
         phone: string;
+        company: string;
+        id: string;
         birthDate: Date;
         address: string;
         city: string;
         country: string;
-        company: string;
         position: string;
         avatarUrl: string;
         emailVerified: boolean;
@@ -76,9 +76,9 @@ export declare class UserController {
         lastLogin: Date;
     }>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<{
-        id: string;
         name: string;
         email: string;
+        id: string;
         city: string;
         country: string;
         emailVerified: boolean;
@@ -86,22 +86,22 @@ export declare class UserController {
         updatedAt: Date;
     }>;
     verifyEmail(id: string): Promise<{
-        id: string;
         email: string;
+        id: string;
         emailVerified: boolean;
         updatedAt: Date;
     }>;
     toggleStatus(id: string): Promise<{
-        id: string;
         name: string;
         email: string;
+        id: string;
         isActive: boolean;
         updatedAt: Date;
     }>;
     remove(id: string): Promise<{
-        id: string;
         name: string;
         email: string;
+        id: string;
         isActive: boolean;
         updatedAt: Date;
     }>;

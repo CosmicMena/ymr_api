@@ -10,3 +10,14 @@ export declare class UserStatisticsDto {
     createdAt: string;
     updatedAt: string;
 }
+declare const UpdateUserStatisticsDto_base: import("@nestjs/common").Type<Partial<UserStatisticsDto>>;
+export declare class UpdateUserStatisticsDto extends UpdateUserStatisticsDto_base {
+}
+export declare class UserStatisticsFilterDto {
+    userId?: string;
+    minOrders?: number;
+    minTotalSpent?: number;
+    startDate?: string;
+    endDate?: string;
+}
+export {};

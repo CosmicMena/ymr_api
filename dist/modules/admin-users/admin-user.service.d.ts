@@ -1,5 +1,7 @@
 import { PrismaService } from '../../common/prisma/prisma.service';
 import { AdminUserDto } from './dto/admin-user.dto';
+import { PaginationDto } from '../../common/dto/pagination.dto';
+import { AdminUserFilterDto } from './dto/admin-user.dto';
 export declare class AdminUserService {
     private readonly prisma;
     constructor(prisma: PrismaService);
@@ -16,19 +18,27 @@ export declare class AdminUserService {
         roleId: string;
         createdBy: string | null;
     }>;
-    findAll(): Promise<{
-        name: string;
-        email: string;
-        id: string;
-        avatarUrl: string | null;
-        passwordHash: string;
-        isActive: boolean;
-        createdAt: Date;
-        updatedAt: Date;
-        lastLogin: Date | null;
-        roleId: string;
-        createdBy: string | null;
-    }[]>;
+    findAll(paginationDto: PaginationDto, filterDto: AdminUserFilterDto): Promise<{
+        data: {
+            name: string;
+            email: string;
+            id: string;
+            avatarUrl: string | null;
+            passwordHash: string;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            lastLogin: Date | null;
+            roleId: string;
+            createdBy: string | null;
+        }[];
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+        };
+    }>;
     findOne(id: string): Promise<{
         name: string;
         email: string;

@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShoppingCartDto = void 0;
+exports.ShoppingCartFilterDto = exports.UpdateShoppingCartDto = exports.CreateShoppingCartDto = exports.ShoppingCartDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class ShoppingCartDto {
@@ -52,4 +52,43 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], ShoppingCartDto.prototype, "updatedAt", void 0);
+class CreateShoppingCartDto extends (0, swagger_1.OmitType)(ShoppingCartDto, ['id', 'createdAt', 'updatedAt']) {
+}
+exports.CreateShoppingCartDto = CreateShoppingCartDto;
+class UpdateShoppingCartDto extends (0, swagger_1.PartialType)(CreateShoppingCartDto) {
+}
+exports.UpdateShoppingCartDto = UpdateShoppingCartDto;
+class ShoppingCartFilterDto {
+}
+exports.ShoppingCartFilterDto = ShoppingCartFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por usuário', required: false, example: 'uuid-user' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], ShoppingCartFilterDto.prototype, "userId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por sessão', required: false, example: 'sess-123' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ShoppingCartFilterDto.prototype, "sessionId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por produto', required: false, example: 'uuid-produto' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], ShoppingCartFilterDto.prototype, "productId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], ShoppingCartFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], ShoppingCartFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=shopping-cart.dto.js.map

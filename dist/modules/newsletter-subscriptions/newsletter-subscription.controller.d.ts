@@ -1,51 +1,53 @@
 import { NewsletterSubscriptionService } from './newsletter-subscription.service';
-import { NewsletterSubscriptionDto } from './dto/newsletter-subscription.dto';
+import { NewsletterSubscriptionDto, NewsletterSubscriptionFilterDto } from './dto/newsletter-subscription.dto';
+import { PaginationDto } from '../../common/dto/pagination.dto';
+import { SuccessResponseDto } from '../../common/dto/response.dto';
 export declare class NewsletterSubscriptionController {
     private readonly service;
     constructor(service: NewsletterSubscriptionService);
-    create(data: Omit<NewsletterSubscriptionDto, 'id' | 'subscribedAt' | 'unsubscribedAt'>): Promise<{
-        id: string;
-        subscribedAt: Date;
-        unsubscribedAt: Date | null;
-        email: string;
+    create(data: Omit<NewsletterSubscriptionDto, 'id' | 'subscribedAt' | 'unsubscribedAt'>): Promise<SuccessResponseDto<{
         name: string | null;
+        email: string;
+        id: string;
         isActive: boolean;
         interests: string[];
-    }>;
-    findAll(): Promise<{
-        id: string;
         subscribedAt: Date;
         unsubscribedAt: Date | null;
-        email: string;
+    }>>;
+    findAll(pagination: PaginationDto, filter: NewsletterSubscriptionFilterDto): Promise<SuccessResponseDto<{
+        data: {
+            name: string | null;
+            email: string;
+            id: string;
+            isActive: boolean;
+            interests: string[];
+            subscribedAt: Date;
+            unsubscribedAt: Date | null;
+        }[];
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+        };
+    }>>;
+    findOne(id: string): Promise<SuccessResponseDto<{
         name: string | null;
+        email: string;
+        id: string;
         isActive: boolean;
         interests: string[];
-    }[]>;
-    findOne(id: string): Promise<{
-        id: string;
         subscribedAt: Date;
         unsubscribedAt: Date | null;
-        email: string;
+    }>>;
+    update(id: string, data: Partial<Omit<NewsletterSubscriptionDto, 'id' | 'subscribedAt' | 'unsubscribedAt'>>): Promise<SuccessResponseDto<{
         name: string | null;
+        email: string;
+        id: string;
         isActive: boolean;
         interests: string[];
-    }>;
-    update(id: string, data: Partial<Omit<NewsletterSubscriptionDto, 'id' | 'subscribedAt' | 'unsubscribedAt'>>): Promise<{
-        id: string;
         subscribedAt: Date;
         unsubscribedAt: Date | null;
-        email: string;
-        name: string | null;
-        isActive: boolean;
-        interests: string[];
-    }>;
-    remove(id: string): Promise<{
-        id: string;
-        subscribedAt: Date;
-        unsubscribedAt: Date | null;
-        email: string;
-        name: string | null;
-        isActive: boolean;
-        interests: string[];
-    }>;
+    }>>;
+    remove(id: string): Promise<SuccessResponseDto<any>>;
 }

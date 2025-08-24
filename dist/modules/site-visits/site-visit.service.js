@@ -19,17 +19,43 @@ let SiteVisitService = class SiteVisitService {
     async create(data) {
         return this.prisma.siteVisit.create({ data });
     }
-    async findAll() {
-        return this.prisma.siteVisit.findMany({
-            include: { user: true },
-            orderBy: { createdAt: 'desc' },
-        });
+    async findAll(paginationDto, filterDto) {
+        const { page = 1, limit = 10 } = paginationDto;
+        const { userId, sessionId, ipAddress, startDate, endDate } = filterDto || {};
+        const where = {};
+        if (userId)
+            where.userId = userId;
+        if (sessionId)
+            where.sessionId = sessionId;
+        if (ipAddress)
+            where.ipAddress = { contains: ipAddress, mode: 'insensitive' };
+        if (startDate || endDate) {
+            where.createdAt = {};
+            if (startDate)
+                where.createdAt.gte = new Date(startDate);
+            if (endDate)
+                where.createdAt.lte = new Date(endDate);
+        }
+        const skip = (page - 1) * limit;
+        const take = Math.min(limit, 100);
+        const [items, total] = await Promise.all([
+            this.prisma.siteVisit.findMany({
+                where,
+                include: { user: true },
+                orderBy: { createdAt: 'desc' },
+                skip,
+                take,
+            }),
+            this.prisma.siteVisit.count({ where }),
+        ]);
+        const totalPages = Math.ceil(total / take);
+        return {
+            data: items,
+            pagination: { page, limit: take, total, totalPages },
+        };
     }
     async findOne(id) {
-        const visit = await this.prisma.siteVisit.findUnique({
-            where: { id },
-            include: { user: true },
-        });
+        const visit = await this.prisma.siteVisit.findUnique({ where: { id }, include: { user: true } });
         if (!visit)
             throw new common_1.NotFoundException(`Visita não encontrada`);
         return visit;

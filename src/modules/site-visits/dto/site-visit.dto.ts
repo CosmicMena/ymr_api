@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, IsUUID, IsNumber, IsInt } from 'class-validator';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
+import { IsString, IsOptional, IsUUID, IsNumber, IsInt, IsDateString } from 'class-validator';
 
 export class SiteVisitDto {
   @ApiProperty({ description: 'ID da visita', example: 'uuid' })
@@ -68,4 +68,35 @@ export class SiteVisitDto {
   @ApiProperty({ description: 'Data de criação', example: '2024-08-19T19:00:00.000Z' })
   @IsString()
   createdAt: string;
+}
+
+export class CreateSiteVisitDto extends OmitType(SiteVisitDto, ['id', 'createdAt'] as const) {}
+
+export class UpdateSiteVisitDto extends PartialType(CreateSiteVisitDto) {}
+
+export class SiteVisitFilterDto {
+  @ApiProperty({ description: 'Filtrar por usuário', required: false, example: 'uuid-user' })
+  @IsOptional()
+  @IsUUID()
+  userId?: string;
+
+  @ApiProperty({ description: 'Filtrar por sessão', required: false, example: 'sess-123' })
+  @IsOptional()
+  @IsString()
+  sessionId?: string;
+
+  @ApiProperty({ description: 'Filtrar por IP', required: false, example: '192.168.0.1' })
+  @IsOptional()
+  @IsString()
+  ipAddress?: string;
+
+  @ApiProperty({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' })
+  @IsOptional()
+  @IsDateString()
+  startDate?: string;
+
+  @ApiProperty({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' })
+  @IsOptional()
+  @IsDateString()
+  endDate?: string;
 }

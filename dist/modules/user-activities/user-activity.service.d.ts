@@ -10,9 +10,9 @@ export declare class UserActivityService {
         createdAt: Date;
         userId: string;
         metadata: import("@prisma/client/runtime/library").JsonValue | null;
+        color: string | null;
         activityType: string;
         icon: string | null;
-        color: string | null;
     }>;
     findAll(): Promise<({
         user: {
@@ -43,9 +43,9 @@ export declare class UserActivityService {
         createdAt: Date;
         userId: string;
         metadata: import("@prisma/client/runtime/library").JsonValue | null;
+        color: string | null;
         activityType: string;
         icon: string | null;
-        color: string | null;
     })[]>;
     findOne(id: string): Promise<{
         user: {
@@ -76,9 +76,9 @@ export declare class UserActivityService {
         createdAt: Date;
         userId: string;
         metadata: import("@prisma/client/runtime/library").JsonValue | null;
+        color: string | null;
         activityType: string;
         icon: string | null;
-        color: string | null;
     }>;
     update(id: string, data: Partial<Omit<UserActivityDto, 'id'>>): Promise<{
         description: string | null;
@@ -87,9 +87,9 @@ export declare class UserActivityService {
         createdAt: Date;
         userId: string;
         metadata: import("@prisma/client/runtime/library").JsonValue | null;
+        color: string | null;
         activityType: string;
         icon: string | null;
-        color: string | null;
     }>;
     remove(id: string): Promise<{
         description: string | null;
@@ -98,8 +98,8 @@ export declare class UserActivityService {
         createdAt: Date;
         userId: string;
         metadata: import("@prisma/client/runtime/library").JsonValue | null;
+        color: string | null;
         activityType: string;
         icon: string | null;
-        color: string | null;
     }>;
 }

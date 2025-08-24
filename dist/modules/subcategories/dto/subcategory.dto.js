@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SubcategoryDto = void 0;
+exports.SubcategoryFilterDto = exports.UpdateSubcategoryDto = exports.CreateSubcategoryDto = exports.SubcategoryDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class SubcategoryDto {
@@ -57,4 +57,32 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], SubcategoryDto.prototype, "updatedAt", void 0);
+class CreateSubcategoryDto extends (0, swagger_1.OmitType)(SubcategoryDto, ['id', 'createdAt', 'updatedAt']) {
+}
+exports.CreateSubcategoryDto = CreateSubcategoryDto;
+class UpdateSubcategoryDto extends (0, swagger_1.PartialType)(CreateSubcategoryDto) {
+}
+exports.UpdateSubcategoryDto = UpdateSubcategoryDto;
+class SubcategoryFilterDto {
+}
+exports.SubcategoryFilterDto = SubcategoryFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Buscar por nome (contém, case-insensitive)', required: false, example: 'gera' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(100),
+    __metadata("design:type", String)
+], SubcategoryFilterDto.prototype, "search", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por categoria', required: false, example: 'uuid-categoria' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], SubcategoryFilterDto.prototype, "categoryId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por ativo', required: false, example: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], SubcategoryFilterDto.prototype, "isActive", void 0);
 //# sourceMappingURL=subcategory.dto.js.map

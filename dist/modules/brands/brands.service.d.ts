@@ -1,5 +1,7 @@
 import { PrismaService } from '../../common/prisma/prisma.service';
 import { BrandDto } from './dto/brand.dto';
+import { PaginationDto } from '../../common/dto/pagination.dto';
+import { BrandFilterDto } from './dto/brand.dto';
 export declare class BrandService {
     private readonly prisma;
     constructor(prisma: PrismaService);
@@ -12,15 +14,23 @@ export declare class BrandService {
         updatedAt: Date;
         logoUrl: string | null;
     }>;
-    findAll(): Promise<{
-        name: string;
-        description: string | null;
-        id: string;
-        isActive: boolean;
-        createdAt: Date;
-        updatedAt: Date;
-        logoUrl: string | null;
-    }[]>;
+    findAll(paginationDto: PaginationDto, filterDto: BrandFilterDto): Promise<{
+        data: {
+            name: string;
+            description: string | null;
+            id: string;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            logoUrl: string | null;
+        }[];
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+        };
+    }>;
     findOne(id: string): Promise<{
         name: string;
         description: string | null;

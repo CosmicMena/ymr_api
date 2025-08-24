@@ -19,11 +19,40 @@ let ShoppingCartService = class ShoppingCartService {
     async create(data) {
         return this.prisma.shoppingCart.create({ data });
     }
-    async findAll() {
-        return this.prisma.shoppingCart.findMany({
-            include: { user: true, product: true },
-            orderBy: { createdAt: 'desc' },
-        });
+    async findAll(paginationDto, filterDto) {
+        const { page = 1, limit = 10 } = paginationDto;
+        const { userId, sessionId, productId, startDate, endDate } = filterDto || {};
+        const where = {};
+        if (userId)
+            where.userId = userId;
+        if (sessionId)
+            where.sessionId = sessionId;
+        if (productId)
+            where.productId = productId;
+        if (startDate || endDate) {
+            where.createdAt = {};
+            if (startDate)
+                where.createdAt.gte = new Date(startDate);
+            if (endDate)
+                where.createdAt.lte = new Date(endDate);
+        }
+        const skip = (page - 1) * limit;
+        const take = Math.min(limit, 100);
+        const [items, total] = await Promise.all([
+            this.prisma.shoppingCart.findMany({
+                where,
+                include: { user: true, product: true },
+                orderBy: { createdAt: 'desc' },
+                skip,
+                take,
+            }),
+            this.prisma.shoppingCart.count({ where }),
+        ]);
+        const totalPages = Math.ceil(total / take);
+        return {
+            data: items,
+            pagination: { page, limit: take, total, totalPages },
+        };
     }
     async findOne(id) {
         const cart = await this.prisma.shoppingCart.findUnique({

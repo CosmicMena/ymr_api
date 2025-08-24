@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateAccessPermissionDto = exports.CreateAccessPermissionDto = exports.AccessPermissionDto = void 0;
+exports.AccessPermissionFilterDto = exports.UpdateAccessPermissionDto = exports.CreateAccessPermissionDto = exports.AccessPermissionDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class AccessPermissionDto {
@@ -52,4 +52,38 @@ exports.CreateAccessPermissionDto = CreateAccessPermissionDto;
 class UpdateAccessPermissionDto extends (0, swagger_1.PartialType)(CreateAccessPermissionDto) {
 }
 exports.UpdateAccessPermissionDto = UpdateAccessPermissionDto;
+class AccessPermissionFilterDto {
+}
+exports.AccessPermissionFilterDto = AccessPermissionFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Buscar por nome (contém)', required: false, example: 'Editar' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(100),
+    __metadata("design:type", String)
+], AccessPermissionFilterDto.prototype, "search", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por recurso', required: false, example: 'Product' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], AccessPermissionFilterDto.prototype, "resource", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por ação', required: false, example: 'edit' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], AccessPermissionFilterDto.prototype, "action", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], AccessPermissionFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], AccessPermissionFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=access-permission.dto.js.map

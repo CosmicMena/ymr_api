@@ -8,6 +8,7 @@ import {
   Delete,
   HttpStatus,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -19,13 +20,15 @@ import {
   ApiConsumes,
   ApiProduces,
   ApiBearerAuth,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { AccessPermissionService } from './access-permission.service';
-import { AccessPermissionDto, CreateAccessPermissionDto, UpdateAccessPermissionDto } from './dto/access-permission.dto';
+import { AccessPermissionDto, CreateAccessPermissionDto, UpdateAccessPermissionDto, AccessPermissionFilterDto } from './dto/access-permission.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { SuccessResponseDto } from '../../common/dto/response.dto';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 
 @ApiTags('AccessPermissions')
 @ApiBearerAuth('JWT-auth')
@@ -98,36 +101,23 @@ export class AccessPermissionController {
   }
 
   @ApiOperation({
-    summary: 'Listar todas as permissões',
-    description: 'Retorna uma lista de todas as permissões de acesso. Acesso restrito a administradores.',
+    summary: 'Listar permissões (paginado)',
+    description: 'Retorna uma lista de permissões de acesso com filtros.',
   })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Permissões recuperadas com sucesso',
-    type: SuccessResponseDto,
-    schema: {
-      example: {
-        success: true,
-        message: 'Access permissions retrieved successfully',
-        data: [
-          {
-            id: 'uuid-1',
-            name: 'Editar Produto',
-            resource: 'Product',
-            action: 'edit',
-            description: 'Permite editar informações de produtos',
-            createdAt: '2024-08-19T19:00:00.000Z',
-          },
-        ],
-      },
-    },
-  })
+  @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
+  @ApiQuery({ name: 'limit', required: false, type: Number, example: 10 })
+  @ApiQuery({ name: 'search', required: false, type: String, example: 'Editar' })
+  @ApiQuery({ name: 'resource', required: false, type: String, example: 'Product' })
+  @ApiQuery({ name: 'action', required: false, type: String, example: 'edit' })
+  @ApiQuery({ name: 'startDate', required: false, type: String, example: '2024-08-01' })
+  @ApiQuery({ name: 'endDate', required: false, type: String, example: '2024-08-31' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Permissões recuperadas com sucesso', type: SuccessResponseDto })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Usuário não autenticado' })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Usuário sem permissão para listar permissões' })
   @Roles('access-permissions.list')
   @Get()
-  async findAll() {
-    const permissions = await this.accessPermissionService.findAll();
+  async findAll(@Query() pagination: PaginationDto, @Query() filter: AccessPermissionFilterDto) {
+    const permissions = await this.accessPermissionService.findAll(pagination, filter);
     return new SuccessResponseDto('Access permissions retrieved successfully', permissions);
   }
 
@@ -140,20 +130,6 @@ export class AccessPermissionController {
     status: HttpStatus.OK,
     description: 'Permissão recuperada com sucesso',
     type: SuccessResponseDto,
-    schema: {
-      example: {
-        success: true,
-        message: 'Access permission retrieved successfully',
-        data: {
-          id: 'uuid-da-permissao',
-          name: 'Editar Produto',
-          resource: 'Product',
-          action: 'edit',
-          description: 'Permite editar informações de produtos',
-          createdAt: '2024-08-19T19:00:00.000Z',
-        },
-      },
-    },
   })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Permissão não encontrada' })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Usuário não autenticado' })
@@ -174,31 +150,10 @@ export class AccessPermissionController {
     type: UpdateAccessPermissionDto,
     description: 'Campos a serem atualizados (todos opcionais)',
     examples: {
-      example1: {
-        summary: 'Atualizar nome e descrição',
-        value: {
-          name: 'Editar Produto Avançado',
-          description: 'Permissão atualizada para edição avançada de produtos',
-        },
-      },
+      example1: { summary: 'Atualizar nome e descrição', value: { name: 'Editar Produto Avançado', description: 'Permissão atualizada para edição avançada de produtos' } },
     },
   })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Permissão atualizada com sucesso',
-    type: SuccessResponseDto,
-    schema: {
-      example: {
-        success: true,
-        message: 'Access permission updated successfully',
-        data: {
-          id: 'uuid-da-permissao',
-          name: 'Editar Produto Avançado',
-          updatedAt: '2024-08-19T20:00:00.000Z',
-        },
-      },
-    },
-  })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Permissão atualizada com sucesso', type: SuccessResponseDto })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Permissão não encontrada' })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Dados inválidos fornecidos' })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Usuário não autenticado' })
@@ -218,12 +173,7 @@ export class AccessPermissionController {
     description: 'Remove uma permissão do sistema. Acesso restrito a administradores.',
   })
   @ApiParam({ name: 'id', description: 'ID da permissão (UUID)', example: 'uuid-da-permissao', type: String })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Permissão excluída com sucesso',
-    type: SuccessResponseDto,
-    schema: { example: { success: true, message: 'Access permission deleted successfully', data: null } },
-  })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Permissão excluída com sucesso', type: SuccessResponseDto, schema: { example: { success: true, message: 'Access permission deleted successfully', data: null } } })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Permissão não encontrada' })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Usuário não autenticado' })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Usuário sem permissão para excluir permissões' })

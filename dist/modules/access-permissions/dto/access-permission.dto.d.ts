@@ -12,4 +12,11 @@ export declare class CreateAccessPermissionDto extends CreateAccessPermissionDto
 declare const UpdateAccessPermissionDto_base: import("@nestjs/common").Type<Partial<CreateAccessPermissionDto>>;
 export declare class UpdateAccessPermissionDto extends UpdateAccessPermissionDto_base {
 }
+export declare class AccessPermissionFilterDto {
+    search?: string;
+    resource?: string;
+    action?: string;
+    startDate?: string;
+    endDate?: string;
+}
 export {};

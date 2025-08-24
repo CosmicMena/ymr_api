@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrderItemDto = void 0;
+exports.OrderItemFilterDto = exports.UpdateOrderItemDto = exports.CreateOrderItemDto = exports.OrderItemDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class OrderItemDto {
@@ -59,4 +59,37 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], OrderItemDto.prototype, "createdAt", void 0);
+class CreateOrderItemDto extends (0, swagger_1.OmitType)(OrderItemDto, ['id', 'createdAt']) {
+}
+exports.CreateOrderItemDto = CreateOrderItemDto;
+class UpdateOrderItemDto extends (0, swagger_1.PartialType)(CreateOrderItemDto) {
+}
+exports.UpdateOrderItemDto = UpdateOrderItemDto;
+class OrderItemFilterDto {
+}
+exports.OrderItemFilterDto = OrderItemFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por pedido', required: false, example: 'uuid-pedido' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], OrderItemFilterDto.prototype, "orderId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por produto', required: false, example: 'uuid-produto' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], OrderItemFilterDto.prototype, "productId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], OrderItemFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], OrderItemFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=order-item.dto.js.map

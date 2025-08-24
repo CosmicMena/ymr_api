@@ -19,10 +19,31 @@ let NewsletterSubscriptionService = class NewsletterSubscriptionService {
     async create(data) {
         return this.prisma.newsletterSubscription.create({ data });
     }
-    async findAll() {
-        return this.prisma.newsletterSubscription.findMany({
-            orderBy: { subscribedAt: 'desc' },
-        });
+    async findAll(paginationDto, filterDto) {
+        const { page = 1, limit = 10 } = paginationDto;
+        const { email, isActive, interest, startDate, endDate } = filterDto || {};
+        const where = {};
+        if (email)
+            where.email = { contains: email, mode: 'insensitive' };
+        if (typeof isActive === 'boolean')
+            where.isActive = isActive;
+        if (interest)
+            where.interests = { has: interest };
+        if (startDate || endDate) {
+            where.subscribedAt = {};
+            if (startDate)
+                where.subscribedAt.gte = new Date(startDate);
+            if (endDate)
+                where.subscribedAt.lte = new Date(endDate);
+        }
+        const skip = (page - 1) * limit;
+        const take = Math.min(limit, 100);
+        const [items, total] = await Promise.all([
+            this.prisma.newsletterSubscription.findMany({ where, orderBy: { subscribedAt: 'desc' }, skip, take }),
+            this.prisma.newsletterSubscription.count({ where }),
+        ]);
+        const totalPages = Math.ceil(total / take);
+        return { data: items, pagination: { page, limit: take, total, totalPages } };
     }
     async findOne(id) {
         const subscription = await this.prisma.newsletterSubscription.findUnique({ where: { id } });

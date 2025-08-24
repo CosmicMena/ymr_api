@@ -1,44 +1,53 @@
 import { BrandService } from './brands.service';
-import { BrandDto } from './dto/brand.dto';
+import { BrandDto, BrandFilterDto } from './dto/brand.dto';
 import { SuccessResponseDto } from '../../common/dto/response.dto';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 export declare class BrandController {
     private readonly brandService;
     constructor(brandService: BrandService);
     create(createBrandDto: Omit<BrandDto, 'id' | 'createdAt' | 'updatedAt'>): Promise<SuccessResponseDto<{
+        name: string;
+        description: string | null;
         id: string;
+        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         logoUrl: string | null;
-        description: string | null;
-        isActive: boolean;
     }>>;
-    findAll(): Promise<SuccessResponseDto<{
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        name: string;
-        logoUrl: string | null;
-        description: string | null;
-        isActive: boolean;
-    }[]>>;
+    findAll(pagination: PaginationDto, filter: BrandFilterDto): Promise<SuccessResponseDto<{
+        data: {
+            name: string;
+            description: string | null;
+            id: string;
+            isActive: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            logoUrl: string | null;
+        }[];
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+        };
+    }>>;
     findOne(id: string): Promise<SuccessResponseDto<{
+        name: string;
+        description: string | null;
         id: string;
+        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         logoUrl: string | null;
-        description: string | null;
-        isActive: boolean;
     }>>;
     update(id: string, updateBrandDto: Partial<Omit<BrandDto, 'id' | 'createdAt' | 'updatedAt'>>): Promise<SuccessResponseDto<{
+        name: string;
+        description: string | null;
         id: string;
+        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         logoUrl: string | null;
-        description: string | null;
-        isActive: boolean;
     }>>;
     remove(id: string): Promise<SuccessResponseDto<any>>;
 }

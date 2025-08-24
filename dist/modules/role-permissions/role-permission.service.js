@@ -19,26 +19,39 @@ let RolePermissionService = class RolePermissionService {
     async create(data) {
         return this.prisma.rolePermission.create({ data });
     }
-    async findAll() {
-        return this.prisma.rolePermission.findMany({
-            include: { role: true, permission: true },
-            orderBy: { grantedAt: 'asc' },
-        });
+    async findAll(paginationDto, filterDto) {
+        const { page = 1, limit = 10 } = paginationDto;
+        const { roleId, permissionId, startDate, endDate } = filterDto || {};
+        const where = {};
+        if (roleId)
+            where.roleId = roleId;
+        if (permissionId)
+            where.permissionId = permissionId;
+        if (startDate || endDate) {
+            where.grantedAt = {};
+            if (startDate)
+                where.grantedAt.gte = new Date(startDate);
+            if (endDate)
+                where.grantedAt.lte = new Date(endDate);
+        }
+        const skip = (page - 1) * limit;
+        const take = Math.min(limit, 100);
+        const [items, total] = await Promise.all([
+            this.prisma.rolePermission.findMany({ include: { role: true, permission: true }, where, orderBy: { grantedAt: 'asc' }, skip, take }),
+            this.prisma.rolePermission.count({ where }),
+        ]);
+        const totalPages = Math.ceil(total / take);
+        return { data: items, pagination: { page, limit: take, total, totalPages } };
     }
     async findOne(roleId, permissionId) {
-        const rp = await this.prisma.rolePermission.findUnique({
-            where: { roleId_permissionId: { roleId, permissionId } },
-            include: { role: true, permission: true },
-        });
+        const rp = await this.prisma.rolePermission.findUnique({ where: { roleId_permissionId: { roleId, permissionId } }, include: { role: true, permission: true } });
         if (!rp)
             throw new common_1.NotFoundException(`RolePermission não encontrada`);
         return rp;
     }
     async remove(roleId, permissionId) {
         await this.findOne(roleId, permissionId);
-        return this.prisma.rolePermission.delete({
-            where: { roleId_permissionId: { roleId, permissionId } },
-        });
+        return this.prisma.rolePermission.delete({ where: { roleId_permissionId: { roleId, permissionId } } });
     }
 };
 exports.RolePermissionService = RolePermissionService;

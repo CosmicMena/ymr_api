@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserRoleDto = void 0;
+exports.UserRoleFilterDto = exports.UpdateUserRoleDto = exports.CreateUserRoleDto = exports.UserRoleDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class UserRoleDto {
@@ -46,4 +46,36 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UserRoleDto.prototype, "createdAt", void 0);
+class CreateUserRoleDto extends (0, swagger_1.OmitType)(UserRoleDto, ['id', 'createdAt']) {
+}
+exports.CreateUserRoleDto = CreateUserRoleDto;
+class UpdateUserRoleDto extends (0, swagger_1.PartialType)(CreateUserRoleDto) {
+}
+exports.UpdateUserRoleDto = UpdateUserRoleDto;
+class UserRoleFilterDto {
+}
+exports.UserRoleFilterDto = UserRoleFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Buscar por nome (contém)', required: false, example: 'admin' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UserRoleFilterDto.prototype, "name", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por ativo', required: false, example: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], UserRoleFilterDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], UserRoleFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], UserRoleFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=user-role.dto.js.map

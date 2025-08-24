@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserActivityDto = void 0;
+exports.UserActivityFilterDto = exports.UpdateUserActivityDto = exports.CreateUserActivityDto = exports.UserActivityDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class UserActivityDto {
@@ -28,11 +28,13 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Tipo de atividade', example: 'login' }),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(50),
     __metadata("design:type", String)
 ], UserActivityDto.prototype, "activityType", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Título', example: 'Login realizado' }),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(255),
     __metadata("design:type", String)
 ], UserActivityDto.prototype, "title", void 0);
 __decorate([
@@ -45,12 +47,14 @@ __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Ícone', example: 'login', required: false }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(50),
     __metadata("design:type", String)
 ], UserActivityDto.prototype, "icon", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Cor', example: '#FF0000', required: false }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(20),
     __metadata("design:type", String)
 ], UserActivityDto.prototype, "color", void 0);
 __decorate([
@@ -63,4 +67,45 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UserActivityDto.prototype, "createdAt", void 0);
+class CreateUserActivityDto extends (0, swagger_1.OmitType)(UserActivityDto, ['id', 'createdAt']) {
+}
+exports.CreateUserActivityDto = CreateUserActivityDto;
+class UpdateUserActivityDto extends (0, swagger_1.PartialType)(CreateUserActivityDto) {
+}
+exports.UpdateUserActivityDto = UpdateUserActivityDto;
+class UserActivityFilterDto {
+}
+exports.UserActivityFilterDto = UserActivityFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por usuário', required: false, example: 'uuid-user' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], UserActivityFilterDto.prototype, "userId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por tipo de atividade', required: false, example: 'login' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(50),
+    __metadata("design:type", String)
+], UserActivityFilterDto.prototype, "activityType", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Buscar por título (contém)', required: false, example: 'Login' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(255),
+    __metadata("design:type", String)
+], UserActivityFilterDto.prototype, "search", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], UserActivityFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], UserActivityFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=user-activity.dto.js.map

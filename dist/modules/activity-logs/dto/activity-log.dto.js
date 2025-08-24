@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ActivityLogDto = void 0;
+exports.ActivityLogFilterDto = exports.UpdateActivityLogDto = exports.CreateActivityLogDto = exports.ActivityLogDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class ActivityLogDto {
@@ -35,6 +35,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Ação', example: 'login' }),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(100),
     __metadata("design:type", String)
 ], ActivityLogDto.prototype, "action", void 0);
 __decorate([
@@ -77,4 +78,50 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], ActivityLogDto.prototype, "createdAt", void 0);
+class CreateActivityLogDto extends (0, swagger_1.OmitType)(ActivityLogDto, ['id', 'createdAt']) {
+}
+exports.CreateActivityLogDto = CreateActivityLogDto;
+class UpdateActivityLogDto extends (0, swagger_1.PartialType)(CreateActivityLogDto) {
+}
+exports.UpdateActivityLogDto = UpdateActivityLogDto;
+class ActivityLogFilterDto {
+}
+exports.ActivityLogFilterDto = ActivityLogFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por usuário', required: false, example: 'uuid-user' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], ActivityLogFilterDto.prototype, "userId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por admin', required: false, example: 'uuid-admin' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], ActivityLogFilterDto.prototype, "adminId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por ação', required: false, example: 'login' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(100),
+    __metadata("design:type", String)
+], ActivityLogFilterDto.prototype, "action", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por tipo de recurso', required: false, example: 'User' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ActivityLogFilterDto.prototype, "resourceType", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], ActivityLogFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], ActivityLogFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=activity-log.dto.js.map

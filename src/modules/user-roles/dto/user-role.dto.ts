@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, IsBoolean, IsUUID } from 'class-validator';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
+import { IsString, IsOptional, IsBoolean, IsUUID, IsDateString } from 'class-validator';
 
 export class UserRoleDto {
   @ApiProperty({ description: 'ID do papel', example: 'uuid' })
@@ -26,4 +26,29 @@ export class UserRoleDto {
   @ApiProperty({ description: 'Data de criação', example: '2024-08-19T19:00:00.000Z' })
   @IsString()
   createdAt: string;
+}
+
+export class CreateUserRoleDto extends OmitType(UserRoleDto, ['id', 'createdAt'] as const) {}
+
+export class UpdateUserRoleDto extends PartialType(CreateUserRoleDto) {}
+
+export class UserRoleFilterDto {
+  @ApiProperty({ description: 'Buscar por nome (contém)', required: false, example: 'admin' })
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @ApiProperty({ description: 'Filtrar por ativo', required: false, example: true })
+  @IsOptional()
+  isActive?: boolean;
+
+  @ApiProperty({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' })
+  @IsOptional()
+  @IsDateString()
+  startDate?: string;
+
+  @ApiProperty({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' })
+  @IsOptional()
+  @IsDateString()
+  endDate?: string;
 }

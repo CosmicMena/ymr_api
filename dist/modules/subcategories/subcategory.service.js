@@ -19,11 +19,30 @@ let SubcategoryService = class SubcategoryService {
     async create(data) {
         return this.prisma.subcategory.create({ data });
     }
-    async findAll() {
-        return this.prisma.subcategory.findMany({
-            orderBy: { name: 'asc' },
-            include: { category: true },
-        });
+    async findAll(paginationDto, filterDto) {
+        const { page = 1, limit = 10 } = paginationDto;
+        const { search, categoryId, isActive } = filterDto || {};
+        const where = {};
+        if (search)
+            where.name = { contains: search, mode: 'insensitive' };
+        if (categoryId)
+            where.categoryId = categoryId;
+        if (typeof isActive === 'boolean')
+            where.isActive = isActive;
+        const skip = (page - 1) * limit;
+        const take = Math.min(limit, 100);
+        const [items, total] = await Promise.all([
+            this.prisma.subcategory.findMany({
+                where,
+                orderBy: { name: 'asc' },
+                include: { category: true },
+                skip,
+                take,
+            }),
+            this.prisma.subcategory.count({ where }),
+        ]);
+        const totalPages = Math.ceil(total / take);
+        return { data: items, pagination: { page, limit: take, total, totalPages } };
     }
     async findOne(id) {
         const subcategory = await this.prisma.subcategory.findUnique({

@@ -4,97 +4,97 @@ export declare class CategoryController {
     private readonly categoryService;
     constructor(categoryService: CategoryService);
     create(createCategoryDto: CreateCategoryDto): Promise<{
+        _count: {
+            subcategories: number;
+        };
         subcategories: {
-            id: string;
             name: string;
-            imageUrl: string | null;
             description: string | null;
+            id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
+            imageUrl: string | null;
         }[];
-        _count: {
-            subcategories: number;
-        };
     } & {
-        id: string;
         name: string;
-        imageUrl: string | null;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        imageUrl: string | null;
     }>;
     findAll(filterDto: CategoryFilterDto): Promise<{
-        id: string;
         name: string;
-        imageUrl: string;
         description: string;
+        id: string;
         isActive: boolean;
         _count: {
             subcategories: number;
         };
+        imageUrl: string;
     }[]>;
     findActiveCategories(): Promise<{
-        id: string;
         name: string;
-        imageUrl: string;
         description: string;
+        id: string;
         isActive: boolean;
         _count: {
             subcategories: number;
         };
+        imageUrl: string;
     }[]>;
     findOne(id: string): Promise<{
-        subcategories: {
-            id: string;
-            name: string;
-            description: string;
-            isActive: boolean;
-        }[];
         _count: {
             subcategories: number;
         };
+        subcategories: {
+            name: string;
+            description: string;
+            id: string;
+            isActive: boolean;
+        }[];
     } & {
-        id: string;
         name: string;
-        imageUrl: string | null;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        imageUrl: string | null;
     }>;
     update(id: string, updateCategoryDto: UpdateCategoryDto): Promise<{
+        _count: {
+            subcategories: number;
+        };
         subcategories: {
-            id: string;
             name: string;
-            imageUrl: string | null;
             description: string | null;
+            id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
+            imageUrl: string | null;
         }[];
-        _count: {
-            subcategories: number;
-        };
     } & {
-        id: string;
         name: string;
-        imageUrl: string | null;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        imageUrl: string | null;
     }>;
     remove(id: string): Promise<{
-        id: string;
         name: string;
-        imageUrl: string | null;
         description: string | null;
+        id: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        imageUrl: string | null;
     }>;
 }

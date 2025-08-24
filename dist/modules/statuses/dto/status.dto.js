@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StatusDto = void 0;
+exports.StatusFilterDto = exports.UpdateStatusDto = exports.CreateStatusDto = exports.StatusDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class StatusDto {
@@ -42,4 +42,26 @@ __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], StatusDto.prototype, "isActive", void 0);
+class CreateStatusDto extends (0, swagger_1.OmitType)(StatusDto, ['id']) {
+}
+exports.CreateStatusDto = CreateStatusDto;
+class UpdateStatusDto extends (0, swagger_1.PartialType)(CreateStatusDto) {
+}
+exports.UpdateStatusDto = UpdateStatusDto;
+class StatusFilterDto {
+}
+exports.StatusFilterDto = StatusFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Buscar por nome (contém, case-insensitive)', required: false, example: 'pend' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(50),
+    __metadata("design:type", String)
+], StatusFilterDto.prototype, "search", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por ativo', required: false, example: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], StatusFilterDto.prototype, "isActive", void 0);
 //# sourceMappingURL=status.dto.js.map

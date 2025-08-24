@@ -22,6 +22,7 @@ const roles_guard_1 = require("../../common/guards/roles.guard");
 const roles_decorator_1 = require("../../common/decorators/roles.decorator");
 const public_decorator_1 = require("../../common/decorators/public.decorator");
 const response_dto_1 = require("../../common/dto/response.dto");
+const pagination_dto_1 = require("../../common/dto/pagination.dto");
 let BrandController = class BrandController {
     constructor(brandService) {
         this.brandService = brandService;
@@ -30,9 +31,9 @@ let BrandController = class BrandController {
         const brand = await this.brandService.create(createBrandDto);
         return new response_dto_1.SuccessResponseDto('Brand created successfully', brand);
     }
-    async findAll() {
-        const brands = await this.brandService.findAll();
-        return new response_dto_1.SuccessResponseDto('Brands retrieved successfully', brands);
+    async findAll(pagination, filter) {
+        const result = await this.brandService.findAll(pagination, filter);
+        return new response_dto_1.SuccessResponseDto('Brands retrieved successfully', result);
     }
     async findOne(id) {
         const brand = await this.brandService.findOne(id);
@@ -127,39 +128,22 @@ __decorate([
 ], BrandController.prototype, "create", null);
 __decorate([
     (0, swagger_1.ApiOperation)({
-        summary: 'Listar todas as marcas',
-        description: 'Retorna uma lista de todas as marcas do sistema. Endpoint público.'
+        summary: 'Listar marcas (paginado)',
+        description: 'Retorna lista paginada de marcas com filtros opcionais.'
     }),
-    (0, swagger_1.ApiResponse)({
-        status: common_1.HttpStatus.OK,
-        description: 'Marcas recuperadas com sucesso',
-        schema: {
-            example: {
-                success: true,
-                message: 'Brands retrieved successfully',
-                data: [
-                    {
-                        id: 'uuid-1',
-                        name: 'YMR Industrial',
-                        logoUrl: 'https://example.com/logo-ymr.png',
-                        description: 'Marca líder em equipamentos industriais de alta qualidade',
-                        isActive: true,
-                        createdAt: '2024-01-15T10:30:00Z',
-                        updatedAt: '2024-01-15T10:30:00Z'
-                    }
-                ]
-            }
-        }
-    }),
-    (0, swagger_1.ApiResponse)({
-        status: common_1.HttpStatus.BAD_REQUEST,
-        description: 'Erro na requisição'
-    }),
+    (0, swagger_1.ApiQuery)({ name: 'page', required: false, type: Number, example: 1 }),
+    (0, swagger_1.ApiQuery)({ name: 'limit', required: false, type: Number, example: 10 }),
+    (0, swagger_1.ApiQuery)({ name: 'search', required: false, type: String, example: 'cat' }),
+    (0, swagger_1.ApiQuery)({ name: 'isActive', required: false, type: Boolean, example: true }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.OK, description: 'Marcas recuperadas com sucesso', type: response_dto_1.SuccessResponseDto }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.BAD_REQUEST, description: 'Erro na requisição' }),
     (0, swagger_1.ApiProduces)('application/json'),
     (0, public_decorator_1.Public)(),
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [pagination_dto_1.PaginationDto, brand_dto_1.BrandFilterDto]),
     __metadata("design:returntype", Promise)
 ], BrandController.prototype, "findAll", null);
 __decorate([
@@ -176,21 +160,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({
         status: common_1.HttpStatus.OK,
         description: 'Marca recuperada com sucesso',
-        schema: {
-            example: {
-                success: true,
-                message: 'Brand retrieved successfully',
-                data: {
-                    id: 'uuid-da-marca',
-                    name: 'YMR Industrial',
-                    logoUrl: 'https://example.com/logo-ymr.png',
-                    description: 'Marca líder em equipamentos industriais de alta qualidade',
-                    isActive: true,
-                    createdAt: '2024-01-15T10:30:00Z',
-                    updatedAt: '2024-01-15T10:30:00Z'
-                }
-            }
-        }
+        type: response_dto_1.SuccessResponseDto,
     }),
     (0, swagger_1.ApiResponse)({
         status: common_1.HttpStatus.NOT_FOUND,
@@ -244,17 +214,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({
         status: common_1.HttpStatus.OK,
         description: 'Marca atualizada com sucesso',
-        schema: {
-            example: {
-                success: true,
-                message: 'Brand updated successfully',
-                data: {
-                    id: 'uuid-da-marca',
-                    name: 'YMR Industrial Solutions',
-                    updatedAt: '2024-01-15T11:30:00Z'
-                }
-            }
-        }
+        type: response_dto_1.SuccessResponseDto,
     }),
     (0, swagger_1.ApiResponse)({
         status: common_1.HttpStatus.NOT_FOUND,
@@ -301,13 +261,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({
         status: common_1.HttpStatus.OK,
         description: 'Marca excluída com sucesso',
-        schema: {
-            example: {
-                success: true,
-                message: 'Brand deleted successfully',
-                data: null
-            }
-        }
+        type: response_dto_1.SuccessResponseDto,
     }),
     (0, swagger_1.ApiResponse)({
         status: common_1.HttpStatus.NOT_FOUND,

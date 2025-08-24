@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SiteVisitDto = void 0;
+exports.SiteVisitFilterDto = exports.UpdateSiteVisitDto = exports.CreateSiteVisitDto = exports.SiteVisitDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class SiteVisitDto {
@@ -96,4 +96,43 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], SiteVisitDto.prototype, "createdAt", void 0);
+class CreateSiteVisitDto extends (0, swagger_1.OmitType)(SiteVisitDto, ['id', 'createdAt']) {
+}
+exports.CreateSiteVisitDto = CreateSiteVisitDto;
+class UpdateSiteVisitDto extends (0, swagger_1.PartialType)(CreateSiteVisitDto) {
+}
+exports.UpdateSiteVisitDto = UpdateSiteVisitDto;
+class SiteVisitFilterDto {
+}
+exports.SiteVisitFilterDto = SiteVisitFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por usuário', required: false, example: 'uuid-user' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], SiteVisitFilterDto.prototype, "userId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por sessão', required: false, example: 'sess-123' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], SiteVisitFilterDto.prototype, "sessionId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por IP', required: false, example: '192.168.0.1' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], SiteVisitFilterDto.prototype, "ipAddress", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], SiteVisitFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], SiteVisitFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=site-visit.dto.js.map

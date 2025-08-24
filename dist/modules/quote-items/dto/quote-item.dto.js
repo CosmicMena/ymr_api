@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.QuoteItemDto = void 0;
+exports.QuoteItemFilterDto = exports.UpdateQuoteItemDto = exports.CreateQuoteItemDto = exports.QuoteItemDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class QuoteItemDto {
@@ -58,4 +58,37 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], QuoteItemDto.prototype, "createdAt", void 0);
+class CreateQuoteItemDto extends (0, swagger_1.OmitType)(QuoteItemDto, ['id', 'createdAt']) {
+}
+exports.CreateQuoteItemDto = CreateQuoteItemDto;
+class UpdateQuoteItemDto extends (0, swagger_1.PartialType)(CreateQuoteItemDto) {
+}
+exports.UpdateQuoteItemDto = UpdateQuoteItemDto;
+class QuoteItemFilterDto {
+}
+exports.QuoteItemFilterDto = QuoteItemFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por solicitação', required: false, example: 'uuid-solicitacao' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], QuoteItemFilterDto.prototype, "quoteRequestId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por produto', required: false, example: 'uuid-produto' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], QuoteItemFilterDto.prototype, "productId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], QuoteItemFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], QuoteItemFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=quote-item.dto.js.map

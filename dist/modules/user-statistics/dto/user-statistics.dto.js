@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserStatisticsDto = void 0;
+exports.UserStatisticsFilterDto = exports.UpdateUserStatisticsDto = exports.UserStatisticsDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class UserStatisticsDto {
@@ -66,4 +66,40 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UserStatisticsDto.prototype, "updatedAt", void 0);
+class UpdateUserStatisticsDto extends (0, swagger_1.PartialType)(UserStatisticsDto) {
+}
+exports.UpdateUserStatisticsDto = UpdateUserStatisticsDto;
+class UserStatisticsFilterDto {
+}
+exports.UserStatisticsFilterDto = UserStatisticsFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por usuário', required: false, example: 'uuid-user' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], UserStatisticsFilterDto.prototype, "userId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Mínimo de pedidos', required: false, example: 1 }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], UserStatisticsFilterDto.prototype, "minOrders", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Mínimo de gastos', required: false, example: 1000 }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], UserStatisticsFilterDto.prototype, "minTotalSpent", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (lastActivity >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], UserStatisticsFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (lastActivity <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], UserStatisticsFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=user-statistics.dto.js.map

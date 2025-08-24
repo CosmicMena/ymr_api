@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RolePermissionDto = void 0;
+exports.RolePermissionFilterDto = exports.UpdateRolePermissionDto = exports.CreateRolePermissionDto = exports.RolePermissionDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class RolePermissionDto {
@@ -30,4 +30,37 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], RolePermissionDto.prototype, "grantedAt", void 0);
+class CreateRolePermissionDto extends (0, swagger_1.OmitType)(RolePermissionDto, ['grantedAt']) {
+}
+exports.CreateRolePermissionDto = CreateRolePermissionDto;
+class UpdateRolePermissionDto extends (0, swagger_1.PartialType)(CreateRolePermissionDto) {
+}
+exports.UpdateRolePermissionDto = UpdateRolePermissionDto;
+class RolePermissionFilterDto {
+}
+exports.RolePermissionFilterDto = RolePermissionFilterDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por papel', required: false, example: 'uuid-role' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], RolePermissionFilterDto.prototype, "roleId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por permissão', required: false, example: 'uuid-permission' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], RolePermissionFilterDto.prototype, "permissionId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data início (grantedAt >=)', required: false, example: '2024-08-01' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], RolePermissionFilterDto.prototype, "startDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Data fim (grantedAt <=)', required: false, example: '2024-08-31' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", String)
+], RolePermissionFilterDto.prototype, "endDate", void 0);
 //# sourceMappingURL=role-permission.dto.js.map

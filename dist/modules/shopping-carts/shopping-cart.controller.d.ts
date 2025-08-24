@@ -1,48 +1,88 @@
 import { ShoppingCartService } from './shopping-cart.service';
-import { ShoppingCartDto } from './dto/shopping-cart.dto';
+import { ShoppingCartDto, ShoppingCartFilterDto } from './dto/shopping-cart.dto';
+import { PaginationDto } from '../../common/dto/pagination.dto';
+import { SuccessResponseDto } from '../../common/dto/response.dto';
 export declare class ShoppingCartController {
     private readonly service;
     constructor(service: ShoppingCartService);
-    create(data: Omit<ShoppingCartDto, 'createdAt' | 'updatedAt'>): Promise<{
+    create(data: Omit<ShoppingCartDto, 'createdAt' | 'updatedAt'>): Promise<SuccessResponseDto<{
+        id: string;
         createdAt: Date;
         updatedAt: Date;
-        id: string;
         userId: string | null;
-        sessionId: string | null;
         productId: string;
         quantity: number;
-    }>;
-    findAll(): Promise<({
-        user: {
+        sessionId: string | null;
+    }>>;
+    findAll(pagination: PaginationDto, filter: ShoppingCartFilterDto): Promise<SuccessResponseDto<{
+        data: ({
+            product: {
+                name: string;
+                description: string | null;
+                id: string;
+                isActive: boolean;
+                createdAt: Date;
+                updatedAt: Date;
+                code: string;
+                model: string | null;
+                features: string[];
+                images: string[];
+                specifications: import("@prisma/client/runtime/library").JsonValue | null;
+                documents: import("@prisma/client/runtime/library").JsonValue | null;
+                availability: string;
+                price: import("@prisma/client/runtime/library").Decimal;
+                stockQuantity: number;
+                subcategoryId: string | null;
+                brandId: string | null;
+                viewCount: number;
+            };
+            user: {
+                name: string;
+                email: string;
+                phone: string | null;
+                company: string | null;
+                id: string;
+                googleId: string | null;
+                birthDate: Date | null;
+                address: string | null;
+                city: string | null;
+                country: string;
+                position: string | null;
+                avatarUrl: string | null;
+                passwordHash: string | null;
+                emailVerified: boolean;
+                isActive: boolean;
+                preferredContactMethod: string;
+                createdAt: Date;
+                updatedAt: Date;
+                lastLogin: Date | null;
+            };
+        } & {
+            id: string;
             createdAt: Date;
             updatedAt: Date;
-            id: string;
-            name: string;
-            email: string;
-            phone: string | null;
-            birthDate: Date | null;
-            address: string | null;
-            city: string | null;
-            country: string;
-            company: string | null;
-            position: string | null;
-            avatarUrl: string | null;
-            passwordHash: string | null;
-            googleId: string | null;
-            emailVerified: boolean;
-            isActive: boolean;
-            preferredContactMethod: string;
-            lastLogin: Date | null;
+            userId: string | null;
+            productId: string;
+            quantity: number;
+            sessionId: string | null;
+        })[];
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
         };
+    }>>;
+    findOne(id: string): Promise<SuccessResponseDto<{
         product: {
+            name: string;
+            description: string | null;
+            id: string;
+            isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
-            id: string;
-            name: string;
-            isActive: boolean;
             code: string;
             model: string | null;
-            description: string | null;
             features: string[];
             images: string[];
             specifications: import("@prisma/client/runtime/library").JsonValue | null;
@@ -50,86 +90,48 @@ export declare class ShoppingCartController {
             availability: string;
             price: import("@prisma/client/runtime/library").Decimal;
             stockQuantity: number;
-            viewCount: number;
             subcategoryId: string | null;
             brandId: string | null;
+            viewCount: number;
         };
-    } & {
-        createdAt: Date;
-        updatedAt: Date;
-        id: string;
-        userId: string | null;
-        sessionId: string | null;
-        productId: string;
-        quantity: number;
-    })[]>;
-    findOne(id: string): Promise<{
         user: {
-            createdAt: Date;
-            updatedAt: Date;
-            id: string;
             name: string;
             email: string;
             phone: string | null;
+            company: string | null;
+            id: string;
+            googleId: string | null;
             birthDate: Date | null;
             address: string | null;
             city: string | null;
             country: string;
-            company: string | null;
             position: string | null;
             avatarUrl: string | null;
             passwordHash: string | null;
-            googleId: string | null;
             emailVerified: boolean;
             isActive: boolean;
             preferredContactMethod: string;
-            lastLogin: Date | null;
-        };
-        product: {
             createdAt: Date;
             updatedAt: Date;
-            id: string;
-            name: string;
-            isActive: boolean;
-            code: string;
-            model: string | null;
-            description: string | null;
-            features: string[];
-            images: string[];
-            specifications: import("@prisma/client/runtime/library").JsonValue | null;
-            documents: import("@prisma/client/runtime/library").JsonValue | null;
-            availability: string;
-            price: import("@prisma/client/runtime/library").Decimal;
-            stockQuantity: number;
-            viewCount: number;
-            subcategoryId: string | null;
-            brandId: string | null;
+            lastLogin: Date | null;
         };
     } & {
+        id: string;
         createdAt: Date;
         updatedAt: Date;
-        id: string;
         userId: string | null;
-        sessionId: string | null;
         productId: string;
         quantity: number;
-    }>;
-    update(id: string, data: Partial<Omit<ShoppingCartDto, 'id' | 'createdAt' | 'updatedAt'>>): Promise<{
+        sessionId: string | null;
+    }>>;
+    update(id: string, data: Partial<Omit<ShoppingCartDto, 'id' | 'createdAt' | 'updatedAt'>>): Promise<SuccessResponseDto<{
+        id: string;
         createdAt: Date;
         updatedAt: Date;
-        id: string;
         userId: string | null;
-        sessionId: string | null;
         productId: string;
         quantity: number;
-    }>;
-    remove(id: string): Promise<{
-        createdAt: Date;
-        updatedAt: Date;
-        id: string;
-        userId: string | null;
         sessionId: string | null;
-        productId: string;
-        quantity: number;
-    }>;
+    }>>;
+    remove(id: string): Promise<SuccessResponseDto<any>>;
 }

@@ -19,10 +19,35 @@ let MessageService = class MessageService {
     async create(data) {
         return this.prisma.message.create({ data });
     }
-    async findAll() {
-        return this.prisma.message.findMany({
-            orderBy: { createdAt: 'asc' },
-        });
+    async findAll(paginationDto, filterDto) {
+        const { page = 1, limit = 10 } = paginationDto;
+        const { threadId, senderId, isUnread, startDate, endDate } = filterDto || {};
+        const where = {};
+        if (threadId)
+            where.threadId = threadId;
+        if (senderId)
+            where.senderId = senderId;
+        if (typeof isUnread === 'boolean')
+            where.isRead = !isUnread ? undefined : undefined;
+        if (typeof isUnread === 'boolean') {
+            if (isUnread)
+                where.isRead = false;
+        }
+        if (startDate || endDate) {
+            where.createdAt = {};
+            if (startDate)
+                where.createdAt.gte = new Date(startDate);
+            if (endDate)
+                where.createdAt.lte = new Date(endDate);
+        }
+        const skip = (page - 1) * limit;
+        const take = Math.min(limit, 100);
+        const [items, total] = await Promise.all([
+            this.prisma.message.findMany({ where, orderBy: { createdAt: 'asc' }, skip, take }),
+            this.prisma.message.count({ where }),
+        ]);
+        const totalPages = Math.ceil(total / take);
+        return { data: items, pagination: { page, limit: take, total, totalPages } };
     }
     async findOne(id) {
         const message = await this.prisma.message.findUnique({ where: { id } });

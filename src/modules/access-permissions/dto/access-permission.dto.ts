@@ -1,5 +1,5 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
-import { IsUUID, IsString, IsOptional } from 'class-validator';
+import { IsUUID, IsString, IsOptional, MaxLength, IsDateString } from 'class-validator';
 
 // DTO principal (para respostas completas)
 export class AccessPermissionDto {
@@ -34,3 +34,31 @@ export class CreateAccessPermissionDto extends OmitType(AccessPermissionDto, ['i
 
 // DTO para atualização (todos os campos opcionais)
 export class UpdateAccessPermissionDto extends PartialType(CreateAccessPermissionDto) {}
+
+export class AccessPermissionFilterDto {
+  @ApiProperty({ description: 'Buscar por nome (contém)', required: false, example: 'Editar' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  search?: string;
+
+  @ApiProperty({ description: 'Filtrar por recurso', required: false, example: 'Product' })
+  @IsOptional()
+  @IsString()
+  resource?: string;
+
+  @ApiProperty({ description: 'Filtrar por ação', required: false, example: 'edit' })
+  @IsOptional()
+  @IsString()
+  action?: string;
+
+  @ApiProperty({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' })
+  @IsOptional()
+  @IsDateString()
+  startDate?: string;
+
+  @ApiProperty({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' })
+  @IsOptional()
+  @IsDateString()
+  endDate?: string;
+}

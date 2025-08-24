@@ -21,6 +21,7 @@ const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
 const roles_guard_1 = require("../../common/guards/roles.guard");
 const roles_decorator_1 = require("../../common/decorators/roles.decorator");
 const response_dto_1 = require("../../common/dto/response.dto");
+const pagination_dto_1 = require("../../common/dto/pagination.dto");
 let AccessPermissionController = class AccessPermissionController {
     constructor(accessPermissionService) {
         this.accessPermissionService = accessPermissionService;
@@ -29,8 +30,8 @@ let AccessPermissionController = class AccessPermissionController {
         const permission = await this.accessPermissionService.create(data);
         return new response_dto_1.SuccessResponseDto('Access permission created successfully', permission);
     }
-    async findAll() {
-        const permissions = await this.accessPermissionService.findAll();
+    async findAll(pagination, filter) {
+        const permissions = await this.accessPermissionService.findAll(pagination, filter);
         return new response_dto_1.SuccessResponseDto('Access permissions retrieved successfully', permissions);
     }
     async findOne(id) {
@@ -109,36 +110,25 @@ __decorate([
 ], AccessPermissionController.prototype, "create", null);
 __decorate([
     (0, swagger_1.ApiOperation)({
-        summary: 'Listar todas as permissões',
-        description: 'Retorna uma lista de todas as permissões de acesso. Acesso restrito a administradores.',
+        summary: 'Listar permissões (paginado)',
+        description: 'Retorna uma lista de permissões de acesso com filtros.',
     }),
-    (0, swagger_1.ApiResponse)({
-        status: common_1.HttpStatus.OK,
-        description: 'Permissões recuperadas com sucesso',
-        type: response_dto_1.SuccessResponseDto,
-        schema: {
-            example: {
-                success: true,
-                message: 'Access permissions retrieved successfully',
-                data: [
-                    {
-                        id: 'uuid-1',
-                        name: 'Editar Produto',
-                        resource: 'Product',
-                        action: 'edit',
-                        description: 'Permite editar informações de produtos',
-                        createdAt: '2024-08-19T19:00:00.000Z',
-                    },
-                ],
-            },
-        },
-    }),
+    (0, swagger_1.ApiQuery)({ name: 'page', required: false, type: Number, example: 1 }),
+    (0, swagger_1.ApiQuery)({ name: 'limit', required: false, type: Number, example: 10 }),
+    (0, swagger_1.ApiQuery)({ name: 'search', required: false, type: String, example: 'Editar' }),
+    (0, swagger_1.ApiQuery)({ name: 'resource', required: false, type: String, example: 'Product' }),
+    (0, swagger_1.ApiQuery)({ name: 'action', required: false, type: String, example: 'edit' }),
+    (0, swagger_1.ApiQuery)({ name: 'startDate', required: false, type: String, example: '2024-08-01' }),
+    (0, swagger_1.ApiQuery)({ name: 'endDate', required: false, type: String, example: '2024-08-31' }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.OK, description: 'Permissões recuperadas com sucesso', type: response_dto_1.SuccessResponseDto }),
     (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.UNAUTHORIZED, description: 'Usuário não autenticado' }),
     (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.FORBIDDEN, description: 'Usuário sem permissão para listar permissões' }),
     (0, roles_decorator_1.Roles)('access-permissions.list'),
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [pagination_dto_1.PaginationDto, access_permission_dto_1.AccessPermissionFilterDto]),
     __metadata("design:returntype", Promise)
 ], AccessPermissionController.prototype, "findAll", null);
 __decorate([
@@ -151,20 +141,6 @@ __decorate([
         status: common_1.HttpStatus.OK,
         description: 'Permissão recuperada com sucesso',
         type: response_dto_1.SuccessResponseDto,
-        schema: {
-            example: {
-                success: true,
-                message: 'Access permission retrieved successfully',
-                data: {
-                    id: 'uuid-da-permissao',
-                    name: 'Editar Produto',
-                    resource: 'Product',
-                    action: 'edit',
-                    description: 'Permite editar informações de produtos',
-                    createdAt: '2024-08-19T19:00:00.000Z',
-                },
-            },
-        },
     }),
     (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.NOT_FOUND, description: 'Permissão não encontrada' }),
     (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.UNAUTHORIZED, description: 'Usuário não autenticado' }),
@@ -186,31 +162,10 @@ __decorate([
         type: access_permission_dto_1.UpdateAccessPermissionDto,
         description: 'Campos a serem atualizados (todos opcionais)',
         examples: {
-            example1: {
-                summary: 'Atualizar nome e descrição',
-                value: {
-                    name: 'Editar Produto Avançado',
-                    description: 'Permissão atualizada para edição avançada de produtos',
-                },
-            },
+            example1: { summary: 'Atualizar nome e descrição', value: { name: 'Editar Produto Avançado', description: 'Permissão atualizada para edição avançada de produtos' } },
         },
     }),
-    (0, swagger_1.ApiResponse)({
-        status: common_1.HttpStatus.OK,
-        description: 'Permissão atualizada com sucesso',
-        type: response_dto_1.SuccessResponseDto,
-        schema: {
-            example: {
-                success: true,
-                message: 'Access permission updated successfully',
-                data: {
-                    id: 'uuid-da-permissao',
-                    name: 'Editar Produto Avançado',
-                    updatedAt: '2024-08-19T20:00:00.000Z',
-                },
-            },
-        },
-    }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.OK, description: 'Permissão atualizada com sucesso', type: response_dto_1.SuccessResponseDto }),
     (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.NOT_FOUND, description: 'Permissão não encontrada' }),
     (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.BAD_REQUEST, description: 'Dados inválidos fornecidos' }),
     (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.UNAUTHORIZED, description: 'Usuário não autenticado' }),
@@ -229,12 +184,7 @@ __decorate([
         description: 'Remove uma permissão do sistema. Acesso restrito a administradores.',
     }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'ID da permissão (UUID)', example: 'uuid-da-permissao', type: String }),
-    (0, swagger_1.ApiResponse)({
-        status: common_1.HttpStatus.OK,
-        description: 'Permissão excluída com sucesso',
-        type: response_dto_1.SuccessResponseDto,
-        schema: { example: { success: true, message: 'Access permission deleted successfully', data: null } },
-    }),
+    (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.OK, description: 'Permissão excluída com sucesso', type: response_dto_1.SuccessResponseDto, schema: { example: { success: true, message: 'Access permission deleted successfully', data: null } } }),
     (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.NOT_FOUND, description: 'Permissão não encontrada' }),
     (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.UNAUTHORIZED, description: 'Usuário não autenticado' }),
     (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.FORBIDDEN, description: 'Usuário sem permissão para excluir permissões' }),

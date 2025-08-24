@@ -6,60 +6,63 @@ export declare class OrderController {
     constructor(orderService: OrderService);
     create(createOrderDto: CreateOrderDto): Promise<{
         user: {
-            id: string;
             name: string;
             email: string;
             phone: string;
+            id: string;
         };
         status: {
-            id: string;
             name: string;
             description: string;
+            id: string;
+        };
+        _count: {
+            orderItems: number;
         };
         orderItems: ({
             product: {
+                name: string;
                 id: string;
                 code: string;
-                name: string;
                 price: import("@prisma/client/runtime/library").Decimal;
             };
         } & {
             id: string;
             createdAt: Date;
-            orderId: string;
             productId: string | null;
-            serviceDescription: string | null;
             quantity: number;
             unitPrice: import("@prisma/client/runtime/library").Decimal | null;
             totalPrice: import("@prisma/client/runtime/library").Decimal | null;
+            orderId: string;
+            serviceDescription: string | null;
         })[];
-        _count: {
-            orderItems: number;
-        };
     } & {
         id: string;
-        code: string;
-        serviceType: string | null;
-        totalAmount: import("@prisma/client/runtime/library").Decimal | null;
-        currency: string;
-        notes: string | null;
-        deliveryAddress: string | null;
-        deliveryDate: Date | null;
         createdAt: Date;
         updatedAt: Date;
         userId: string;
+        code: string;
+        notes: string | null;
         statusId: string;
+        serviceType: string | null;
+        totalAmount: import("@prisma/client/runtime/library").Decimal | null;
+        currency: string;
+        deliveryAddress: string | null;
+        deliveryDate: Date | null;
     }>;
     findAll(paginationDto: PaginationDto, filterDto: OrderFilterDto): Promise<{
         data: ({
             user: {
-                id: string;
                 name: string;
                 email: string;
+                id: string;
             };
             status: {
-                id: string;
                 name: string;
+                id: string;
+            };
+            _count: {
+                orderItems: number;
             };
             orderItems: {
                 id: string;
@@ -67,22 +70,19 @@ export declare class OrderController {
                 unitPrice: import("@prisma/client/runtime/library").Decimal;
                 totalPrice: import("@prisma/client/runtime/library").Decimal;
             }[];
-            _count: {
-                orderItems: number;
-            };
         } & {
             id: string;
-            code: string;
-            serviceType: string | null;
-            totalAmount: import("@prisma/client/runtime/library").Decimal | null;
-            currency: string;
-            notes: string | null;
-            deliveryAddress: string | null;
-            deliveryDate: Date | null;
             createdAt: Date;
             updatedAt: Date;
             userId: string;
+            code: string;
+            notes: string | null;
             statusId: string;
+            serviceType: string | null;
+            totalAmount: import("@prisma/client/runtime/library").Decimal | null;
+            currency: string;
+            deliveryAddress: string | null;
+            deliveryDate: Date | null;
         })[];
         pagination: {
             page: number;
@@ -93,55 +93,55 @@ export declare class OrderController {
     }>;
     findActiveOrders(limit?: number): Promise<({
         user: {
-            id: string;
             name: string;
             email: string;
+            id: string;
         };
         status: {
-            id: string;
             name: string;
+            id: string;
         };
         _count: {
             orderItems: number;
         };
     } & {
         id: string;
-        code: string;
-        serviceType: string | null;
-        totalAmount: import("@prisma/client/runtime/library").Decimal | null;
-        currency: string;
-        notes: string | null;
-        deliveryAddress: string | null;
-        deliveryDate: Date | null;
         createdAt: Date;
         updatedAt: Date;
         userId: string;
+        code: string;
+        notes: string | null;
         statusId: string;
+        serviceType: string | null;
+        totalAmount: import("@prisma/client/runtime/library").Decimal | null;
+        currency: string;
+        deliveryAddress: string | null;
+        deliveryDate: Date | null;
     })[]>;
     findRecentOrders(limit?: number): Promise<({
         user: {
-            id: string;
             name: string;
             email: string;
             phone: string;
+            id: string;
         };
         status: {
-            id: string;
             name: string;
+            id: string;
         };
     } & {
         id: string;
-        code: string;
-        serviceType: string | null;
-        totalAmount: import("@prisma/client/runtime/library").Decimal | null;
-        currency: string;
-        notes: string | null;
-        deliveryAddress: string | null;
-        deliveryDate: Date | null;
         createdAt: Date;
         updatedAt: Date;
         userId: string;
+        code: string;
+        notes: string | null;
         statusId: string;
+        serviceType: string | null;
+        totalAmount: import("@prisma/client/runtime/library").Decimal | null;
+        currency: string;
+        deliveryAddress: string | null;
+        deliveryDate: Date | null;
     })[]>;
     getOrderStats(): Promise<{
         totalOrders: number;
@@ -153,104 +153,104 @@ export declare class OrderController {
     }>;
     findOne(id: string): Promise<{
         user: {
-            id: string;
             name: string;
             email: string;
             phone: string;
+            id: string;
             address: string;
             city: string;
             country: string;
         };
         status: {
-            id: string;
             name: string;
             description: string;
+            id: string;
+        };
+        _count: {
+            orderItems: number;
         };
         orderItems: ({
             product: {
-                id: string;
-                code: string;
+                brand: {
+                    name: string;
+                    id: string;
+                };
                 name: string;
                 description: string;
+                id: string;
+                code: string;
                 price: import("@prisma/client/runtime/library").Decimal;
-                brand: {
-                    id: string;
-                    name: string;
-                };
             };
         } & {
             id: string;
             createdAt: Date;
-            orderId: string;
             productId: string | null;
-            serviceDescription: string | null;
             quantity: number;
             unitPrice: import("@prisma/client/runtime/library").Decimal | null;
             totalPrice: import("@prisma/client/runtime/library").Decimal | null;
+            orderId: string;
+            serviceDescription: string | null;
         })[];
-        _count: {
-            orderItems: number;
-        };
     } & {
         id: string;
-        code: string;
-        serviceType: string | null;
-        totalAmount: import("@prisma/client/runtime/library").Decimal | null;
-        currency: string;
-        notes: string | null;
-        deliveryAddress: string | null;
-        deliveryDate: Date | null;
         createdAt: Date;
         updatedAt: Date;
         userId: string;
+        code: string;
+        notes: string | null;
         statusId: string;
+        serviceType: string | null;
+        totalAmount: import("@prisma/client/runtime/library").Decimal | null;
+        currency: string;
+        deliveryAddress: string | null;
+        deliveryDate: Date | null;
     }>;
     update(id: string, updateOrderDto: UpdateOrderDto): Promise<{
         user: {
-            id: string;
             name: string;
             email: string;
+            id: string;
         };
         status: {
-            id: string;
             name: string;
+            id: string;
         };
         orderItems: {
             id: string;
             createdAt: Date;
-            orderId: string;
             productId: string | null;
-            serviceDescription: string | null;
             quantity: number;
             unitPrice: import("@prisma/client/runtime/library").Decimal | null;
             totalPrice: import("@prisma/client/runtime/library").Decimal | null;
+            orderId: string;
+            serviceDescription: string | null;
         }[];
     } & {
         id: string;
-        code: string;
-        serviceType: string | null;
-        totalAmount: import("@prisma/client/runtime/library").Decimal | null;
-        currency: string;
-        notes: string | null;
-        deliveryAddress: string | null;
-        deliveryDate: Date | null;
         createdAt: Date;
         updatedAt: Date;
         userId: string;
+        code: string;
+        notes: string | null;
         statusId: string;
+        serviceType: string | null;
+        totalAmount: import("@prisma/client/runtime/library").Decimal | null;
+        currency: string;
+        deliveryAddress: string | null;
+        deliveryDate: Date | null;
     }>;
     remove(id: string): Promise<{
         id: string;
-        code: string;
-        serviceType: string | null;
-        totalAmount: import("@prisma/client/runtime/library").Decimal | null;
-        currency: string;
-        notes: string | null;
-        deliveryAddress: string | null;
-        deliveryDate: Date | null;
         createdAt: Date;
         updatedAt: Date;
         userId: string;
+        code: string;
+        notes: string | null;
         statusId: string;
+        serviceType: string | null;
+        totalAmount: import("@prisma/client/runtime/library").Decimal | null;
+        currency: string;
+        deliveryAddress: string | null;
+        deliveryDate: Date | null;
     }>;
 }

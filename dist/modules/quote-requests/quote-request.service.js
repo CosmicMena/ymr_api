@@ -19,17 +19,34 @@ let QuoteRequestService = class QuoteRequestService {
     async create(data) {
         return this.prisma.quoteRequest.create({ data });
     }
-    async findAll() {
-        return this.prisma.quoteRequest.findMany({
-            orderBy: { createdAt: 'asc' },
-            include: { user: true, status: true, quoteItems: true },
-        });
+    async findAll(paginationDto, filterDto) {
+        const { page = 1, limit = 10 } = paginationDto;
+        const { search, userId, statusId, startDate, endDate } = filterDto || {};
+        const where = {};
+        if (search)
+            where.code = { contains: search, mode: 'insensitive' };
+        if (userId)
+            where.userId = userId;
+        if (statusId)
+            where.statusId = statusId;
+        if (startDate || endDate) {
+            where.createdAt = {};
+            if (startDate)
+                where.createdAt.gte = new Date(startDate);
+            if (endDate)
+                where.createdAt.lte = new Date(endDate);
+        }
+        const skip = (page - 1) * limit;
+        const take = Math.min(limit, 100);
+        const [items, total] = await Promise.all([
+            this.prisma.quoteRequest.findMany({ where, include: { user: true, status: true, quoteItems: true }, orderBy: { createdAt: 'asc' }, skip, take }),
+            this.prisma.quoteRequest.count({ where }),
+        ]);
+        const totalPages = Math.ceil(total / take);
+        return { data: items, pagination: { page, limit: take, total, totalPages } };
     }
     async findOne(id) {
-        const request = await this.prisma.quoteRequest.findUnique({
-            where: { id },
-            include: { user: true, status: true, quoteItems: true },
-        });
+        const request = await this.prisma.quoteRequest.findUnique({ where: { id }, include: { user: true, status: true, quoteItems: true } });
         if (!request)
             throw new common_1.NotFoundException(`Solicitação de orçamento com ID ${id} não encontrada`);
         return request;

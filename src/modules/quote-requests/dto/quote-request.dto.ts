@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, IsUUID, IsInt } from 'class-validator';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
+import { IsString, IsOptional, IsUUID, IsInt, IsDateString, MaxLength } from 'class-validator';
 
 export class QuoteRequestDto {
   @ApiProperty({ description: 'ID da solicitação de orçamento', example: 'uuid' })
@@ -44,4 +44,36 @@ export class QuoteRequestDto {
   @ApiProperty({ description: 'Data de atualização', example: '2024-08-19T19:00:00.000Z' })
   @IsString()
   updatedAt: string;
+}
+
+export class CreateQuoteRequestDto extends OmitType(QuoteRequestDto, ['id', 'code', 'createdAt', 'updatedAt'] as const) {}
+
+export class UpdateQuoteRequestDto extends PartialType(CreateQuoteRequestDto) {}
+
+export class QuoteRequestFilterDto {
+  @ApiProperty({ description: 'Buscar por código (contém)', required: false, example: 'Q-2024' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(20)
+  search?: string;
+
+  @ApiProperty({ description: 'Filtrar por usuário', required: false, example: 'uuid-usuario' })
+  @IsOptional()
+  @IsUUID()
+  userId?: string;
+
+  @ApiProperty({ description: 'Filtrar por status', required: false, example: 'uuid-status' })
+  @IsOptional()
+  @IsUUID()
+  statusId?: string;
+
+  @ApiProperty({ description: 'Data início (createdAt >=)', required: false, example: '2024-08-01' })
+  @IsOptional()
+  @IsDateString()
+  startDate?: string;
+
+  @ApiProperty({ description: 'Data fim (createdAt <=)', required: false, example: '2024-08-31' })
+  @IsOptional()
+  @IsDateString()
+  endDate?: string;
 }

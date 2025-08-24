@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, IsBoolean, IsUUID, IsEmail } from 'class-validator';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
+import { IsString, IsOptional, IsBoolean, IsUUID, IsEmail, IsDateString } from 'class-validator';
 
 export class NewsletterSubscriptionDto {
   @ApiProperty({ description: 'ID da inscrição', example: 'uuid' })
@@ -30,4 +30,35 @@ export class NewsletterSubscriptionDto {
   @IsOptional()
   @IsString()
   unsubscribedAt?: string;
+}
+
+export class CreateNewsletterSubscriptionDto extends OmitType(NewsletterSubscriptionDto, ['id', 'subscribedAt', 'unsubscribedAt'] as const) {}
+
+export class UpdateNewsletterSubscriptionDto extends PartialType(CreateNewsletterSubscriptionDto) {}
+
+export class NewsletterSubscriptionFilterDto {
+  @ApiProperty({ description: 'Buscar por e-mail (contém)', required: false, example: 'gmail.com' })
+  @IsOptional()
+  @IsString()
+  email?: string;
+
+  @ApiProperty({ description: 'Filtrar por ativo', required: false, example: true })
+  @IsOptional()
+  @IsBoolean()
+  isActive?: boolean;
+
+  @ApiProperty({ description: 'Filtrar por interesse', required: false, example: 'novidades' })
+  @IsOptional()
+  @IsString()
+  interest?: string;
+
+  @ApiProperty({ description: 'Data início (subscribedAt >=)', required: false, example: '2024-08-01' })
+  @IsOptional()
+  @IsDateString()
+  startDate?: string;
+
+  @ApiProperty({ description: 'Data fim (subscribedAt <=)', required: false, example: '2024-08-31' })
+  @IsOptional()
+  @IsDateString()
+  endDate?: string;
 }

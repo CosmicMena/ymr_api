@@ -1,71 +1,69 @@
 import { ActivityLogService } from './activity-log.service';
-import { ActivityLogDto } from './dto/activity-log.dto';
+import { ActivityLogDto, ActivityLogFilterDto } from './dto/activity-log.dto';
+import { PaginationDto } from '../../common/dto/pagination.dto';
+import { SuccessResponseDto } from '../../common/dto/response.dto';
 export declare class ActivityLogController {
     private readonly activityLogService;
     constructor(activityLogService: ActivityLogService);
-    create(data: Omit<ActivityLogDto, 'id' | 'createdAt'>): Promise<{
+    create(data: Omit<ActivityLogDto, 'id' | 'createdAt'>): Promise<SuccessResponseDto<{
+        description: string | null;
         id: string;
         createdAt: Date;
-        userId: string | null;
-        adminId: string | null;
         action: string;
-        description: string | null;
+        userId: string | null;
         resourceType: string | null;
         resourceId: string | null;
         ipAddress: string | null;
         userAgent: string | null;
         metadata: import("@prisma/client/runtime/library").JsonValue | null;
-    }>;
-    findAll(): Promise<{
+        adminId: string | null;
+    }>>;
+    findAll(pagination: PaginationDto, filter: ActivityLogFilterDto): Promise<SuccessResponseDto<{
+        data: {
+            description: string | null;
+            id: string;
+            createdAt: Date;
+            action: string;
+            userId: string | null;
+            resourceType: string | null;
+            resourceId: string | null;
+            ipAddress: string | null;
+            userAgent: string | null;
+            metadata: import("@prisma/client/runtime/library").JsonValue | null;
+            adminId: string | null;
+        }[];
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+        };
+    }>>;
+    findOne(id: string): Promise<SuccessResponseDto<{
+        description: string | null;
         id: string;
         createdAt: Date;
-        userId: string | null;
-        adminId: string | null;
         action: string;
-        description: string | null;
+        userId: string | null;
         resourceType: string | null;
         resourceId: string | null;
         ipAddress: string | null;
         userAgent: string | null;
         metadata: import("@prisma/client/runtime/library").JsonValue | null;
-    }[]>;
-    findOne(id: string): Promise<{
+        adminId: string | null;
+    }>>;
+    update(id: string, data: Partial<Omit<ActivityLogDto, 'id' | 'createdAt'>>): Promise<SuccessResponseDto<{
+        description: string | null;
         id: string;
         createdAt: Date;
-        userId: string | null;
-        adminId: string | null;
         action: string;
-        description: string | null;
+        userId: string | null;
         resourceType: string | null;
         resourceId: string | null;
         ipAddress: string | null;
         userAgent: string | null;
         metadata: import("@prisma/client/runtime/library").JsonValue | null;
-    }>;
-    update(id: string, data: Partial<Omit<ActivityLogDto, 'id' | 'createdAt'>>): Promise<{
-        id: string;
-        createdAt: Date;
-        userId: string | null;
         adminId: string | null;
-        action: string;
-        description: string | null;
-        resourceType: string | null;
-        resourceId: string | null;
-        ipAddress: string | null;
-        userAgent: string | null;
-        metadata: import("@prisma/client/runtime/library").JsonValue | null;
-    }>;
-    remove(id: string): Promise<{
-        id: string;
-        createdAt: Date;
-        userId: string | null;
-        adminId: string | null;
-        action: string;
-        description: string | null;
-        resourceType: string | null;
-        resourceId: string | null;
-        ipAddress: string | null;
-        userAgent: string | null;
-        metadata: import("@prisma/client/runtime/library").JsonValue | null;
-    }>;
+    }>>;
+    remove(id: string): Promise<SuccessResponseDto<any>>;
 }

@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { 
   ApiTags, 
@@ -18,15 +19,17 @@ import {
   ApiBody,
   ApiHeader,
   ApiConsumes,
-  ApiProduces
+  ApiProduces,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { BrandService } from './brands.service';
-import { BrandDto } from './dto/brand.dto';
+import { BrandDto, BrandFilterDto } from './dto/brand.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { Public } from '../../common/decorators/public.decorator';
 import { SuccessResponseDto } from '../../common/dto/response.dto';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 
 @ApiTags('Brands')
 @ApiBearerAuth('JWT-auth')
@@ -112,40 +115,21 @@ export class BrandController {
   }
 
   @ApiOperation({ 
-    summary: 'Listar todas as marcas',
-    description: 'Retorna uma lista de todas as marcas do sistema. Endpoint público.'
+    summary: 'Listar marcas (paginado)',
+    description: 'Retorna lista paginada de marcas com filtros opcionais.'
   })
-  @ApiResponse({ 
-    status: HttpStatus.OK, 
-    description: 'Marcas recuperadas com sucesso',
-    schema: {
-      example: {
-        success: true,
-        message: 'Brands retrieved successfully',
-        data: [
-          {
-            id: 'uuid-1',
-            name: 'YMR Industrial',
-            logoUrl: 'https://example.com/logo-ymr.png',
-            description: 'Marca líder em equipamentos industriais de alta qualidade',
-            isActive: true,
-            createdAt: '2024-01-15T10:30:00Z',
-            updatedAt: '2024-01-15T10:30:00Z'
-          }
-        ]
-      }
-    }
-  })
-  @ApiResponse({ 
-    status: HttpStatus.BAD_REQUEST, 
-    description: 'Erro na requisição'
-  })
+  @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
+  @ApiQuery({ name: 'limit', required: false, type: Number, example: 10 })
+  @ApiQuery({ name: 'search', required: false, type: String, example: 'cat' })
+  @ApiQuery({ name: 'isActive', required: false, type: Boolean, example: true })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Marcas recuperadas com sucesso', type: SuccessResponseDto })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Erro na requisição' })
   @ApiProduces('application/json')
   @Public()
   @Get()
-  async findAll() {
-    const brands = await this.brandService.findAll();
-    return new SuccessResponseDto('Brands retrieved successfully', brands);
+  async findAll(@Query() pagination: PaginationDto, @Query() filter: BrandFilterDto) {
+    const result = await this.brandService.findAll(pagination, filter);
+    return new SuccessResponseDto('Brands retrieved successfully', result);
   }
 
   @ApiOperation({ 
@@ -161,21 +145,7 @@ export class BrandController {
   @ApiResponse({ 
     status: HttpStatus.OK, 
     description: 'Marca recuperada com sucesso',
-    schema: {
-      example: {
-        success: true,
-        message: 'Brand retrieved successfully',
-        data: {
-          id: 'uuid-da-marca',
-          name: 'YMR Industrial',
-          logoUrl: 'https://example.com/logo-ymr.png',
-          description: 'Marca líder em equipamentos industriais de alta qualidade',
-          isActive: true,
-          createdAt: '2024-01-15T10:30:00Z',
-          updatedAt: '2024-01-15T10:30:00Z'
-        }
-      }
-    }
+    type: SuccessResponseDto,
   })
   @ApiResponse({ 
     status: HttpStatus.NOT_FOUND, 
@@ -228,17 +198,7 @@ export class BrandController {
   @ApiResponse({ 
     status: HttpStatus.OK, 
     description: 'Marca atualizada com sucesso',
-    schema: {
-      example: {
-        success: true,
-        message: 'Brand updated successfully',
-        data: {
-          id: 'uuid-da-marca',
-          name: 'YMR Industrial Solutions',
-          updatedAt: '2024-01-15T11:30:00Z'
-        }
-      }
-    }
+    type: SuccessResponseDto,
   })
   @ApiResponse({ 
     status: HttpStatus.NOT_FOUND, 
@@ -283,13 +243,7 @@ export class BrandController {
   @ApiResponse({ 
     status: HttpStatus.OK, 
     description: 'Marca excluída com sucesso',
-    schema: {
-      example: {
-        success: true,
-        message: 'Brand deleted successfully',
-        data: null
-      }
-    }
+    type: SuccessResponseDto,
   })
   @ApiResponse({ 
     status: HttpStatus.NOT_FOUND, 
