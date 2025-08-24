@@ -1,6 +1,9 @@
+-- Enable pgcrypto for gen_random_uuid()
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
 -- CreateTable
 CREATE TABLE "brands" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" VARCHAR(100) NOT NULL,
     "logo_url" TEXT,
     "description" TEXT,
@@ -13,7 +16,7 @@ CREATE TABLE "brands" (
 
 -- CreateTable
 CREATE TABLE "categories" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" VARCHAR(100) NOT NULL,
     "image_url" TEXT,
     "description" TEXT,
@@ -26,7 +29,7 @@ CREATE TABLE "categories" (
 
 -- CreateTable
 CREATE TABLE "subcategories" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" VARCHAR(100) NOT NULL,
     "category_id" UUID NOT NULL,
     "image_url" TEXT,
@@ -40,7 +43,7 @@ CREATE TABLE "subcategories" (
 
 -- CreateTable
 CREATE TABLE "products" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "code" VARCHAR(50) NOT NULL,
     "name" VARCHAR(200) NOT NULL,
     "model" VARCHAR(100),
@@ -64,7 +67,7 @@ CREATE TABLE "products" (
 
 -- CreateTable
 CREATE TABLE "users" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" VARCHAR(150) NOT NULL,
     "email" VARCHAR(150) NOT NULL,
     "phone" VARCHAR(20),
@@ -89,7 +92,7 @@ CREATE TABLE "users" (
 
 -- CreateTable
 CREATE TABLE "user_roles" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" VARCHAR(50) NOT NULL,
     "description" TEXT,
     "permissions" JSONB,
@@ -101,7 +104,7 @@ CREATE TABLE "user_roles" (
 
 -- CreateTable
 CREATE TABLE "admin_users" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" VARCHAR(150) NOT NULL,
     "email" VARCHAR(150) NOT NULL,
     "password_hash" TEXT NOT NULL,
@@ -118,7 +121,7 @@ CREATE TABLE "admin_users" (
 
 -- CreateTable
 CREATE TABLE "statuses" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" VARCHAR(50) NOT NULL,
     "description" TEXT,
     "color" VARCHAR(7),
@@ -129,7 +132,7 @@ CREATE TABLE "statuses" (
 
 -- CreateTable
 CREATE TABLE "quote_requests" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "code" VARCHAR(20) NOT NULL,
     "user_id" UUID NOT NULL,
     "status_id" UUID NOT NULL,
@@ -145,7 +148,7 @@ CREATE TABLE "quote_requests" (
 
 -- CreateTable
 CREATE TABLE "quote_items" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "quote_request_id" UUID NOT NULL,
     "product_id" UUID NOT NULL,
     "quantity" INTEGER NOT NULL DEFAULT 1,
@@ -159,7 +162,7 @@ CREATE TABLE "quote_items" (
 
 -- CreateTable
 CREATE TABLE "shopping_carts" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "user_id" UUID,
     "session_id" VARCHAR(255),
     "product_id" UUID NOT NULL,
@@ -172,7 +175,7 @@ CREATE TABLE "shopping_carts" (
 
 -- CreateTable
 CREATE TABLE "orders" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "code" VARCHAR(20) NOT NULL,
     "user_id" UUID NOT NULL,
     "status_id" UUID NOT NULL,
@@ -190,7 +193,7 @@ CREATE TABLE "orders" (
 
 -- CreateTable
 CREATE TABLE "order_items" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "order_id" UUID NOT NULL,
     "product_id" UUID,
     "service_description" TEXT,
@@ -204,7 +207,7 @@ CREATE TABLE "order_items" (
 
 -- CreateTable
 CREATE TABLE "user_favorites" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "user_id" UUID NOT NULL,
     "product_id" UUID NOT NULL,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -214,7 +217,7 @@ CREATE TABLE "user_favorites" (
 
 -- CreateTable
 CREATE TABLE "message_threads" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "subject" VARCHAR(255) NOT NULL,
     "user_id" UUID,
     "admin_id" UUID,
@@ -228,7 +231,7 @@ CREATE TABLE "message_threads" (
 
 -- CreateTable
 CREATE TABLE "messages" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "thread_id" UUID NOT NULL,
     "sender_type" VARCHAR(10) NOT NULL,
     "sender_id" UUID NOT NULL,
@@ -242,7 +245,7 @@ CREATE TABLE "messages" (
 
 -- CreateTable
 CREATE TABLE "newsletter_subscriptions" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "email" VARCHAR(150) NOT NULL,
     "name" VARCHAR(150),
     "is_active" BOOLEAN NOT NULL DEFAULT true,
@@ -255,7 +258,7 @@ CREATE TABLE "newsletter_subscriptions" (
 
 -- CreateTable
 CREATE TABLE "activity_logs" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "user_id" UUID,
     "admin_id" UUID,
     "action" VARCHAR(100) NOT NULL,
@@ -272,7 +275,7 @@ CREATE TABLE "activity_logs" (
 
 -- CreateTable
 CREATE TABLE "site_visits" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "ip_address" TEXT NOT NULL,
     "user_agent" TEXT,
     "referer" TEXT,
@@ -292,7 +295,7 @@ CREATE TABLE "site_visits" (
 
 -- CreateTable
 CREATE TABLE "user_statistics" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "user_id" UUID NOT NULL,
     "orders_count" INTEGER NOT NULL DEFAULT 0,
     "consultations_count" INTEGER NOT NULL DEFAULT 0,
@@ -308,7 +311,7 @@ CREATE TABLE "user_statistics" (
 
 -- CreateTable
 CREATE TABLE "user_activities" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "user_id" UUID NOT NULL,
     "activity_type" VARCHAR(50) NOT NULL,
     "title" VARCHAR(255) NOT NULL,
@@ -323,7 +326,7 @@ CREATE TABLE "user_activities" (
 
 -- CreateTable
 CREATE TABLE "access_permissions" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" VARCHAR(100) NOT NULL,
     "resource" VARCHAR(50) NOT NULL,
     "action" VARCHAR(50) NOT NULL,

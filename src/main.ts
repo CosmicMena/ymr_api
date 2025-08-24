@@ -83,6 +83,9 @@ async function bootstrap() {
     },
   });
 
+  // Redirect root '/' to Swagger docs
+  app.getHttpAdapter().getInstance().get('/', (_req, res) => res.redirect('/api/docs'));
+
   // Global prefix
   app.setGlobalPrefix('api/v1');
 

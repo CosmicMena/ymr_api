@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Brand {
-  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String    @unique @db.VarChar(100)
   logoUrl     String?   @map("logo_url")
   description String?
@@ -25,7 +25,7 @@ model Brand {
 }
 
 model Category {
-  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String    @unique @db.VarChar(100)
   imageUrl    String?   @map("image_url")
   description String?
@@ -39,11 +39,9 @@ model Category {
 }
 
 model Subcategory {
-  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String    @db.VarChar(100)
   categoryId  String    @map("category_id") @db.Uuid
-  imageUrl    String?   @map("image_url")
-  description String?
   isActive    Boolean   @default(true) @map("is_active")
   createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
@@ -56,7 +54,7 @@ model Subcategory {
 }
 
 model Product {
-  id             String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id             String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   code           String  @unique @db.VarChar(50)
   name           String  @db.VarChar(200)
   model          String? @db.VarChar(100)
@@ -86,7 +84,7 @@ model Product {
 }
 
 model User {
-  id                      String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id                      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name                    String    @db.VarChar(150)
   email                   String    @unique @db.VarChar(150)
   phone                   String?   @db.VarChar(20)
@@ -120,7 +118,7 @@ model User {
 }
 
 model UserRole {
-  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String    @unique @db.VarChar(50)
   description String?
   permissions Json?     @db.JsonB
@@ -134,7 +132,7 @@ model UserRole {
 }
 
 model AdminUser {
-  id           String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name         String    @db.VarChar(150)
   email        String    @unique @db.VarChar(150)
   passwordHash String    @map("password_hash")
@@ -156,7 +154,7 @@ model AdminUser {
 }
 
 model Status {
-  id          String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String  @unique @db.VarChar(50)
   description String?
   color       String? @db.VarChar(7)
@@ -169,7 +167,7 @@ model Status {
 }
 
 model QuoteRequest {
-  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   code       String    @unique @db.VarChar(20)
   userId     String    @map("user_id") @db.Uuid
   statusId   String    @map("status_id") @db.Uuid
@@ -188,7 +186,7 @@ model QuoteRequest {
 }
 
 model QuoteItem {
-  id             String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   quoteRequestId String   @map("quote_request_id") @db.Uuid
   productId      String   @map("product_id") @db.Uuid
   quantity       Int      @default(1)
@@ -204,7 +202,7 @@ model QuoteItem {
 }
 
 model ShoppingCart {
-  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId    String?  @map("user_id") @db.Uuid
   sessionId String?  @map("session_id") @db.VarChar(255)
   productId String   @map("product_id") @db.Uuid
@@ -221,7 +219,7 @@ model ShoppingCart {
 }
 
 model Order {
-  id              String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   code            String    @unique @db.VarChar(20)
   userId          String    @map("user_id") @db.Uuid
   statusId        String    @map("status_id") @db.Uuid
@@ -242,7 +240,7 @@ model Order {
 }
 
 model OrderItem {
-  id                 String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id                 String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   orderId            String   @map("order_id") @db.Uuid
   productId          String?  @map("product_id") @db.Uuid
   serviceDescription String?  @map("service_description")
@@ -258,7 +256,7 @@ model OrderItem {
 }
 
 model UserFavorite {
-  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId    String   @map("user_id") @db.Uuid
   productId String   @map("product_id") @db.Uuid
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
@@ -271,7 +269,7 @@ model UserFavorite {
 }
 
 model MessageThread {
-  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   subject   String   @db.VarChar(255)
   userId    String?  @map("user_id") @db.Uuid
   adminId   String?  @map("admin_id") @db.Uuid
@@ -288,7 +286,7 @@ model MessageThread {
 }
 
 model Message {
-  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   threadId    String   @map("thread_id") @db.Uuid
   senderType  String   @map("sender_type") @db.VarChar(10)
   senderId    String   @map("sender_id") @db.Uuid
@@ -303,7 +301,7 @@ model Message {
 }
 
 model NewsletterSubscription {
-  id             String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email          String    @unique @db.VarChar(150)
   name           String?   @db.VarChar(150)
   isActive       Boolean   @default(true) @map("is_active")
@@ -315,7 +313,7 @@ model NewsletterSubscription {
 }
 
 model ActivityLog {
-  id           String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId       String?  @map("user_id") @db.Uuid
   adminId      String?  @map("admin_id") @db.Uuid
   action       String   @db.VarChar(100)
@@ -334,7 +332,7 @@ model ActivityLog {
 }
 
 model SiteVisit {
-  id            String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   ipAddress     String   @map("ip_address")
   userAgent     String?  @map("user_agent")
   referer       String?
@@ -355,7 +353,7 @@ model SiteVisit {
 }
 
 model UserStatistics {
-  id                 String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId             String    @unique @map("user_id") @db.Uuid
   ordersCount        Int       @default(0) @map("orders_count")
   consultationsCount Int       @default(0) @map("consultations_count")
@@ -372,7 +370,7 @@ model UserStatistics {
 }
 
 model UserActivity {
-  id           String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId       String   @map("user_id") @db.Uuid
   activityType String   @map("activity_type") @db.VarChar(50)
   title        String   @db.VarChar(255)
@@ -388,7 +386,7 @@ model UserActivity {
 }
 
 model AccessPermission {
-  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String   @unique @db.VarChar(100)
   resource    String   @db.VarChar(50)
   action      String   @db.VarChar(50)

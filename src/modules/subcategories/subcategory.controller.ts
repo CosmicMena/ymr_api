@@ -30,8 +30,6 @@ export class SubcategoryController {
         value: {
           name: 'Geradores Industriais',
           categoryId: 'uuid-da-categoria',
-          imageUrl: 'https://exemplo.com/imagem.png',
-          description: 'Linhas de geradores para uso industrial',
           isActive: true
         }
       }
@@ -80,7 +78,6 @@ export class SubcategoryController {
     description: 'Campos parciais para atualização',
     examples: {
       atualizarNome: { summary: 'Atualizar nome', value: { name: 'Geradores de Backup' } },
-      atualizarImagem: { summary: 'Atualizar imagem', value: { imageUrl: 'https://exemplo.com/nova-imagem.png' } },
       ativarDesativar: { summary: 'Ativar/Desativar', value: { isActive: false } }
     }
   })

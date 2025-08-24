@@ -14,16 +14,6 @@ export class SubcategoryDto {
   @IsUUID()
   categoryId: string;
 
-  @ApiProperty({ description: 'URL da imagem da subcategoria', example: 'https://exemplo.com/imagem.png', required: false })
-  @IsOptional()
-  @IsString()
-  imageUrl?: string;
-
-  @ApiProperty({ description: 'Descrição da subcategoria', required: false })
-  @IsOptional()
-  @IsString()
-  description?: string;
-
   @ApiProperty({ description: 'Subcategoria ativa?', example: true, default: true })
   @IsBoolean()
   isActive: boolean;

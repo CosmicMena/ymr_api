@@ -63,6 +63,7 @@ async function bootstrap() {
             operationsSorter: 'alpha',
         },
     });
+    app.getHttpAdapter().getInstance().get('/', (_req, res) => res.redirect('/api/docs'));
     app.setGlobalPrefix('api/v1');
     const port = configService.get('PORT', 3000);
     await app.listen(port);
