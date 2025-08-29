@@ -22,7 +22,6 @@ const roles_guard_1 = require("../../common/guards/roles.guard");
 const roles_decorator_1 = require("../../common/decorators/roles.decorator");
 const public_decorator_1 = require("../../common/decorators/public.decorator");
 const response_dto_1 = require("../../common/dto/response.dto");
-const pagination_dto_1 = require("../../common/dto/pagination.dto");
 let SubcategoryController = class SubcategoryController {
     constructor(service) {
         this.service = service;
@@ -31,8 +30,9 @@ let SubcategoryController = class SubcategoryController {
         const created = await this.service.create(data);
         return new response_dto_1.SuccessResponseDto('Subcategory created successfully', created);
     }
-    async findAll(pagination, filter) {
-        const result = await this.service.findAll(pagination, filter);
+    async findAll(query) {
+        const { page, limit, search, isActive, categoryId } = query;
+        const result = await this.service.findAll({ page, limit, search }, { isActive, categoryId, search });
         return new response_dto_1.SuccessResponseDto('Subcategories retrieved successfully', result);
     }
     async findOne(id) {
@@ -62,8 +62,6 @@ __decorate([
                 value: {
                     name: 'Geradores Industriais',
                     categoryId: 'uuid-da-categoria',
-                    imageUrl: 'https://exemplo.com/imagem.png',
-                    description: 'Linhas de geradores para uso industrial',
                     isActive: true
                 }
             }
@@ -82,16 +80,10 @@ __decorate([
     (0, common_1.Get)(),
     (0, public_decorator_1.Public)(),
     (0, swagger_1.ApiOperation)({ summary: 'Listar subcategorias (paginado)', description: 'Retorna subcategorias com filtros por nome, categoria e ativo.' }),
-    (0, swagger_1.ApiQuery)({ name: 'page', required: false, type: Number, example: 1 }),
-    (0, swagger_1.ApiQuery)({ name: 'limit', required: false, type: Number, example: 10 }),
-    (0, swagger_1.ApiQuery)({ name: 'search', required: false, type: String, example: 'gera' }),
-    (0, swagger_1.ApiQuery)({ name: 'categoryId', required: false, type: String, example: 'uuid-category' }),
-    (0, swagger_1.ApiQuery)({ name: 'isActive', required: false, type: Boolean, example: true }),
     (0, swagger_1.ApiResponse)({ status: common_1.HttpStatus.OK, description: 'Lista retornada com sucesso', type: response_dto_1.SuccessResponseDto }),
     __param(0, (0, common_1.Query)()),
-    __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [pagination_dto_1.PaginationDto, subcategory_dto_1.SubcategoryFilterDto]),
+    __metadata("design:paramtypes", [subcategory_dto_1.SubcategoryListQueryDto]),
     __metadata("design:returntype", Promise)
 ], SubcategoryController.prototype, "findAll", null);
 __decorate([
@@ -116,7 +108,6 @@ __decorate([
         description: 'Campos parciais para atualização',
         examples: {
             atualizarNome: { summary: 'Atualizar nome', value: { name: 'Geradores de Backup' } },
-            atualizarImagem: { summary: 'Atualizar imagem', value: { imageUrl: 'https://exemplo.com/nova-imagem.png' } },
             ativarDesativar: { summary: 'Ativar/Desativar', value: { isActive: false } }
         }
     }),

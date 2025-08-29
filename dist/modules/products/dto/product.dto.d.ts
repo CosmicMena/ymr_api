@@ -1,3 +1,4 @@
+import { PaginationDto } from '../../../common/dto/pagination.dto';
 export declare class CreateProductDto {
     code: string;
     name: string;
@@ -31,6 +32,14 @@ export declare class UpdateProductDto {
     brandId?: string;
 }
 export declare class ProductFilterDto {
+    brandId?: string;
+    subcategoryId?: string;
+    categoryId?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    isActive?: boolean;
+}
+export declare class ProductListQueryDto extends PaginationDto {
     brandId?: string;
     subcategoryId?: string;
     categoryId?: string;

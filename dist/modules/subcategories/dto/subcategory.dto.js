@@ -9,9 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SubcategoryFilterDto = exports.UpdateSubcategoryDto = exports.CreateSubcategoryDto = exports.SubcategoryDto = void 0;
+exports.SubcategoryListQueryDto = exports.SubcategoryFilterDto = exports.UpdateSubcategoryDto = exports.CreateSubcategoryDto = exports.SubcategoryDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+const pagination_dto_1 = require("../../../common/dto/pagination.dto");
 class SubcategoryDto {
 }
 exports.SubcategoryDto = SubcategoryDto;
@@ -30,18 +31,6 @@ __decorate([
     (0, class_validator_1.IsUUID)(),
     __metadata("design:type", String)
 ], SubcategoryDto.prototype, "categoryId", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ description: 'URL da imagem da subcategoria', example: 'https://exemplo.com/imagem.png', required: false }),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], SubcategoryDto.prototype, "imageUrl", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Descrição da subcategoria', required: false }),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], SubcategoryDto.prototype, "description", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Subcategoria ativa?', example: true, default: true }),
     (0, class_validator_1.IsBoolean)(),
@@ -85,4 +74,26 @@ __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], SubcategoryFilterDto.prototype, "isActive", void 0);
+class SubcategoryListQueryDto extends pagination_dto_1.PaginationDto {
+}
+exports.SubcategoryListQueryDto = SubcategoryListQueryDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Buscar por nome (contém, case-insensitive)', required: false, example: 'gera' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(100),
+    __metadata("design:type", String)
+], SubcategoryListQueryDto.prototype, "search", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por categoria', required: false, example: 'uuid-categoria' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], SubcategoryListQueryDto.prototype, "categoryId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filtrar por ativo', required: false, example: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], SubcategoryListQueryDto.prototype, "isActive", void 0);
 //# sourceMappingURL=subcategory.dto.js.map

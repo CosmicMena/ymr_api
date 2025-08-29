@@ -9,10 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductFilterDto = exports.UpdateProductDto = exports.CreateProductDto = void 0;
+exports.ProductListQueryDto = exports.ProductFilterDto = exports.UpdateProductDto = exports.CreateProductDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 const swagger_1 = require("@nestjs/swagger");
+const pagination_dto_1 = require("../../../common/dto/pagination.dto");
 class CreateProductDto {
     constructor() {
         this.availability = 'Em Estoque';
@@ -296,4 +297,48 @@ __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], ProductFilterDto.prototype, "isActive", void 0);
+class ProductListQueryDto extends pagination_dto_1.PaginationDto {
+}
+exports.ProductListQueryDto = ProductListQueryDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filter by brand ID', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], ProductListQueryDto.prototype, "brandId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filter by subcategory ID', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], ProductListQueryDto.prototype, "subcategoryId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filter by category ID', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], ProductListQueryDto.prototype, "categoryId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Minimum price filter', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.Min)(0),
+    __metadata("design:type", Number)
+], ProductListQueryDto.prototype, "minPrice", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Maximum price filter', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.Min)(0),
+    __metadata("design:type", Number)
+], ProductListQueryDto.prototype, "maxPrice", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Filter by active status', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Transform)(({ value }) => value === 'true' || value === true),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], ProductListQueryDto.prototype, "isActive", void 0);
 //# sourceMappingURL=product.dto.js.map

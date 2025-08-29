@@ -17,6 +17,7 @@ import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { SuccessResponseDto } from '../../common/dto/response.dto';
+import { Public } from '../../common/decorators/public.decorator';
 
 @ApiTags('Categories')
 @ApiBearerAuth('JWT-auth')
@@ -101,6 +102,7 @@ export class CategoryController {
   }
 
   @Get()
+  @Public()
   @ApiOperation({
     summary: 'Listar todas as categorias',
     description: 'Retorna uma lista de todas as categorias do sistema'
@@ -150,6 +152,7 @@ export class CategoryController {
   }
 
   @Get('active')
+  @Public()
   @ApiOperation({
     summary: 'Listar categorias ativas',
     description: 'Retorna apenas as categorias ativas ordenadas por nome'
@@ -180,6 +183,7 @@ export class CategoryController {
   }
 
   @Get(':id')
+  @Public()
   @ApiOperation({
     summary: 'Obter categoria por ID',
     description: 'Retorna uma categoria específica pelo seu ID único'

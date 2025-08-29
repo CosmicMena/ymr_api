@@ -133,3 +133,68 @@ Erros e Respostas
 Dicas
 - Use o Swagger para testar rapidamente cada endpoint.
 - Em produção, configure CORS, rate limit, helmet e variáveis no .env (JWT, DATABASE_URL, etc.).
+
+===========================
+GUIA RÁPIDO — PRODUCTS
+===========================
+
+Base: http://localhost:<PORT>/api/v1 (JWT obrigatório)
+
+Autenticação (obter token)
+1) POST /auth/register (opcional)
+2) POST /auth/login -> copiar accessToken
+
+Listar produtos (com paginação/filtros)
+curl "http://localhost:3000/api/v1/products?page=1&limit=20&search=gerador&minPrice=1000&maxPrice=50000&sortBy=price&sortOrder=asc" \
+     -H "Authorization: Bearer <TOKEN>"
+
+Obter por ID
+curl "http://localhost:3000/api/v1/products/<uuid>" \
+     -H "Authorization: Bearer <TOKEN>"
+
+Criar (admin/manager)
+curl -X POST "http://localhost:3000/api/v1/products" \
+     -H "Authorization: Bearer <TOKEN>" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "code": "YMR-2024-001",
+           "name": "Gerador Industrial 500KW",
+           "model": "GEN-500-XL",
+           "description": "Gerador de alta eficiência para uso contínuo",
+           "price": 50000,
+           "brandId": "<uuid-marca>",
+           "subcategoryId": "<uuid-subcategoria>",
+           "stockQuantity": 10,
+           "isActive": true,
+           "features": ["Alta eficiência", "Baixa manutenção"],
+           "specifications": { "power": "500KW", "fuel": "Diesel" },
+           "documents": { "manual": "https://exemplo.com/manual.pdf" }
+         }'
+
+Atualizar (admin/manager)
+curl -X PATCH "http://localhost:3000/api/v1/products/<uuid>" \
+     -H "Authorization: Bearer <TOKEN>" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "price": 47999.90,
+           "stockQuantity": 12,
+           "description": "Atualização: novo lote com melhorias"
+         }'
+
+Remover (admin)
+curl -X DELETE "http://localhost:3000/api/v1/products/<uuid>" \
+     -H "Authorization: Bearer <TOKEN>"
+
+Populares
+curl "http://localhost:3000/api/v1/products/popular?limit=5" \
+     -H "Authorization: Bearer <TOKEN>"
+
+Em destaque
+curl "http://localhost:3000/api/v1/products/featured?limit=8" \
+     -H "Authorization: Bearer <TOKEN>"
+
+Exemplo (fetch JS)
+// const BASE = 'http://localhost:3000/api/v1';
+// const TOKEN = '<TOKEN>';
+// fetch(`${BASE}/products?page=1&limit=10`, { headers: { Authorization: `Bearer ${TOKEN}` }})
+//   .then(r => r.json()).then(console.log);

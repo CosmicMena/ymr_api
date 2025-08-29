@@ -21,6 +21,7 @@ const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
 const roles_guard_1 = require("../../common/guards/roles.guard");
 const roles_decorator_1 = require("../../common/decorators/roles.decorator");
 const response_dto_1 = require("../../common/dto/response.dto");
+const public_decorator_1 = require("../../common/decorators/public.decorator");
 let CategoryController = class CategoryController {
     constructor(categoryService) {
         this.categoryService = categoryService;
@@ -125,6 +126,7 @@ __decorate([
 ], CategoryController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, public_decorator_1.Public)(),
     (0, swagger_1.ApiOperation)({
         summary: 'Listar todas as categorias',
         description: 'Retorna uma lista de todas as categorias do sistema'
@@ -173,6 +175,7 @@ __decorate([
 ], CategoryController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)('active'),
+    (0, public_decorator_1.Public)(),
     (0, swagger_1.ApiOperation)({
         summary: 'Listar categorias ativas',
         description: 'Retorna apenas as categorias ativas ordenadas por nome'
@@ -204,6 +207,7 @@ __decorate([
 ], CategoryController.prototype, "findActiveCategories", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, public_decorator_1.Public)(),
     (0, swagger_1.ApiOperation)({
         summary: 'Obter categoria por ID',
         description: 'Retorna uma categoria específica pelo seu ID único'

@@ -6,35 +6,31 @@ export declare class SubcategoryService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(data: Omit<SubcategoryDto, 'id'>): Promise<{
-        name: string;
-        description: string | null;
         id: string;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        name: string;
         categoryId: string;
-        imageUrl: string | null;
+        isActive: boolean;
     }>;
     findAll(paginationDto: PaginationDto, filterDto: SubcategoryFilterDto): Promise<{
         data: ({
             category: {
-                name: string;
-                description: string | null;
                 id: string;
-                isActive: boolean;
                 createdAt: Date;
                 updatedAt: Date;
+                name: string;
+                isActive: boolean;
                 imageUrl: string | null;
+                description: string | null;
             };
         } & {
-            name: string;
-            description: string | null;
             id: string;
-            isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
+            name: string;
             categoryId: string;
-            imageUrl: string | null;
+            isActive: boolean;
         })[];
         pagination: {
             page: number;
@@ -45,42 +41,36 @@ export declare class SubcategoryService {
     }>;
     findOne(id: string): Promise<{
         category: {
-            name: string;
-            description: string | null;
             id: string;
-            isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
+            name: string;
+            isActive: boolean;
             imageUrl: string | null;
+            description: string | null;
         };
     } & {
-        name: string;
-        description: string | null;
         id: string;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        name: string;
         categoryId: string;
-        imageUrl: string | null;
+        isActive: boolean;
     }>;
     update(id: string, data: Partial<Omit<SubcategoryDto, 'id'>>): Promise<{
-        name: string;
-        description: string | null;
         id: string;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        name: string;
         categoryId: string;
-        imageUrl: string | null;
+        isActive: boolean;
     }>;
     remove(id: string): Promise<{
-        name: string;
-        description: string | null;
         id: string;
-        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        name: string;
         categoryId: string;
-        imageUrl: string | null;
+        isActive: boolean;
     }>;
 }

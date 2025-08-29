@@ -48,8 +48,9 @@ async function bootstrap() {
         description: 'Enter JWT token',
         in: 'header',
     }, 'JWT-auth')
+        .addServer('/api')
         .build();
-    const document = swagger_1.SwaggerModule.createDocument(app, config);
+    const document = swagger_1.SwaggerModule.createDocument(app, config, { ignoreGlobalPrefix: false });
     swagger_1.SwaggerModule.setup('api/docs', app, document, {
         customSiteTitle: 'YMR System API Documentation',
         customfavIcon: '/favicon.ico',
@@ -64,7 +65,7 @@ async function bootstrap() {
         },
     });
     app.getHttpAdapter().getInstance().get('/', (_req, res) => res.redirect('/api/docs'));
-    app.setGlobalPrefix('api/v1');
+    app.setGlobalPrefix('api');
     const port = configService.get('PORT', 3000);
     await app.listen(port);
     console.log(`🚀 YMR System API is running on: http://localhost:${port}`);

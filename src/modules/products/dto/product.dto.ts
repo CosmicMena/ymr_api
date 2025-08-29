@@ -14,6 +14,7 @@ import {
 } from 'class-validator';
 import { Type, Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { PaginationDto } from '../../../common/dto/pagination.dto';
 
 export class CreateProductDto {
   @ApiProperty({ description: 'Unique product code', example: 'YMR-2024-001' })
@@ -220,6 +221,43 @@ export class UpdateProductDto {
 }
 
 export class ProductFilterDto {
+  @ApiProperty({ description: 'Filter by brand ID', required: false })
+  @IsOptional()
+  @IsUUID()
+  brandId?: string;
+
+  @ApiProperty({ description: 'Filter by subcategory ID', required: false })
+  @IsOptional()
+  @IsUUID()
+  subcategoryId?: string;
+
+  @ApiProperty({ description: 'Filter by category ID', required: false })
+  @IsOptional()
+  @IsUUID()
+  categoryId?: string;
+
+  @ApiProperty({ description: 'Minimum price filter', required: false })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  minPrice?: number;
+
+  @ApiProperty({ description: 'Maximum price filter', required: false })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  maxPrice?: number;
+
+  @ApiProperty({ description: 'Filter by active status', required: false })
+  @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
+  @IsBoolean()
+  isActive?: boolean;
+}
+
+export class ProductListQueryDto extends PaginationDto {
   @ApiProperty({ description: 'Filter by brand ID', required: false })
   @IsOptional()
   @IsUUID()

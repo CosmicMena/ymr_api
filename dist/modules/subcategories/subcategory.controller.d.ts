@@ -1,40 +1,35 @@
 import { SubcategoryService } from './subcategory.service';
-import { SubcategoryDto, SubcategoryFilterDto } from './dto/subcategory.dto';
+import { SubcategoryDto, SubcategoryListQueryDto } from './dto/subcategory.dto';
 import { SuccessResponseDto } from '../../common/dto/response.dto';
-import { PaginationDto } from '../../common/dto/pagination.dto';
 export declare class SubcategoryController {
     private readonly service;
     constructor(service: SubcategoryService);
     create(data: Omit<SubcategoryDto, 'id'>): Promise<SuccessResponseDto<{
-        name: string;
-        description: string | null;
         id: string;
+        name: string;
+        categoryId: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        categoryId: string;
-        imageUrl: string | null;
     }>>;
-    findAll(pagination: PaginationDto, filter: SubcategoryFilterDto): Promise<SuccessResponseDto<{
+    findAll(query: SubcategoryListQueryDto): Promise<SuccessResponseDto<{
         data: ({
             category: {
-                name: string;
-                description: string | null;
                 id: string;
+                name: string;
                 isActive: boolean;
                 createdAt: Date;
                 updatedAt: Date;
                 imageUrl: string | null;
+                description: string | null;
             };
         } & {
-            name: string;
-            description: string | null;
             id: string;
+            name: string;
+            categoryId: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
-            categoryId: string;
-            imageUrl: string | null;
         })[];
         pagination: {
             page: number;
@@ -45,33 +40,29 @@ export declare class SubcategoryController {
     }>>;
     findOne(id: string): Promise<SuccessResponseDto<{
         category: {
-            name: string;
-            description: string | null;
             id: string;
+            name: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             imageUrl: string | null;
+            description: string | null;
         };
     } & {
-        name: string;
-        description: string | null;
         id: string;
+        name: string;
+        categoryId: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        categoryId: string;
-        imageUrl: string | null;
     }>>;
     update(id: string, data: Partial<Omit<SubcategoryDto, 'id'>>): Promise<SuccessResponseDto<{
-        name: string;
-        description: string | null;
         id: string;
+        name: string;
+        categoryId: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        categoryId: string;
-        imageUrl: string | null;
     }>>;
     remove(id: string): Promise<SuccessResponseDto<any>>;
 }

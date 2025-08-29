@@ -1,9 +1,8 @@
+import { PaginationDto } from '../../../common/dto/pagination.dto';
 export declare class SubcategoryDto {
     id: string;
     name: string;
     categoryId: string;
-    imageUrl?: string;
-    description?: string;
     isActive: boolean;
     createdAt: string;
     updatedAt: string;
@@ -15,6 +14,11 @@ declare const UpdateSubcategoryDto_base: import("@nestjs/common").Type<Partial<C
 export declare class UpdateSubcategoryDto extends UpdateSubcategoryDto_base {
 }
 export declare class SubcategoryFilterDto {
+    search?: string;
+    categoryId?: string;
+    isActive?: boolean;
+}
+export declare class SubcategoryListQueryDto extends PaginationDto {
     search?: string;
     categoryId?: string;
     isActive?: boolean;

@@ -9,13 +9,11 @@ export declare class CategoryController {
         };
         subcategories: {
             name: string;
-            description: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
-            imageUrl: string | null;
         }[];
     } & {
         name: string;
@@ -52,7 +50,6 @@ export declare class CategoryController {
         };
         subcategories: {
             name: string;
-            description: string;
             id: string;
             isActive: boolean;
         }[];
@@ -71,13 +68,11 @@ export declare class CategoryController {
         };
         subcategories: {
             name: string;
-            description: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
-            imageUrl: string | null;
         }[];
     } & {
         name: string;

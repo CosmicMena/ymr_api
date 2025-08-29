@@ -66,9 +66,10 @@ async function bootstrap() {
       },
       'JWT-auth',
     )
+    .addServer('/api')
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, config, { ignoreGlobalPrefix: false });
   SwaggerModule.setup('api/docs', app, document, {
     customSiteTitle: 'YMR System API Documentation',
     customfavIcon: '/favicon.ico',
@@ -86,8 +87,8 @@ async function bootstrap() {
   // Redirect root '/' to Swagger docs
   app.getHttpAdapter().getInstance().get('/', (_req, res) => res.redirect('/api/docs'));
 
-  // Global prefix
-  app.setGlobalPrefix('api/v1');
+  // Global prefix (combined with URI versioning → /api/v1)
+  app.setGlobalPrefix('api');
 
   const port = configService.get('PORT', 3000);
   await app.listen(port);

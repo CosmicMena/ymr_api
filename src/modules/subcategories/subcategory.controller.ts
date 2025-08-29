@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Param, Body, Patch, Delete, UseGuards, HttpStatus, Query } from '@nestjs/common';
 import { SubcategoryService } from './subcategory.service';
-import { SubcategoryDto, SubcategoryFilterDto } from './dto/subcategory.dto';
+import { SubcategoryDto, SubcategoryFilterDto, SubcategoryListQueryDto } from './dto/subcategory.dto';
 import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse, ApiParam, ApiBody, ApiConsumes, ApiProduces, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
@@ -47,14 +47,10 @@ export class SubcategoryController {
   @Get()
   @Public()
   @ApiOperation({ summary: 'Listar subcategorias (paginado)', description: 'Retorna subcategorias com filtros por nome, categoria e ativo.' })
-  @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
-  @ApiQuery({ name: 'limit', required: false, type: Number, example: 10 })
-  @ApiQuery({ name: 'search', required: false, type: String, example: 'gera' })
-  @ApiQuery({ name: 'categoryId', required: false, type: String, example: 'uuid-category' })
-  @ApiQuery({ name: 'isActive', required: false, type: Boolean, example: true })
   @ApiResponse({ status: HttpStatus.OK, description: 'Lista retornada com sucesso', type: SuccessResponseDto })
-  async findAll(@Query() pagination: PaginationDto, @Query() filter: SubcategoryFilterDto) {
-    const result = await this.service.findAll(pagination, filter);
+  async findAll(@Query() query: SubcategoryListQueryDto) {
+    const { page, limit, search, isActive, categoryId } = query;
+    const result = await this.service.findAll({ page, limit, search }, { isActive, categoryId, search });
     return new SuccessResponseDto('Subcategories retrieved successfully', result);
   }
 

@@ -17,11 +17,11 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const products_service_1 = require("./products.service");
 const product_dto_1 = require("./dto/product.dto");
-const pagination_dto_1 = require("../../common/dto/pagination.dto");
 const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
 const roles_guard_1 = require("../../common/guards/roles.guard");
 const roles_decorator_1 = require("../../common/decorators/roles.decorator");
 const response_dto_1 = require("../../common/dto/response.dto");
+const public_decorator_1 = require("../../common/decorators/public.decorator");
 let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
@@ -29,8 +29,9 @@ let ProductsController = class ProductsController {
     async create(createProductDto) {
         return this.productsService.create(createProductDto);
     }
-    async findAll(paginationDto, filterDto) {
-        return this.productsService.findAll(paginationDto, filterDto);
+    async findAll(query) {
+        const { page, limit, search, sortBy, sortOrder, ...filters } = query;
+        return this.productsService.findAll({ page, limit, search, sortBy, sortOrder }, filters);
     }
     async getPopularProducts(limit = 10) {
         return this.productsService.getPopularProducts(limit);
@@ -141,6 +142,7 @@ __decorate([
 ], ProductsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, public_decorator_1.Public)(),
     (0, swagger_1.ApiOperation)({
         summary: 'Listar todos os produtos',
         description: 'Retorna uma lista paginada de produtos com filtros opcionais'
@@ -251,14 +253,13 @@ __decorate([
         description: 'Usuário não autenticado'
     }),
     __param(0, (0, common_1.Query)()),
-    __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [pagination_dto_1.PaginationDto,
-        product_dto_1.ProductFilterDto]),
+    __metadata("design:paramtypes", [product_dto_1.ProductListQueryDto]),
     __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)('popular'),
+    (0, public_decorator_1.Public)(),
     (0, swagger_1.ApiOperation)({
         summary: 'Obter produtos populares',
         description: 'Retorna os produtos mais visualizados/populares'
@@ -298,6 +299,7 @@ __decorate([
 ], ProductsController.prototype, "getPopularProducts", null);
 __decorate([
     (0, common_1.Get)('featured'),
+    (0, public_decorator_1.Public)(),
     (0, swagger_1.ApiOperation)({
         summary: 'Obter produtos em destaque',
         description: 'Retorna produtos marcados como em destaque'
@@ -337,6 +339,7 @@ __decorate([
 ], ProductsController.prototype, "getFeaturedProducts", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, public_decorator_1.Public)(),
     (0, swagger_1.ApiOperation)({
         summary: 'Obter produto por ID',
         description: 'Retorna um produto específico pelo seu ID único'

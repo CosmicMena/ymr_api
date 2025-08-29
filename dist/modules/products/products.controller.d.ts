@@ -1,6 +1,5 @@
 import { ProductsService } from './products.service';
-import { CreateProductDto, UpdateProductDto, ProductFilterDto } from './dto/product.dto';
-import { PaginationDto } from '../../common/dto/pagination.dto';
+import { CreateProductDto, UpdateProductDto, ProductListQueryDto } from './dto/product.dto';
 export declare class ProductsController {
     private readonly productsService;
     constructor(productsService: ProductsService);
@@ -26,13 +25,11 @@ export declare class ProductsController {
             };
         } & {
             name: string;
-            description: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
-            imageUrl: string | null;
         };
     } & {
         name: string;
@@ -54,7 +51,7 @@ export declare class ProductsController {
         brandId: string | null;
         viewCount: number;
     }>;
-    findAll(paginationDto: PaginationDto, filterDto: ProductFilterDto): Promise<{
+    findAll(query: ProductListQueryDto): Promise<{
         data: unknown[];
         pagination: {
             page: number;
@@ -87,13 +84,11 @@ export declare class ProductsController {
             };
         } & {
             name: string;
-            description: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
-            imageUrl: string | null;
         };
     } & {
         name: string;
@@ -137,13 +132,11 @@ export declare class ProductsController {
             };
         } & {
             name: string;
-            description: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
-            imageUrl: string | null;
         };
     } & {
         name: string;
@@ -187,13 +180,11 @@ export declare class ProductsController {
             };
         } & {
             name: string;
-            description: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
-            imageUrl: string | null;
         };
         _count: {
             userFavorites: number;
@@ -242,13 +233,11 @@ export declare class ProductsController {
             };
         } & {
             name: string;
-            description: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
-            imageUrl: string | null;
         };
     } & {
         name: string;

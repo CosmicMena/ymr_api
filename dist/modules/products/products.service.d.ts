@@ -26,13 +26,11 @@ export declare class ProductsService {
             };
         } & {
             name: string;
-            description: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
-            imageUrl: string | null;
         };
     } & {
         name: string;
@@ -87,13 +85,11 @@ export declare class ProductsService {
             };
         } & {
             name: string;
-            description: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
-            imageUrl: string | null;
         };
         _count: {
             userFavorites: number;
@@ -142,13 +138,11 @@ export declare class ProductsService {
             };
         } & {
             name: string;
-            description: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
-            imageUrl: string | null;
         };
     } & {
         name: string;
@@ -212,13 +206,11 @@ export declare class ProductsService {
             };
         } & {
             name: string;
-            description: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
-            imageUrl: string | null;
         };
     } & {
         name: string;
@@ -262,13 +254,11 @@ export declare class ProductsService {
             };
         } & {
             name: string;
-            description: string | null;
             id: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
             categoryId: string;
-            imageUrl: string | null;
         };
     } & {
         name: string;

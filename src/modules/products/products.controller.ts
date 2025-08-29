@@ -12,12 +12,13 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiParam, ApiBearerAuth, ApiConsumes, ApiProduces } from '@nestjs/swagger';
 import { ProductsService } from './products.service';
-import { CreateProductDto, UpdateProductDto, ProductFilterDto } from './dto/product.dto';
+import { CreateProductDto, UpdateProductDto, ProductFilterDto, ProductListQueryDto } from './dto/product.dto';
 import { PaginationDto } from '../../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { SuccessResponseDto } from '../../common/dto/response.dto';
+import { Public } from '../../common/decorators/public.decorator';
 
 @ApiTags('Products')
 @ApiBearerAuth('JWT-auth')
@@ -117,6 +118,7 @@ export class ProductsController {
   }
 
   @Get()
+  @Public()
   @ApiOperation({
     summary: 'Listar todos os produtos',
     description: 'Retorna uma lista paginada de produtos com filtros opcionais'
@@ -226,14 +228,16 @@ export class ProductsController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Usuário não autenticado'
   })
-  async findAll(
-    @Query() paginationDto: PaginationDto,
-    @Query() filterDto: ProductFilterDto
-  ) {
-    return this.productsService.findAll(paginationDto, filterDto);
+  async findAll(@Query() query: ProductListQueryDto) {
+    const { page, limit, search, sortBy, sortOrder, ...filters } = query;
+    return this.productsService.findAll(
+      { page, limit, search, sortBy, sortOrder },
+      filters as ProductFilterDto,
+    );
   }
 
   @Get('popular')
+  @Public()
   @ApiOperation({
     summary: 'Obter produtos populares',
     description: 'Retorna os produtos mais visualizados/populares'
@@ -271,6 +275,7 @@ export class ProductsController {
   }
 
   @Get('featured')
+  @Public()
   @ApiOperation({
     summary: 'Obter produtos em destaque',
     description: 'Retorna produtos marcados como em destaque'
@@ -308,6 +313,7 @@ export class ProductsController {
   }
 
   @Get(':id')
+  @Public()
   @ApiOperation({
     summary: 'Obter produto por ID',
     description: 'Retorna um produto específico pelo seu ID único'
